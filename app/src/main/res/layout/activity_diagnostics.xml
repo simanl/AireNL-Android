@@ -1,0 +1,142 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".DiagnosticsActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/mainViewBackground"
+        android:src="@drawable/fondodia"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondodia"
+        android:scaleType="centerCrop"
+        android:id="@+id/blurImageView" />
+
+    <FrameLayout
+        android:id="@+id/darkBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:alpha="0.1"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="455dp"
+                >
+                <TextView
+                    android:id="@+id/airQualityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="LA CALIDAD DEL AIRE ES"
+                    android:textColor="#AAffffff"
+                    android:textSize="15sp"
+                    android:layout_alignParentBottom="true"/>
+                <TextView
+                    android:id="@+id/imecaLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="IMECA"
+                    android:textColor="#aaffffff"
+                    android:textSize="15sp"
+                    android:layout_above="@id/airQualityLabel"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginTop="-16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imecaQuantity"
+                    android:layout_centerHorizontal="true"
+                    android:text="40"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#ffffff"
+                    android:layout_above="@id/imecaLabel"
+                    android:textSize="110sp"/>
+
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="10dp"
+                android:background="#55afafaf">
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="3dp"
+                android:background="#55afafaf">
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="MONTERREY"
+            android:id="@+id/monterreyTextView"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:layout_weight="0"
+            android:textSize="20dp"
+            android:singleLine="false"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@id/monterreyTextView"
+            android:layout_centerHorizontal="true"
+            android:textColor="#aaffffff"
+            android:text="ESTACIÓN CENTRO OBISPADO"
+            android:textSize="13dp"
+            android:layout_marginTop="4dp"
+            android:id="@+id/stationTextView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
