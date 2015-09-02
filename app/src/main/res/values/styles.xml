@@ -2,8 +2,166 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="GreenButton">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:background">@drawable/green_button_background</item>
+    </style>
+
+
+    <style name="AireSection.Frosted">
+        <item name="android:background">@drawable/section_background</item>
+    </style>
+
+    <style name="AireSection">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="AireSubsection">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AireSubsection.Frosted">
+        <item name="android:background">@drawable/section_background</item>
+    </style>
+
+    <style name="AireSection.Frosted.Small">
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="AireSection.Small">
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="AireSection.Frosted.Big">
+        <item name="android:layout_height">180dp</item>
+    </style>
+
+    <style name="GreenButton.Dynamic">
+        <item name="android:layout_width">200dp</item>
+    </style>
+
+    <style name="TopItems">
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="AireSubsectionText">
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        android:textColor="#aaffffff"
+    </style>
+
+    <style name="AireSubsectionText.MeasurementCategory">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="AireSubsectionText.Amount">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#aaffffff</item>
+    </style>
+
+    <style name="ContaminantSection">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ContaminantContainerLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="ContaminantTile">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:background">@drawable/tile_background</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="ContaminantTileText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="ContaminantAmountText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="ContaminantAmountText.Forecasts">
+        <item name="android:textSize">33sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ContaminantForecastTable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="ContaminantForecastTableRow">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ContaminantForecastTableColumn">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ContaminantForecastTableColumn.Day">
+        <item name="android:textColor">#88ffffff</item>
+    </style>
+
+    <style name="InfoButton">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:src">@drawable/info_circle</item>
+    </style>
+
+    <style name="InfoButton.InAireStatus">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="InfoButton.InSection">
+        <item name="android:layout_marginLeft">6dp</item>
+    </style>
+
+    <style name="InfoButton.InSection.Recomendations">
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="InfoButton.InSection.Forecasts">
+        <item name="android:scaleType">fitStart</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 
 </resources>

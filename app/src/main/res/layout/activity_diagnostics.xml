@@ -1,16 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".DiagnosticsActivity">
+    android:layout_height="match_parent" android:id="@+id/rootDiagnosticsLayout" tools:context=".DiagnosticsActivity">
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/mainViewBackground"
         android:src="@drawable/fondodia"
-        android:scaleType="centerCrop"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -38,9 +35,25 @@
             android:gravity="center_horizontal">
 
             <RelativeLayout
+                android:id="@+id/nonBoxedDiagnostics"
                 android:layout_width="wrap_content"
-                android:layout_height="455dp"
+                android:layout_height="345dp"
                 >
+                <RelativeLayout
+                    style="@style/GreenButton.Dynamic"
+                    android:id="@+id/airQualityView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true">
+                    <ImageView
+                        style="@style/InfoButton.InAireStatus"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="BUENA"
+                        android:textSize="25sp"
+                        android:textColor="#ffffff"/>
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/airQualityLabel"
                     android:layout_width="wrap_content"
@@ -49,7 +62,9 @@
                     android:text="LA CALIDAD DEL AIRE ES"
                     android:textColor="#AAffffff"
                     android:textSize="15sp"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_above="@id/airQualityView"
+                    />
                 <TextView
                     android:id="@+id/imecaLabel"
                     android:layout_width="wrap_content"
@@ -74,30 +89,218 @@
 
 
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="10dp"
-                android:background="#55afafaf">
 
             </RelativeLayout>
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="3dp"
-                android:background="#55afafaf">
-
+                style="@style/AireSection.Frosted.Small"
+                android:id="@+id/firstSection"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    style="@style/InfoButton.InSection.Recomendations"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:text="ACTIVIDADES RECOMENDADAS"
+                    android:textColor="#fff"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"/>
             </RelativeLayout>
+            <LinearLayout
+                style="@style/AireSection.Small">
+                <RelativeLayout
+                    style="@style/AireSubsection.Frosted"
+                    android:layout_marginRight="5dp">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                        <RelativeLayout
+                            android:id="@+id/windInfoView"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/windIcon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/wind_icon"
+                                android:layout_marginRight="10dp"/>
+                            <TextView
+                                style="@style/AireSubsectionText.MeasurementCategory"
+                                android:text="11"
+                                android:layout_toRightOf="@id/windIcon"
+                                android:gravity="center"/>
+                        </RelativeLayout>
+                        <TextView
+                            style="@style/AireSubsectionText.Amount"
+                            android:layout_below="@id/windInfoView"
+                            android:text="VIENTO KM/H"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/AireSubsection.Frosted">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                        <RelativeLayout
+                            android:id="@+id/temperatureInfoView"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/temperatureIcon"
+                                android:layout_width="30dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/temperature_icon"
+                                android:layout_marginRight="10dp"/>
+                            <TextView
+                                style="@style/AireSubsectionText.MeasurementCategory"
+                                android:text="28º"
+                                android:layout_toRightOf="@id/temperatureIcon"/>
+                        </RelativeLayout>
+                        <TextView
+                            style="@style/AireSubsectionText.Amount"
+                            android:layout_below="@id/temperatureInfoView"
+                            android:text="TEMPERATURA"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/AireSection.Frosted.Small">
+                <FrameLayout
+                    style="@style/ContaminantSection"
+                    >
+                    <RelativeLayout
+                        style="@style/ContaminantContainerLayout">
+                        <FrameLayout
+                            style="@style/ContaminantTile"
+                            android:id="@+id/pm10Tile"
+                            >
+                            <TextView
+                                style="@style/ContaminantTileText"
+                                android:text="PM10"/>
+                        </FrameLayout>
+                        <TextView
+                            style="@style/ContaminantAmountText"
+                            android:layout_below="@id/pm10Tile"
+                            android:text="120"/>
+                    </RelativeLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/ContaminantSection"
+                    >
+                    <RelativeLayout
+                        style="@style/ContaminantContainerLayout">
+                        <FrameLayout
+                            style="@style/ContaminantTile"
+                            android:id="@+id/pm2.5Tile"
+                            >
+                            <TextView
+                                style="@style/ContaminantTileText"
+                                android:text="PM2.5"/>
+                        </FrameLayout>
+                        <TextView
+                            style="@style/ContaminantAmountText"
+                            android:layout_below="@id/pm2.5Tile"
+                            android:text="87"/>
+                    </RelativeLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/ContaminantSection"
+                    >
+                    <RelativeLayout
+                        style="@style/ContaminantContainerLayout">
+                        <FrameLayout
+                            style="@style/ContaminantTile"
+                            android:id="@+id/o3Tile"
+                            >
+                            <TextView
+                                style="@style/ContaminantTileText"
+                                android:text="O3"/>
+                        </FrameLayout>
+                        <TextView
+                            style="@style/ContaminantAmountText"
+                            android:layout_below="@id/o3Tile"
+                            android:text="63"/>
+                    </RelativeLayout>
+
+                </FrameLayout>
+            </LinearLayout>
+            <RelativeLayout
+                style="@style/AireSection.Frosted.Big">
+                <TableLayout
+                    style="@style/ContaminantForecastTable">
+                    <TableRow style="@style/ContaminantForecastTableRow"
+                        android:layout_weight="20">
+                        <ImageView style="@style/InfoButton.InSection.Forecasts" />
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="HOY"/>
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="MAÑANA"/>
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="PASADO"/>
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <FrameLayout style="@style/ContaminantForecastTableColumn">
+                            <FrameLayout style="@style/ContaminantTile">
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="PM10"/>
+                            </FrameLayout>
+                        </FrameLayout>
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="120" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="112" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="110" />
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <FrameLayout style="@style/ContaminantForecastTableColumn">
+                            <FrameLayout style="@style/ContaminantTile">
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="PM2.5"/>
+                            </FrameLayout>
+                        </FrameLayout>
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="87" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="84" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="70" />
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <FrameLayout style="@style/ContaminantForecastTableColumn">
+                            <FrameLayout style="@style/ContaminantTile">
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="O3"/>
+                            </FrameLayout>
+                        </FrameLayout>
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="63" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="51" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="53" />
+                    </TableRow>
+                </TableLayout>
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
+        style="@style/TopItems"
+        android:id="@+id/topItemsGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

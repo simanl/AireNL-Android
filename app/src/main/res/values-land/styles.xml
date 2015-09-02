@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="GreenButton.Dynamic">
+        <item name="android:layout_width">400dp</item>
+    </style>
+
+
+
+</resources>
