@@ -18,6 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
 
 public class DiagnosticsActivity extends ActionBarActivity implements ViewTreeObserver.OnScrollChangedListener {
@@ -25,6 +27,7 @@ public class DiagnosticsActivity extends ActionBarActivity implements ViewTreeOb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
