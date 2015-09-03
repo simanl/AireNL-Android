@@ -12,7 +12,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/fondodia"
         android:scaleType="centerCrop"
         android:id="@+id/blurImageView" />
 
@@ -332,6 +331,7 @@
             android:id="@+id/stationTextView" />
 
         <ImageView
+            android:id="@+id/mapIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/map_icon"

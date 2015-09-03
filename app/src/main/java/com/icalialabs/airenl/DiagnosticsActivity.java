@@ -1,13 +1,17 @@
 package com.icalialabs.airenl;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.graphics.*;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -22,7 +26,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
 
-public class DiagnosticsActivity extends ActionBarActivity implements ViewTreeObserver.OnScrollChangedListener {
+public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeObserver.OnScrollChangedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,12 @@ public class DiagnosticsActivity extends ActionBarActivity implements ViewTreeOb
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Bitmap image = decodeSampledBitmapFromResource(getResources(),R.drawable.fondodia, size.x/4, size.y/4);
+        Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
 
 
         setContentView(R.layout.activity_diagnostics);
 
-        final RelativeLayout nonBoxedDiagnostics = (RelativeLayout)findViewById(R.id.nonBoxedDiagnostics);
+        final RelativeLayout nonBoxedDiagnostics = (RelativeLayout) findViewById(R.id.nonBoxedDiagnostics);
         nonBoxedDiagnostics.post(new Runnable() {
             @Override
             public void run() {
@@ -63,29 +67,31 @@ public class DiagnosticsActivity extends ActionBarActivity implements ViewTreeOb
         });
 
 
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
-        ImageView mainViewBackground = (ImageView)findViewById(R.id.mainViewBackground);
+        ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
         mainViewBackground.setImageBitmap(image);
-    }
+        findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiagnosticsActivity.this, MapActivity.class));
+            }
+        });
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ImageView background = (ImageView)findViewById(R.id.mainViewBackground);
         ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
-        Blurry.with(DiagnosticsActivity.this)
-                .radius(20)
-                .sampling(1)
-                .async()
-                .capture(background)
-                .into(blurredBackground);
-
-
-
-
-
-
+        blurredBackground.setAlpha(0f);
+        blurredBackground.post(new Runnable() {
+            @Override
+            public void run() {
+                ImageView background = (ImageView) findViewById(R.id.mainViewBackground);
+                ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
+                Blurry.with(DiagnosticsActivity.this)
+                        .radius(20)
+                        .sampling(1)
+                        .capture(background)
+                        .into(blurredBackground);
+            }
+        });
     }
 
     @Override
