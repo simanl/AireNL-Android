@@ -3,6 +3,7 @@ package com.icalialabs.airenl;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
+import com.squareup.leakcanary.LeakCanary;
+
 import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
 
@@ -74,7 +77,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DiagnosticsActivity.this, MapActivity.class));
+                startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
             }
         });
 
@@ -92,6 +95,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                         .into(blurredBackground);
             }
         });
+
     }
 
     @Override

@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.icalialabs.airenl.StationsMapActivity"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <com.icalialabs.airenl.TopCropImageView
+            android:id="@+id/topBarImage"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:src="@drawable/fondodia"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Measurement Stations"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            />
+    </RelativeLayout>
+    <fragment
+        android:id="@+id/theMapFragment"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+</LinearLayout>

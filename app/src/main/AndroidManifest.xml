@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".AireNL"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,6 +42,10 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name=".StationsMapActivity"
+            android:label="@string/title_activity_stations_map" >
         </activity>
     </application>
 

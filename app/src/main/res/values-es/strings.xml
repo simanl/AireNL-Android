@@ -5,9 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_stations_map">StationsMapActivity</string>
-    <string name="good">GOOD</string>
+    <string name="good">BUENA</string>
     <string name="regular">REGULAR</string>
-    <string name="bad">BAD</string>
-    <string name="very_bad">VERY BAD</string>
-    <string name="extremely_bad">EXTREMELY BAD</string>
+    <string name="bad">MALA</string>
+    <string name="very_bad">MUY MALA</string>
+    <string name="extremely_bad">EXTREMADAMENTE MALA</string>
 </resources>

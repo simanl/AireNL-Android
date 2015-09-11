@@ -6,6 +6,14 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.StationsMapActivity"/>
+      <point      
+        x = "2196"      
+        y = "124"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.icalialabs.airenl.MapActivity"/>
       <point      
         x = "3392"      
