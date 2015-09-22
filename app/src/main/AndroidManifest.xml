@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".DiagnosticsActivity"
+            android:name=".Activities.DiagnosticsActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,11 +40,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
-        <activity
-            android:name=".StationsMapActivity"
+            android:name=".Activities.StationsMapActivity"
             android:label="@string/title_activity_stations_map" >
         </activity>
     </application>

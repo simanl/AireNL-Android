@@ -1,4 +1,4 @@
-package com.icalialabs.airenl;
+package com.icalialabs.airenl.Activities;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -35,6 +35,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.icalialabs.airenl.Models.AirQualityType;
+import com.icalialabs.airenl.AireNL;
+import com.icalialabs.airenl.R;
 import com.squareup.leakcanary.RefWatcher;
 
 public class StationsMapActivity extends AppCompatActivity implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {

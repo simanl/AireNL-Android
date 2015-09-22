@@ -1,6 +1,9 @@
-package com.icalialabs.airenl;
+package com.icalialabs.airenl.Models;
 
 import android.graphics.Color;
+
+import com.icalialabs.airenl.AireNL;
+import com.icalialabs.airenl.R;
 
 /**
  * Created by Compean on 10/09/15.

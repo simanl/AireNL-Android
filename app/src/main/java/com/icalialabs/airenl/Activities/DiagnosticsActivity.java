@@ -1,4 +1,4 @@
-package com.icalialabs.airenl;
+package com.icalialabs.airenl.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,6 +24,8 @@ import android.widget.TextView;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
+import com.icalialabs.airenl.Activities.StationsMapActivity;
+import com.icalialabs.airenl.R;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.fabric.sdk.android.Fabric;
