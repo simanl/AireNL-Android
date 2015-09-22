@@ -50,9 +50,9 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         Point size = new Point();
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
-
+//
         ImageView mainViewBackground = (ImageView) findViewById(R.id.topBarImage);
-        mainViewBackground.destroyDrawingCache();
+        //mainViewBackground.destroyDrawingCache();
         mainViewBackground.setImageBitmap(image);
         setUpMapIfNeeded();
     }
@@ -211,6 +211,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ImageView mainViewBackground = (ImageView) findViewById(R.id.topBarImage);
+        mainViewBackground.setImageBitmap(null);
         RefWatcher refWatcher = AireNL.getRefWatcher(this);
         refWatcher.watch(this);
 //        RefWatcher refWatcher;

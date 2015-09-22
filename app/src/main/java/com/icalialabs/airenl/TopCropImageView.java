@@ -5,6 +5,8 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
+
 /**
  * ImageView to display top-crop scale of an image view.
  *
@@ -12,17 +14,17 @@ import android.widget.ImageView;
  */
 public class TopCropImageView extends ImageView {
 
-    Context viewContext;
+    WeakReference viewContext;
 
     public TopCropImageView(Context context) {
         super(context);
-        viewContext = context;
+        viewContext = new WeakReference<Context>(context);
         setScaleType(ScaleType.MATRIX);
     }
 
     public TopCropImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        viewContext = context;
+        viewContext = new WeakReference<Context>(context);
         setScaleType(ScaleType.MATRIX);
     }
 
