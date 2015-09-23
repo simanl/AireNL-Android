@@ -25,11 +25,17 @@ import android.widget.TextView;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
 import com.icalialabs.airenl.Activities.StationsMapActivity;
+import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
+import com.icalialabs.airenl.RestApi.StationRestClient;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
+import retrofit.Callback;
+import retrofit.Response;
 
 public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeObserver.OnScrollChangedListener {
 
@@ -98,6 +104,21 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             }
         });
 
+        StationRestClient client = new StationRestClient();
+        client.getStationService().getAll().enqueue(new Callback<List<Station>>() {
+            @Override
+            public void onResponse(Response<List<Station>> response) {
+                if (response != null) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 
     @Override
