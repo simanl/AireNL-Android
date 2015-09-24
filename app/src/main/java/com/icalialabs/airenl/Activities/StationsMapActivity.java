@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,12 +38,20 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.icalialabs.airenl.Models.AirQualityType;
 import com.icalialabs.airenl.AireNL;
+import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
+import com.icalialabs.airenl.RestApi.RestClient;
 import com.squareup.leakcanary.RefWatcher;
+
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.Response;
 
 public class StationsMapActivity extends AppCompatActivity implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private List<Station> stations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +62,34 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         Point size = new Point();
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
+
 //
         ImageView mainViewBackground = (ImageView) findViewById(R.id.topBarImage);
         //mainViewBackground.destroyDrawingCache();
         mainViewBackground.setImageBitmap(image);
+
+        RestClient client = new RestClient();
+        client.getStationService().getAllStations().enqueue(new Callback<List<Station>>() {
+            @Override
+            public void onResponse(Response<List<Station>> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        stations = response.body();
+                        resetMarkers();
+                    } else {
+                        System.out.println(response.errorBody());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
+
         setUpMapIfNeeded();
     }
 
@@ -149,6 +182,16 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         }
     }
 
+    private void resetMarkers() {
+        mMap.clear();
+        if (stations != null) {
+            for (Station station: stations) {
+                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(station.getLastMeassurement().getImecaPoints());
+                mMap.addMarker(new MarkerOptions().position(station.getCoordinate().getLatLong()).title(station.getName()).snippet(String.valueOf(qualityType.getStringId())).icon(qualityType.getIcon()));
+            }
+        }
+    }
+
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
@@ -156,11 +199,13 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(25.684299, -100.316563)).title("Downton Obispado Station").snippet(String.valueOf(R.string.good)).icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(25.743689, -100.286994)).title("San Nicolas Station").snippet(String.valueOf(R.string.regular)).icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow_marker)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(25.776156, -100.316177)).title("Escobedo Station").snippet(String.valueOf(R.string.bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_marker)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(25.673315, -100.457025)).title("Santa Catarina Station").snippet(String.valueOf(R.string.very_bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_marker)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(25.660008, -100.191293)).title("Guadalupe Station").snippet(String.valueOf(R.string.extremely_bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.purple_marker)));
+        resetMarkers();
+
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(25.684299, -100.316563)).title("Downton Obispado Station").snippet(String.valueOf(R.string.good)).icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker)));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(25.743689, -100.286994)).title("San Nicolas Station").snippet(String.valueOf(R.string.regular)).icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow_marker)));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(25.776156, -100.316177)).title("Escobedo Station").snippet(String.valueOf(R.string.bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_marker)));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(25.673315, -100.457025)).title("Santa Catarina Station").snippet(String.valueOf(R.string.very_bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_marker)));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(25.660008, -100.191293)).title("Guadalupe Station").snippet(String.valueOf(R.string.extremely_bad)).icon(BitmapDescriptorFactory.fromResource(R.drawable.purple_marker)));
         CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(25.648795,-100.3030961));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
         mMap.moveCamera(center);

@@ -74,8 +74,8 @@ public class JSONApiTypeAdapterFactory implements TypeAdapterFactory {
                             if (properties.get("latlon") != null) {
                                 String[] latlon = properties.get("latlon").getAsString().split(",");
                                 JsonObject coordinate = new JsonObject();
-                                coordinate.addProperty("latitude",latlon[1]);
-                                coordinate.addProperty("longitude",latlon[0]);
+                                coordinate.addProperty("latitude",latlon[0]);
+                                coordinate.addProperty("longitude",latlon[1]);
                                 properties.add("coordinate", coordinate);
                             }
                             if (station.get("relationships") != null) {

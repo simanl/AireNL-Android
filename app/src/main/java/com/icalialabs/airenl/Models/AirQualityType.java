@@ -2,6 +2,8 @@ package com.icalialabs.airenl.Models;
 
 import android.graphics.Color;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.icalialabs.airenl.AireNL;
 import com.icalialabs.airenl.R;
 
@@ -34,6 +36,35 @@ public enum AirQualityType {
         return Color.TRANSPARENT;
     }
 
+    public BitmapDescriptor getIcon() {
+        switch (id) {
+            case R.string.good: return BitmapDescriptorFactory.fromResource(R.drawable.green_marker);
+            case R.string.regular: return BitmapDescriptorFactory.fromResource(R.drawable.yellow_marker);
+            case R.string.bad: return BitmapDescriptorFactory.fromResource(R.drawable.orange_marker);
+            case R.string.very_bad: return BitmapDescriptorFactory.fromResource(R.drawable.red_marker);
+            case R.string.extremely_bad: return BitmapDescriptorFactory.fromResource(R.drawable.purple_marker);
+        }
+        return null;
+    }
+
+    public static AirQualityType qualityTypeWithImecaValue(Double imeca) {
+        if (imeca < 130d) {
+            return GOOD;
+        } else if (isBetween(imeca, 130d, 140d)){
+            return REGULAR;
+        } else if (isBetween(imeca, 140d, 165d)){
+            return BAD;
+        } else if (isBetween(imeca, 165d, 185d)){
+            return VERY_BAD;
+        } else {
+            return EXTREMELY_BAD;
+        }
+    }
+
+    private static boolean isBetween(Double x, Double lower, Double upper){
+        return lower <= x && x < upper;
+    }
+
     public static AirQualityType qualityType(int id) {
         switch (id) {
             case R.string.good: return GOOD;
@@ -43,6 +74,10 @@ public enum AirQualityType {
             case R.string.extremely_bad: return EXTREMELY_BAD;
         }
         return NONE;
+    }
+
+    public int getStringId() {
+        return id;
     }
 
     @Override

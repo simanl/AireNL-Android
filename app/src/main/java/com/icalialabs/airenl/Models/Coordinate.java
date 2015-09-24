@@ -1,5 +1,6 @@
 package com.icalialabs.airenl.Models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -11,4 +12,8 @@ public class Coordinate {
 
     @SerializedName("longitude")
     private Double longitude;
+
+    public LatLng getLatLong() {
+        return new LatLng(latitude, longitude);
+    }
 }

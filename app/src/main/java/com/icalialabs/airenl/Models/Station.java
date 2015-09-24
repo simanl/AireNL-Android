@@ -23,4 +23,28 @@ public class Station {
 
     @SerializedName("coordinate")
     private Coordinate coordinate;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Meassurement getLastMeassurement() {
+        return lastMeassurement;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
 }

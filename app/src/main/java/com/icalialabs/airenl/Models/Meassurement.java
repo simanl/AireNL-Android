@@ -58,4 +58,72 @@ public class Meassurement {
 
     @SerializedName("fine_particles")
     private Double fine_particles;
+
+    public String getId() {
+        return id;
+    }
+
+    public Date getMeasuredAt() {
+        return measuredAt;
+    }
+
+    public Double getTemperature() {
+        return temperature;
+    }
+
+    public Double getRelativeHumidity() {
+        return relativeHumidity;
+    }
+
+    public Integer getWindDirection() {
+        return windDirection;
+    }
+
+    public Double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public Double getImecaPoints() {
+        return imecaPoints;
+    }
+
+    public Double getPrecipitation() {
+        return precipitation;
+    }
+
+    public Double getCarbonMonoxide() {
+        return carbonMonoxide;
+    }
+
+    public Double getNitricOxide() {
+        return nitricOxide;
+    }
+
+    public Double getNitrogenDioxide() {
+        return nitrogenDioxide;
+    }
+
+    public Double getNitrogenOxides() {
+        return nitrogenOxides;
+    }
+
+    public Double getOzone() {
+        return ozone;
+    }
+
+    public Double getSulfurDioxide() {
+        return sulfurDioxide;
+    }
+
+    public Double getSuspendedParticulateMatter() {
+        return suspendedParticulateMatter;
+    }
+
+    public Double getRespirableSuspendedParticles() {
+        return respirableSuspendedParticles;
+    }
+
+    public Double getFine_particles() {
+        return fine_particles;
+    }
 }
