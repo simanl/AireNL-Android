@@ -3,14 +3,9 @@ package com.icalialabs.airenl.Activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.PersistableBundle;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.graphics.*;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +19,9 @@ import android.widget.TextView;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
-import com.icalialabs.airenl.Activities.StationsMapActivity;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
-import com.icalialabs.airenl.RestApi.StationRestClient;
-import com.squareup.leakcanary.LeakCanary;
+import com.icalialabs.airenl.RestApi.RestClient;
 
 import java.util.List;
 
@@ -104,7 +97,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             }
         });
 
-        StationRestClient client = new StationRestClient();
+        RestClient client = new RestClient();
         client.getStationService().getAll().enqueue(new Callback<List<Station>>() {
             @Override
             public void onResponse(Response<List<Station>> response) {
@@ -155,7 +148,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 //        System.out.println("blur status: "+currentBlurAlpha + " scroll amount: " + currentScroll);
 
         darkBackground.setAlpha((float)currentDarkAlpha);
-        blurImageView.setAlpha((float)currentBlurAlpha);
+        blurImageView.setAlpha((float) currentBlurAlpha);
 
         RelativeLayout topItemsGroup = (RelativeLayout)findViewById(R.id.topItemsGroup);
         TextView imecaQuantity = (TextView)findViewById(R.id.imecaQuantity);

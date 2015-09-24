@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Created by Compean on 23/09/15.
  */
-public class StationsTypeAdapterFactory implements TypeAdapterFactory {
+public class JSONApiTypeAdapterFactory implements TypeAdapterFactory {
 
     public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
 
