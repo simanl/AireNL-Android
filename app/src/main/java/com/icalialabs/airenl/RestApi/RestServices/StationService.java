@@ -13,5 +13,5 @@ import retrofit.http.GET;
  */
 public interface StationService {
     @GET("stations?include=last_measurement")
-    Call<List<Station>> getAll();
+    Call<List<Station>> getAllStations();
 }

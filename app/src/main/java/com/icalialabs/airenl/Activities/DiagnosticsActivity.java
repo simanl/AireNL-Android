@@ -98,7 +98,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         });
 
         RestClient client = new RestClient();
-        client.getStationService().getAll().enqueue(new Callback<List<Station>>() {
+        client.getStationService().getAllStations().enqueue(new Callback<List<Station>>() {
             @Override
             public void onResponse(Response<List<Station>> response) {
                 if (response != null) {

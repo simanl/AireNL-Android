@@ -20,4 +20,7 @@ public class Station {
 
     @SerializedName("last_measurement")
     private Meassurement lastMeassurement;
+
+    @SerializedName("coordinate")
+    private Coordinate coordinate;
 }
