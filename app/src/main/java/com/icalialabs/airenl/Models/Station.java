@@ -17,4 +17,7 @@ public class Station {
 
     @SerializedName("id")
     private String id;
+
+    @SerializedName("last_measurement")
+    private Meassurement lastMeassurement;
 }

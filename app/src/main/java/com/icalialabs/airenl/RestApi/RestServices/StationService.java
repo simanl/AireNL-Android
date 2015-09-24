@@ -12,6 +12,6 @@ import retrofit.http.GET;
  * Created by Compean on 23/09/15.
  */
 public interface StationService {
-    @GET("stations")
+    @GET("stations?include=last_measurement")
     Call<List<Station>> getAll();
 }
