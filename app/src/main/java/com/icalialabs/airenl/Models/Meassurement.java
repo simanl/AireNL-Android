@@ -27,7 +27,7 @@ public class Meassurement {
     private Double windSpeed;
 
     @SerializedName("imeca_points")
-    private Double imecaPoints;
+    private Integer imecaPoints;
 
     @SerializedName("precipitation")
     private Double precipitation;
@@ -57,7 +57,7 @@ public class Meassurement {
     private Double respirableSuspendedParticles;
 
     @SerializedName("fine_particles")
-    private Double fine_particles;
+    private Double fineParticles;
 
     public String getId() {
         return id;
@@ -83,7 +83,7 @@ public class Meassurement {
         return windSpeed;
     }
 
-    public Double getImecaPoints() {
+    public Integer getImecaPoints() {
         return imecaPoints;
     }
 
@@ -123,7 +123,7 @@ public class Meassurement {
         return respirableSuspendedParticles;
     }
 
-    public Double getFine_particles() {
-        return fine_particles;
+    public Double getFineParticles() {
+        return fineParticles;
     }
 }

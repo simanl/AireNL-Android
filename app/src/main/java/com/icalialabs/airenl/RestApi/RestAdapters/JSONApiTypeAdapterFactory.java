@@ -68,40 +68,75 @@ public class JSONApiTypeAdapterFactory implements TypeAdapterFactory {
                         JsonArray jsonArray = (JsonArray)jsonObject.get("data");
                         Iterator<JsonElement> iterator = jsonArray.iterator();
                         while (iterator.hasNext()) {
-                            JsonObject station = (JsonObject)iterator.next();
-                            JsonObject properties = (JsonObject)station.get("attributes");
-                            properties.add("id",station.get("id"));
-                            if (properties.get("latlon") != null) {
-                                String[] latlon = properties.get("latlon").getAsString().split(",");
-                                JsonObject coordinate = new JsonObject();
-                                coordinate.addProperty("latitude",latlon[0]);
-                                coordinate.addProperty("longitude",latlon[1]);
-                                properties.add("coordinate", coordinate);
-                            }
-                            if (station.get("relationships") != null) {
-                                JsonObject relationships = (JsonObject)station.get("relationships");
-                                Iterator relationshipIterator = relationships.entrySet().iterator();
-                                while (relationshipIterator.hasNext()) {
-                                    Map.Entry<String, JsonElement> realtionship = (Map.Entry<String, JsonElement>)relationshipIterator.next();
-                                    JsonObject lastMeasurementData = realtionship.getValue().getAsJsonObject().get("data").getAsJsonObject();
-                                    HashMap<String, JsonElement> includedType =  included.get(lastMeasurementData.get("type").getAsString());
-                                    if (includedType != null) {
-                                        JsonElement includedElement = includedType.get(lastMeasurementData.get("id").getAsString());
-                                        if (includedElement != null) {
-                                            properties.add(realtionship.getKey(),includedElement);
-                                        }
-                                    } else {
-                                        properties.add(realtionship.getKey(),lastMeasurementData);
-                                    }
-                                }
-                            }
-                            jsonOutPut.add(properties);
+//                            JsonObject station = (JsonObject)iterator.next();
+                            JsonObject transformedObject = transformObjectToRequiredForm(iterator.next().getAsJsonObject(),included);
+//                            JsonObject properties = (JsonObject)station.get("attributes");
+//                            properties.add("id",station.get("id"));
+//                            if (properties.get("latlon") != null) {
+//                                String[] latlon = properties.get("latlon").getAsString().split(",");
+//                                JsonObject coordinate = new JsonObject();
+//                                coordinate.addProperty("latitude",latlon[0]);
+//                                coordinate.addProperty("longitude",latlon[1]);
+//                                properties.add("coordinate", coordinate);
+//                            }
+//                            if (station.get("relationships") != null) {
+//                                JsonObject relationships = (JsonObject)station.get("relationships");
+//                                Iterator relationshipIterator = relationships.entrySet().iterator();
+//                                while (relationshipIterator.hasNext()) {
+//                                    Map.Entry<String, JsonElement> realtionship = (Map.Entry<String, JsonElement>)relationshipIterator.next();
+//                                    JsonObject lastMeasurementData = realtionship.getValue().getAsJsonObject().get("data").getAsJsonObject();
+//                                    HashMap<String, JsonElement> includedType =  included.get(lastMeasurementData.get("type").getAsString());
+//                                    if (includedType != null) {
+//                                        JsonElement includedElement = includedType.get(lastMeasurementData.get("id").getAsString());
+//                                        if (includedElement != null) {
+//                                            properties.add(realtionship.getKey(),includedElement);
+//                                        }
+//                                    } else {
+//                                        properties.add(realtionship.getKey(),lastMeasurementData);
+//                                    }
+//                                }
+//                            }
+//                            jsonOutPut.add(properties);
+                            jsonOutPut.add(transformedObject);
                         }
                         return delegate.fromJsonTree(jsonOutPut);
+                    } else if (jsonObject.has("data") && jsonObject.get("data").isJsonObject()) {
+                        JsonObject transformedObject = transformObjectToRequiredForm(jsonObject.get("data").getAsJsonObject(),included);
+                        return delegate.fromJsonTree(transformedObject);
                     }
                 }
                 return delegate.fromJsonTree(jsonElement);
             }
         }.nullSafe();
+    }
+
+    private JsonObject transformObjectToRequiredForm(JsonObject object, HashMap<String, HashMap<String, JsonElement>> included) {
+        JsonObject properties = (JsonObject)object.get("attributes");
+        properties.add("id", object.get("id"));
+        if (properties.get("latlon") != null) {
+            String[] latlon = properties.get("latlon").getAsString().split(",");
+            JsonObject coordinate = new JsonObject();
+            coordinate.addProperty("latitude",latlon[0]);
+            coordinate.addProperty("longitude",latlon[1]);
+            properties.add("coordinate", coordinate);
+        }
+        if (object.get("relationships") != null) {
+            JsonObject relationships = (JsonObject)object.get("relationships");
+            Iterator relationshipIterator = relationships.entrySet().iterator();
+            while (relationshipIterator.hasNext()) {
+                Map.Entry<String, JsonElement> realtionship = (Map.Entry<String, JsonElement>)relationshipIterator.next();
+                JsonObject lastMeasurementData = realtionship.getValue().getAsJsonObject().get("data").getAsJsonObject();
+                HashMap<String, JsonElement> includedType =  included.get(lastMeasurementData.get("type").getAsString());
+                if (includedType != null) {
+                    JsonElement includedElement = includedType.get(lastMeasurementData.get("id").getAsString());
+                    if (includedElement != null) {
+                        properties.add(realtionship.getKey(),includedElement);
+                    }
+                } else {
+                    properties.add(realtionship.getKey(),lastMeasurementData);
+                }
+            }
+        }
+        return  properties;
     }
 }

@@ -3,6 +3,8 @@ package com.icalialabs.airenl.Activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -16,13 +18,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.icalialabs.airenl.Models.AirQualityType;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
@@ -30,7 +40,11 @@ import jp.wasabeef.blurry.Blurry;
 import retrofit.Callback;
 import retrofit.Response;
 
-public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeObserver.OnScrollChangedListener {
+public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeObserver.OnScrollChangedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +54,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         Point size = new Point();
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
+
 
 
         setContentView(R.layout.activity_diagnostics);
@@ -82,6 +97,13 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             }
         });
 
+        findViewById(R.id.locationIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSelectedLocation();
+            }
+        });
+
         ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
         blurredBackground.setAlpha(0f);
         blurredBackground.post(new Runnable() {
@@ -97,7 +119,120 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             }
         });
 
+        findViewById(R.id.locationIcon).setAlpha(0.5f);
+        if (checkPlayServices()) {
 
+            buildGoogleApiClient();
+            mGoogleApiClient.connect();
+        }
+
+    }
+
+    /**
+     * Method to verify google play services on the device
+     * */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    public void reloadDataWithStation(Station station) {
+        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeassurement().getImecaPoints());
+
+        TextView stationNameTextView = (TextView)findViewById(R.id.stationTextView);
+        TextView imecaValueTextView = (TextView)findViewById(R.id.imecaQuantity);
+        RelativeLayout airStatusView = (RelativeLayout)findViewById(R.id.airQualityView);
+        TextView airQualityStatusTextView = (TextView)findViewById(R.id.airQualityStatusText);
+        TextView temperatureTextView = (TextView)findViewById(R.id.temperatureValueText);
+        TextView windSpeedTextView = (TextView)findViewById(R.id.windSpeedValueText);
+        TextView pm10TextView = (TextView)findViewById(R.id.pm10ValueText);
+        TextView pm2_5TextView = (TextView)findViewById(R.id.pm2_5ValueText);
+        TextView o3TextView = (TextView)findViewById(R.id.o3ValueText);
+
+        DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
+        DecimalFormat numberFormat = new DecimalFormat("0.##");
+
+        String pm10Text = (station.getLastMeassurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeassurement().getRespirableSuspendedParticles()) : "0";
+        String pm2_5Text = (station.getLastMeassurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeassurement().getFineParticles()) : "0";
+        String o3Text = (station.getLastMeassurement().getOzone() != null) ? numberFormat.format(station.getLastMeassurement().getOzone()) : "0";
+
+        stationNameTextView.setText(station.getName());
+        imecaValueTextView.setText(station.getLastMeassurement().getImecaPoints().toString());
+        airQualityStatusTextView.setText(type.toString());
+        temperatureTextView.setText(temperatureFormat.format(station.getLastMeassurement().getTemperature()));
+        windSpeedTextView.setText(numberFormat.format(station.getLastMeassurement().getWindSpeed()));
+        pm10TextView.setText(pm10Text);
+        pm2_5TextView.setText(pm2_5Text);
+        o3TextView.setText(o3Text);
+
+        GradientDrawable drawableAirStatusView = new GradientDrawable();
+        drawableAirStatusView.setCornerRadius(5000);
+        drawableAirStatusView.setColor(type.color());
+        drawableAirStatusView.setAlpha(60*255/100);
+        airStatusView.setBackground(drawableAirStatusView);
+    }
+
+    public void userSelectedLocation() {
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        RestClient client = new RestClient();
+        client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
+            @Override
+            public void onResponse(Response<Station> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        reloadDataWithStation(response.body());
+                    } else {
+                        System.out.println(response.errorBody());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println(t.getLocalizedMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+//        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        userSelectedLocation();
+
+        findViewById(R.id.locationIcon).setAlpha(1f);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        findViewById(R.id.locationIcon).setAlpha(0.5f);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+        findViewById(R.id.locationIcon).setAlpha(0.5f);
     }
 
     @Override

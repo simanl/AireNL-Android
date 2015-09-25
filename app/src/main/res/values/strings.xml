@@ -10,4 +10,13 @@
     <string name="bad">BAD</string>
     <string name="very_bad">VERY BAD</string>
     <string name="extremely_bad">EXTREMELY BAD</string>
+    <string name="air_quality">AIR QUALITY</string>
+    <string name="measurement_stations">Measurement Stations</string>
+    <string name="quality_of_air_is">THE QUALITY OF AIR IS</string>
+    <string name="recomended_activities">RECOMMENDED ACTIVITIES</string>
+    <string name="wind_with_unit_description">WIND KM/H</string>
+    <string name="temperature">TEMPERATURE</string>
+    <string name="today">TODAY</string>
+    <string name="tomorrow">TOMORROW</string>
+    <string name="day_after_tomorrow">THE DAY AFTER</string>
 </resources>

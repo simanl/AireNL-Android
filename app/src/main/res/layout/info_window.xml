@@ -24,7 +24,7 @@
             android:textColor="#AAA"
             android:fontFamily="sans_serif_light"
             android:gravity="center_horizontal"
-            android:text="AIR QUALITY"/>
+            android:text="@string/air_quality"/>
         <FrameLayout
             android:id="@+id/airStatusView"
             android:layout_width="match_parent"

@@ -46,10 +46,11 @@
                     <ImageView
                         style="@style/InfoButton.InAireStatus"/>
                     <TextView
+                        android:id="@+id/airQualityStatusText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="BUENA"
+                        android:text="@string/good"
                         android:textSize="25sp"
                         android:textColor="#ffffff"/>
                 </RelativeLayout>
@@ -58,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="LA CALIDAD DEL AIRE ES"
+                    android:text="@string/quality_of_air_is"
                     android:textColor="#AAffffff"
                     android:textSize="15sp"
                     android:layout_marginBottom="5dp"
@@ -99,7 +100,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
-                    android:text="ACTIVIDADES RECOMENDADAS"
+                    android:text="@string/recomended_activities"
                     android:textColor="#fff"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="6dp"/>
@@ -127,6 +128,7 @@
                                 android:src="@drawable/wind_icon"
                                 android:layout_marginRight="10dp"/>
                             <TextView
+                                android:id="@+id/windSpeedValueText"
                                 style="@style/AireSubsectionText.MeasurementCategory"
                                 android:text="11"
                                 android:layout_toRightOf="@id/windIcon"
@@ -135,7 +137,7 @@
                         <TextView
                             style="@style/AireSubsectionText.Amount"
                             android:layout_below="@id/windInfoView"
-                            android:text="VIENTO KM/H"/>
+                            android:text="@string/wind_with_unit_description"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -157,6 +159,7 @@
                                 android:src="@drawable/temperature_icon"
                                 android:layout_marginRight="10dp"/>
                             <TextView
+                                android:id="@+id/temperatureValueText"
                                 style="@style/AireSubsectionText.MeasurementCategory"
                                 android:text="28º"
                                 android:layout_toRightOf="@id/temperatureIcon"/>
@@ -164,7 +167,7 @@
                         <TextView
                             style="@style/AireSubsectionText.Amount"
                             android:layout_below="@id/temperatureInfoView"
-                            android:text="TEMPERATURA"/>
+                            android:text="@string/temperature"/>
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -185,6 +188,7 @@
                                 android:text="PM10"/>
                         </FrameLayout>
                         <TextView
+                            android:id="@+id/pm10ValueText"
                             style="@style/ContaminantAmountText"
                             android:layout_below="@id/pm10Tile"
                             android:text="120"/>
@@ -205,6 +209,7 @@
                                 android:text="PM2.5"/>
                         </FrameLayout>
                         <TextView
+                            android:id="@+id/pm2.5ValueText"
                             style="@style/ContaminantAmountText"
                             android:layout_below="@id/pm2.5Tile"
                             android:text="87"/>
@@ -225,6 +230,7 @@
                                 android:text="O3"/>
                         </FrameLayout>
                         <TextView
+                            android:id="@+id/o3ValueText"
                             style="@style/ContaminantAmountText"
                             android:layout_below="@id/o3Tile"
                             android:text="63"/>
@@ -240,11 +246,11 @@
                         android:layout_weight="20">
                         <ImageView style="@style/InfoButton.InSection.Forecasts" />
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="HOY"/>
+                            android:text="@string/today"/>
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="MAÑANA"/>
+                            android:text="@string/tomorrow"/>
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="PASADO"/>
+                            android:text="@string/day_after_tomorrow"/>
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <FrameLayout style="@style/ContaminantForecastTableColumn">
@@ -302,6 +308,16 @@
         android:id="@+id/topItemsGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/location_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:layout_width="wrap_content"

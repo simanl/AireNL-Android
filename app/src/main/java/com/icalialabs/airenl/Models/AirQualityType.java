@@ -47,21 +47,21 @@ public enum AirQualityType {
         return null;
     }
 
-    public static AirQualityType qualityTypeWithImecaValue(Double imeca) {
+    public static AirQualityType qualityTypeWithImecaValue(Integer imeca) {
         if (imeca < 130d) {
             return GOOD;
-        } else if (isBetween(imeca, 130d, 140d)){
+        } else if (isBetween(imeca, 130, 140)){
             return REGULAR;
-        } else if (isBetween(imeca, 140d, 165d)){
+        } else if (isBetween(imeca, 140, 165)){
             return BAD;
-        } else if (isBetween(imeca, 165d, 185d)){
+        } else if (isBetween(imeca, 165, 185)){
             return VERY_BAD;
         } else {
             return EXTREMELY_BAD;
         }
     }
 
-    private static boolean isBetween(Double x, Double lower, Double upper){
+    private static boolean isBetween(Integer x, Integer lower, Integer upper){
         return lower <= x && x < upper;
     }
 
