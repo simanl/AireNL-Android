@@ -1,7 +1,9 @@
 package com.icalialabs.airenl.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
@@ -128,6 +130,23 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             mGoogleApiClient.connect();
         }
 
+        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+            findViewById(R.id.locationIcon).setAlpha(1f);
+        } else {
+            findViewById(R.id.locationIcon).setAlpha(0.5f);
+        }
+        Station currentStation = Station.getPersistedCurrentStation();
+        if (currentStation != null) {
+            reloadDataWithStation(currentStation);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+            mGoogleApiClient.reconnect();
+        }
     }
 
     @Override
@@ -136,7 +155,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (requestCode == STATIONS_RESULT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 findViewById(R.id.locationIcon).setAlpha(0.5f);
-                reloadDataWithStation((Station)data.getExtras().getSerializable("station"));
+                Station station = (Station)data.getExtras().getSerializable("station");
+                reloadDataWithStation(station);
+                persistStation(station, false);
             }
         }
     }
@@ -214,7 +235,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             public void onResponse(Response<Station> response) {
                 if (response != null) {
                     if (response.body() != null) {
+                        findViewById(R.id.locationIcon).setAlpha(1f);
                         reloadDataWithStation(response.body());
+                        persistStation(response.body(), true);
                     } else {
                         System.out.println(response.errorBody());
                     }
@@ -229,12 +252,21 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         });
     }
 
+    private void persistStation(Station station, boolean usingLocation) {
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE);
+        SharedPreferences.Editor settingEditor = settings.edit();
+        settingEditor.putBoolean("using_location",usingLocation);
+        settingEditor.commit();
+        station.persistAsCurrentStation();
+    }
+
     @Override
     public void onConnected(Bundle bundle) {
 //        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        userSelectedLocation();
-
-        findViewById(R.id.locationIcon).setAlpha(1f);
+        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+            userSelectedLocation();
+            //findViewById(R.id.locationIcon).setAlpha(1f);
+        }
     }
 
     @Override

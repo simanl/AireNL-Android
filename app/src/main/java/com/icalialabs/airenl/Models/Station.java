@@ -1,7 +1,14 @@
 package com.icalialabs.airenl.Models;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
+import com.icalialabs.airenl.AireNL;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -9,6 +16,7 @@ import java.io.Serializable;
  */
 public class Station implements Serializable {
 
+    private static final String currentStationFileName = "current_station";
     private static final long serialVersionUID = 1345698L;
 
     @SerializedName("code")
@@ -51,5 +59,31 @@ public class Station implements Serializable {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    public void persistAsCurrentStation() {
+        try {
+            FileOutputStream fos = AireNL.getContext().openFileOutput(currentStationFileName, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(this);
+            os.close();
+            fos.close();
+        } catch (Exception exception) {
+            System.out.println(exception.getLocalizedMessage());
+        }
+    }
+
+    public static Station getPersistedCurrentStation() {
+        Station station = null;
+        try {
+            FileInputStream fis = AireNL.getContext().openFileInput(currentStationFileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            station = (Station) is.readObject();
+            is.close();
+            fis.close();
+        } catch (Exception exception) {
+            System.out.println(exception.getLocalizedMessage());
+        }
+        return station;
     }
 }
