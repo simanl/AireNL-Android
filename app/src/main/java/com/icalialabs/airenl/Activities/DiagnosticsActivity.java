@@ -1,5 +1,6 @@
 package com.icalialabs.airenl.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -32,8 +33,6 @@ import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
@@ -45,6 +44,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private GoogleApiClient mGoogleApiClient;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+
+    private final static int STATIONS_RESULT_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
+                startActivityForResult(new Intent(DiagnosticsActivity.this, StationsMapActivity.class),STATIONS_RESULT_CODE);
+                //startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
             }
         });
 
@@ -128,6 +130,17 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == STATIONS_RESULT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                findViewById(R.id.locationIcon).setAlpha(0.5f);
+                reloadDataWithStation((Station)data.getExtras().getSerializable("station"));
+            }
+        }
+    }
+
     /**
      * Method to verify google play services on the device
      * */
@@ -157,7 +170,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     public void reloadDataWithStation(Station station) {
-        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeassurement().getImecaPoints());
+        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
 
         TextView stationNameTextView = (TextView)findViewById(R.id.stationTextView);
         TextView imecaValueTextView = (TextView)findViewById(R.id.imecaQuantity);
@@ -172,15 +185,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
 
-        String pm10Text = (station.getLastMeassurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeassurement().getRespirableSuspendedParticles()) : "0";
-        String pm2_5Text = (station.getLastMeassurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeassurement().getFineParticles()) : "0";
-        String o3Text = (station.getLastMeassurement().getOzone() != null) ? numberFormat.format(station.getLastMeassurement().getOzone()) : "0";
+        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableSuspendedParticles()) : "0";
+        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getFineParticles()) : "0";
+        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "0";
 
         stationNameTextView.setText(station.getName());
-        imecaValueTextView.setText(station.getLastMeassurement().getImecaPoints().toString());
+        imecaValueTextView.setText(station.getLastMeasurement().getImecaPoints().toString());
         airQualityStatusTextView.setText(type.toString());
-        temperatureTextView.setText(temperatureFormat.format(station.getLastMeassurement().getTemperature()));
-        windSpeedTextView.setText(numberFormat.format(station.getLastMeassurement().getWindSpeed()));
+        temperatureTextView.setText(temperatureFormat.format(station.getLastMeasurement().getTemperature()));
+        windSpeedTextView.setText(numberFormat.format(station.getLastMeasurement().getWindSpeed()));
         pm10TextView.setText(pm10Text);
         pm2_5TextView.setText(pm2_5Text);
         o3TextView.setText(o3Text);

@@ -2,12 +2,16 @@ package com.icalialabs.airenl.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Compean on 23/09/15.
  */
-public class Meassurement {
+public class Measurement implements Serializable {
+
+    private static final long serialVersionUID = 1545698L;
+
     @SerializedName("id")
     private String id;
 

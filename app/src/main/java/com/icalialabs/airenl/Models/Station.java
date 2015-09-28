@@ -2,10 +2,15 @@ package com.icalialabs.airenl.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Compean on 23/09/15.
  */
-public class Station {
+public class Station implements Serializable {
+
+    private static final long serialVersionUID = 1345698L;
+
     @SerializedName("code")
     private String code;
 
@@ -19,7 +24,7 @@ public class Station {
     private String id;
 
     @SerializedName("last_measurement")
-    private Meassurement lastMeassurement;
+    private Measurement lastMeasurement;
 
     @SerializedName("coordinate")
     private Coordinate coordinate;
@@ -40,8 +45,8 @@ public class Station {
         return id;
     }
 
-    public Meassurement getLastMeassurement() {
-        return lastMeassurement;
+    public Measurement getLastMeasurement() {
+        return lastMeasurement;
     }
 
     public Coordinate getCoordinate() {

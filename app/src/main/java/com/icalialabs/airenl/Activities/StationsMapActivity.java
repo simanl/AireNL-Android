@@ -1,38 +1,27 @@
 package com.icalialabs.airenl.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
-import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.internal.IUiSettingsDelegate;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -185,9 +174,10 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
     private void resetMarkers() {
         mMap.clear();
         if (stations != null) {
-            for (Station station: stations) {
-                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(station.getLastMeassurement().getImecaPoints());
-                mMap.addMarker(new MarkerOptions().position(station.getCoordinate().getLatLong()).title(station.getName()).snippet(String.valueOf(qualityType.getStringId())).icon(qualityType.getIcon()));
+            for (int idx = 0; idx < stations.size(); idx++) {
+                Station station = stations.get(idx);
+                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
+                mMap.addMarker(new MarkerOptions().position(station.getCoordinate().getLatLong()).title(station.getName()).snippet(String.valueOf(idx)).icon(qualityType.getIcon()));
             }
         }
     }
@@ -225,7 +215,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
 //        contentView.setBackgroundColor(0xFFF);
 //        return contentView;
         FrameLayout view = (FrameLayout)getLayoutInflater().inflate(R.layout.info_window, null);
-        AirQualityType type = AirQualityType.qualityType(Integer.parseInt(marker.getSnippet()));
+        Station station = stations.get(Integer.parseInt(marker.getSnippet()));
+        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
 
         View airStatusView = view.findViewById(R.id.airStatusView);
         GradientDrawable drawableAirStatus = new GradientDrawable();
@@ -248,6 +239,10 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        Station station = stations.get(Integer.parseInt(marker.getSnippet()));
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("station",station);
+        setResult(Activity.RESULT_OK,resultIntent);
         finish();
     }
 
