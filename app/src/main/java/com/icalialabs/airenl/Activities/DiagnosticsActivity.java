@@ -146,6 +146,25 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         super.onResume();
         if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
             mGoogleApiClient.reconnect();
+        } else {
+            RestClient apiClient = new RestClient();
+            apiClient.getStationService().getStation(Station.getPersistedCurrentStation().getId()).enqueue(new Callback<Station>() {
+                @Override
+                public void onResponse(Response<Station> response) {
+                    if (response != null) {
+                        if (response.body() != null) {
+                            reloadDataWithStation(response.body());
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    System.out.println(t.getLocalizedMessage());
+                }
+            });
         }
     }
 

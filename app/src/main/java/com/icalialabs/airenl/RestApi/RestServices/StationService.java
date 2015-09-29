@@ -21,5 +21,5 @@ public interface StationService {
     Call<Station> getNearestStationFrom(@Query("latlon") String latlon);
 
     @GET("stations/{station}?include=last_measurement")
-    Call<Station> getStation(@Path("station") Integer id);
+    Call<Station> getStation(@Path("station") String id);
 }

@@ -23,7 +23,7 @@ android {
         applicationId "com.icalialabs.airenl"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
