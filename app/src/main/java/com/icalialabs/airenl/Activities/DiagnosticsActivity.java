@@ -229,27 +229,30 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     public void userSelectedLocation() {
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        RestClient client = new RestClient();
-        client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
-            @Override
-            public void onResponse(Response<Station> response) {
-                if (response != null) {
-                    if (response.body() != null) {
-                        findViewById(R.id.locationIcon).setAlpha(1f);
-                        reloadDataWithStation(response.body());
-                        persistStation(response.body(), true);
-                    } else {
-                        System.out.println(response.errorBody());
+        if (mLastLocation != null) {
+            RestClient client = new RestClient();
+            client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
+                @Override
+                public void onResponse(Response<Station> response) {
+                    if (response != null) {
+                        if (response.body() != null) {
+                            findViewById(R.id.locationIcon).setAlpha(1f);
+                            reloadDataWithStation(response.body());
+                            persistStation(response.body(), true);
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
                     }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Throwable t) {
+                    System.out.println(t.getLocalizedMessage());
+                }
+            });
+        }
 
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println(t.getLocalizedMessage());
-            }
-        });
     }
 
     private void persistStation(Station station, boolean usingLocation) {
