@@ -1,5 +1,6 @@
 package com.icalialabs.airenl.Activities;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.graphics.*;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.icalialabs.airenl.Models.AirQualityType;
+import com.icalialabs.airenl.Models.Screenshot;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
@@ -48,11 +51,19 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
 
     private final static int STATIONS_RESULT_CODE = 1;
+    private final static int POPUP_RESULT_CODE = 2;
+    private final static int FORECASTS_POPUP_RESULT_CODE = 2;
+
+    private boolean isShowingPopup = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        if (savedInstanceState != null && savedInstanceState.get("is_showing_popup") != null) {
+            isShowingPopup = savedInstanceState.getBoolean("is_showing_popup");
+        }
+
+//        Fabric.with(this, new Crashlytics());
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -96,7 +107,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(DiagnosticsActivity.this, StationsMapActivity.class),STATIONS_RESULT_CODE);
+                startActivityForResult(new Intent(DiagnosticsActivity.this, StationsMapActivity.class), STATIONS_RESULT_CODE);
                 //startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
             }
         });
@@ -108,6 +119,20 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             }
         });
 
+        findViewById(R.id.airStatusInfoButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                statusInfoButtonClicked();
+            }
+        });
+
+        findViewById(R.id.forecastsInfoButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forecastsInfoButtonClicked();
+            }
+        });
+
         ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
         blurredBackground.setAlpha(0f);
         blurredBackground.post(new Runnable() {
@@ -115,11 +140,21 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             public void run() {
                 ImageView background = (ImageView) findViewById(R.id.mainViewBackground);
                 ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
-                Blurry.with(DiagnosticsActivity.this)
+                Blurry.with(getApplicationContext())
                         .radius(20)
                         .sampling(1)
                         .capture(background)
                         .into(blurredBackground);
+            }
+        });
+
+        ImageView blurScreenshot = (ImageView)findViewById(R.id.blurScreenshot);
+        blurScreenshot.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isShowingPopup) {
+                    blurScreenshotShow();
+                }
             }
         });
 
@@ -168,6 +203,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         }
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -178,7 +214,49 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 reloadDataWithStation(station);
                 persistStation(station, false);
             }
+        } else if (requestCode == POPUP_RESULT_CODE) {
+            ImageView screenShot = (ImageView)findViewById(R.id.blurScreenshot);
+            screenShot.animate().alpha(0f).setDuration(500);
+            isShowingPopup = false;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("is_showing_popup", isShowingPopup);
+    }
+
+    private void blurScreenshotShow() {
+        View screen = (View) findViewById(R.id.rootDiagnosticsLayout);
+        ImageView blurredBackground = (ImageView) findViewById(R.id.blurScreenshot);
+//        if (blurredBackground.getDrawable() != null) {
+//            blurredBackground.animate().alpha(1f).setDuration(300);
+//        } else {
+        Blurry.with(getApplicationContext())
+                .radius(25)
+                .sampling(5)
+                .animate(300)
+                .capture(screen)
+                .into(blurredBackground);
+        blurredBackground.setAlpha(1f);
+    }
+
+    private void forecastsInfoButtonClicked() {
+        isShowingPopup = true;
+        blurScreenshotShow();
+        startActivityForResult(new Intent(DiagnosticsActivity.this, ForecastsPopup.class), FORECASTS_POPUP_RESULT_CODE);
+    }
+
+    private void statusInfoButtonClicked() {
+//        View view = findViewById(R.id.rootDiagnosticsLayout);
+//        Bitmap bitmap = Screenshot.takeScreenshot(view);
+//        Screenshot.saveBitmap(bitmap,"main_screen");
+        isShowingPopup = true;
+        blurScreenshotShow();
+//        }
+
+        startActivityForResult(new Intent(DiagnosticsActivity.this, Popup.class), POPUP_RESULT_CODE);
     }
 
     /**

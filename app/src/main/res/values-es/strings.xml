@@ -5,11 +5,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_stations_map">StationsMapActivity</string>
-    <string name="good">BUENA</string>
-    <string name="regular">REGULAR</string>
-    <string name="bad">MALA</string>
-    <string name="very_bad">MUY MALA</string>
-    <string name="extremely_bad">EXTREMADAMENTE MALA</string>
+    <string name="good">Buena</string>
+    <string name="regular">Regular</string>
+    <string name="bad">Mala</string>
+    <string name="very_bad">Muy Mala</string>
+    <string name="extremely_bad">Extremadamente Mala</string>
     <string name="air_quality">CALIDAD DEL AIRE</string>
     <string name="measurement_stations">Estaciones de Medición</string>
     <string name="quality_of_air_is">LA CALIDAD DEL AIRE ES</string>
@@ -20,4 +20,12 @@
     <string name="tomorrow">MAÑANA</string>
     <string name="day_after_tomorrow">PASADO</string>
     <string name="loading">Cargando...</string>
+    <string name="good_air_quality_description">Se puede realizar cualquier actividad al aire libre.</string>
+    <string name="regular_air_quality_description">Personas extremadamente sensibles a la contaminación: consideren limitar los esfuerzos prolongados al aire libre.</string>
+    <string name="bad_air_quality_description">Niños, adultos mayores, quienes realicen actividad física intensa o con enfermedades respiratorias y cardiovasculares: limitar esfuerzos prolongados al aire libre</string>
+    <string name="very_bad_air_quality_description">Niños, adultos mayores, quienes realicen actividad física intensa o con enfermedades respiratorias y cardiovasculares: evitar esfuerzos prolongados al aire libre</string>
+    <string name="extremely_bad_air_quality_description">Población en general: suspender esfuerzos al aire libre.</string>
+    <string name="pm10_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 10 µm, es decir, comprende las fracciones fina y gruesa.</string>
+    <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
+    <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
 </resources>

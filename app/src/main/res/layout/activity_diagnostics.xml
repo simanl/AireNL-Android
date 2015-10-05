@@ -44,6 +44,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true">
                     <ImageView
+                        android:id="@+id/airStatusInfoButton"
                         style="@style/InfoButton.InAireStatus"/>
                     <TextView
                         android:id="@+id/airQualityStatusText"
@@ -244,7 +245,9 @@
                     style="@style/ContaminantForecastTable">
                     <TableRow style="@style/ContaminantForecastTableRow"
                         android:layout_weight="20">
-                        <ImageView style="@style/InfoButton.InSection.Forecasts" />
+                        <ImageView
+                            android:id="@+id/forecastsInfoButton"
+                            style="@style/InfoButton.InSection.Forecasts" />
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="@string/today"/>
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
@@ -357,5 +360,11 @@
 
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/blurScreenshot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"/>
 
 </RelativeLayout>

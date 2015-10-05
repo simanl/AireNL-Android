@@ -85,6 +85,6 @@ public enum AirQualityType {
         if (id == 0) {
             return "none";
         }
-        return AireNL.getContext().getString(id);
+        return AireNL.getContext().getString(id).toUpperCase();
     }
 }

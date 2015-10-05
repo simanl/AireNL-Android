@@ -43,6 +43,13 @@
             android:name=".Activities.StationsMapActivity"
             android:label="@string/title_activity_stations_map" >
         </activity>
+
+        <activity android:name=".Activities.Popup"
+            android:theme="@style/AppTheme.PopupTheme">
+        </activity>
+
+        <activity android:name=".Activities.ForecastsPopup"
+            android:theme="@style/AppTheme.PopupTheme"></activity>
     </application>
 
 </manifest>

@@ -5,11 +5,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_stations_map">StationsMapActivity</string>
-    <string name="good">GOOD</string>
-    <string name="regular">REGULAR</string>
-    <string name="bad">BAD</string>
-    <string name="very_bad">VERY BAD</string>
-    <string name="extremely_bad">EXTREMELY BAD</string>
+    <string name="good">Good</string>
+    <string name="regular">Regular</string>
+    <string name="bad">Bad</string>
+    <string name="very_bad">Very Bad</string>
+    <string name="extremely_bad">Extremely Bad</string>
     <string name="air_quality">AIR QUALITY</string>
     <string name="measurement_stations">Measurement Stations</string>
     <string name="quality_of_air_is">THE QUALITY OF AIR IS</string>
@@ -20,4 +20,12 @@
     <string name="tomorrow">TOMORROW</string>
     <string name="day_after_tomorrow">THE DAY AFTER</string>
     <string name="loading">Loading...</string>
+    <string name="good_air_quality_description">You can perform any outdoor activities.</string>
+    <string name="regular_air_quality_description">For people who are sensitive to contamination: consider limiting prolonged outdoor efforts.</string>
+    <string name="bad_air_quality_description">Kids, older adults, people who are doing intense physical activities or who have breathing or heart problems: limit prolonged outdoor efforts.</string>
+    <string name="very_bad_air_quality_description">Kids, older adults, people who are doing intense physical activities or who have breathing or heart problems: avoid prolonged outdoor efforts.</string>
+    <string name="extremely_bad_air_quality_description">General population: abstain from any outdoor efforts.</string>
+    <string name="pm10_description">Coarse dust particles are 2.5 to 10 micrometers in diameter. Sources include crushing or grinding operations and dust.</string>
+    <string name="pm2_5_description">Fine particles are 2.5 micrometers in diameter or smaller. They are produced from all types of combustion.</string>
+    <string name="o3_description">Natural gas composed of three atoms of oxygen.</string>
 </resources>

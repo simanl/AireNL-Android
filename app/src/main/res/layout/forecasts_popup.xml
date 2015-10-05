@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/popup_layout"
+    android:background="@drawable/popup_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:fontFamily="sans-serif-light"
+        android:textSize="18sp"
+        android:text="MORE INFORMATION"
+        android:id="@+id/popupTitle"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/cross_cancel"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:alpha="0.5"
+        android:src="@drawable/cross_cancel"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/popupTitle"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/goodQualityTypeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:textColor="@android:color/white"
+                    android:text="PM 10"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/goodQualityTypeText"
+                    android:layout_below="@id/goodQualityTypeText"
+                    android:layout_marginTop="3dp"
+                    android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/white"
+                    android:text="@string/pm10_description"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/regularQualityTypeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:textColor="@android:color/white"
+                    android:text="PM 2.5"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/regularQualityTypeText"
+                    android:layout_below="@id/regularQualityTypeText"
+                    android:layout_marginTop="3dp"
+                    android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/white"
+                    android:text="@string/pm2_5_description"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/badQualityTypeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:textColor="@android:color/white"
+                    android:text="O3"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/badQualityTypeText"
+                    android:layout_below="@id/badQualityTypeText"
+                    android:layout_marginTop="3dp"
+                    android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/white"
+                    android:text="@string/o3_description"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
