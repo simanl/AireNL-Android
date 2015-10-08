@@ -11,6 +11,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Display;
 import android.graphics.*;
 import android.view.View;
@@ -31,13 +32,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.icalialabs.airenl.Adapters.RecomendedActivityAdapter;
 import com.icalialabs.airenl.Models.AirQualityType;
 import com.icalialabs.airenl.Models.Screenshot;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
 
+import org.lucasr.twowayview.widget.SpacingItemDecoration;
+import org.lucasr.twowayview.widget.TwoWayView;
+
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import jp.wasabeef.blurry.Blurry;
@@ -79,7 +86,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             public void run() {
                 ViewGroup rootView = (ViewGroup) findViewById(R.id.rootDiagnosticsLayout);
                 RelativeLayout firstSectionView = (RelativeLayout) findViewById(R.id.firstSection);
+                LinearLayout secondSectionView = (LinearLayout) findViewById(R.id.secondSection);
                 LinearLayout.LayoutParams firstSectionParams = (LinearLayout.LayoutParams) firstSectionView.getLayoutParams();
+                LinearLayout.LayoutParams secondSectionParams = (LinearLayout.LayoutParams) secondSectionView.getLayoutParams();
 
                 ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
                 scrollView.setScrollY(0);
@@ -88,7 +97,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     newHeight = rootView.getMeasuredHeight() - firstSectionParams.topMargin / 2;
                 } else {
-                    newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height * 2 + firstSectionParams.topMargin + 3 * firstSectionParams.bottomMargin / 2);
+                    newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height + secondSectionParams.height + firstSectionParams.topMargin + firstSectionParams.bottomMargin + secondSectionParams.bottomMargin / 2);
                 }
 
 //                int newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height + firstSectionParams.topMargin + firstSectionParams.bottomMargin / 2);
@@ -170,6 +179,23 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         } else {
             findViewById(R.id.locationIcon).setAlpha(0.5f);
         }
+
+        List<Integer> imageIds = new ArrayList<Integer>();
+        imageIds.add(R.drawable.outdoors);
+        imageIds.add(R.drawable.window);
+        imageIds.add(R.drawable.run);
+        imageIds.add(R.drawable.allergy);
+        imageIds.add(R.drawable.smoke);
+        imageIds.add(R.drawable.heart_condition);
+        imageIds.add(R.drawable.gas);
+        imageIds.add(R.drawable.car);
+
+        TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
+        twoWayView.setHasFixedSize(true);
+        //twoWayView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        twoWayView.setAdapter(new RecomendedActivityAdapter(imageIds));
+        twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
+
         Station currentStation = Station.getPersistedCurrentStation();
         if (currentStation != null) {
             reloadDataWithStation(currentStation);

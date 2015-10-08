@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:id="@+id/rootDiagnosticsLayout" tools:context=".DiagnosticsActivity">
@@ -93,20 +94,33 @@
 
             </RelativeLayout>
             <RelativeLayout
-                style="@style/AireSection.Frosted.Small"
+                style="@style/AireSection.Frosted.Medium"
                 android:id="@+id/firstSection"
                 android:layout_marginTop="10dp">
-                <ImageView
-                    style="@style/InfoButton.InSection.Recomendations"/>
                 <TextView
+                    android:id="@+id/recomendedActivitiesTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:text="@string/recomended_activities"
                     android:textColor="#fff"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="6dp"/>
+                <org.lucasr.twowayview.widget.TwoWayView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    style="@style/TwoWayView"
+                    android:id="@+id/recomendedActivitesListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_below="@id/recomendedActivitiesTitle"
+                    app:twowayview_layoutManager="ListLayoutManager"
+                    >
+                </org.lucasr.twowayview.widget.TwoWayView>
             </RelativeLayout>
             <LinearLayout
+                android:id="@+id/secondSection"
                 style="@style/AireSection.Small">
                 <RelativeLayout
                     style="@style/AireSubsection.Frosted"
