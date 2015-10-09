@@ -28,4 +28,5 @@
     <string name="pm10_description">Coarse dust particles are 2.5 to 10 micrometers in diameter. Sources include crushing or grinding operations and dust.</string>
     <string name="pm2_5_description">Fine particles are 2.5 micrometers in diameter or smaller. They are produced from all types of combustion.</string>
     <string name="o3_description">Natural gas composed of three atoms of oxygen.</string>
+    <string name="forecast">FORECAST</string>
 </resources>

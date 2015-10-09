@@ -187,89 +187,93 @@
                 </RelativeLayout>
 
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 style="@style/AireSection.Frosted.Small">
-                <FrameLayout
-                    style="@style/ContaminantSection"
-                    >
-                    <RelativeLayout
-                        style="@style/ContaminantContainerLayout">
-                        <FrameLayout
-                            style="@style/ContaminantTile"
-                            android:id="@+id/pm10Tile"
-                            >
-                            <TextView
-                                style="@style/ContaminantTileText"
-                                android:text="PM10"/>
-                        </FrameLayout>
-                        <TextView
-                            android:id="@+id/pm10ValueText"
-                            style="@style/ContaminantAmountText"
-                            android:layout_below="@id/pm10Tile"
-                            android:text="0"/>
-                    </RelativeLayout>
 
-                </FrameLayout>
-                <FrameLayout
-                    style="@style/ContaminantSection"
-                    >
-                    <RelativeLayout
-                        style="@style/ContaminantContainerLayout">
-                        <FrameLayout
-                            style="@style/ContaminantTile"
-                            android:id="@+id/pm2.5Tile"
-                            >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+                    <FrameLayout
+                        style="@style/ContaminantSection"
+                        >
+                        <RelativeLayout
+                            style="@style/ContaminantContainerLayout">
+                            <FrameLayout
+                                style="@style/ContaminantTile"
+                                android:id="@+id/pm10Tile"
+                                >
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="PM10"/>
+                            </FrameLayout>
                             <TextView
-                                style="@style/ContaminantTileText"
-                                android:text="PM2.5"/>
-                        </FrameLayout>
-                        <TextView
-                            android:id="@+id/pm2.5ValueText"
-                            style="@style/ContaminantAmountText"
-                            android:layout_below="@id/pm2.5Tile"
-                            android:text="0"/>
-                    </RelativeLayout>
+                                android:id="@+id/pm10ValueText"
+                                style="@style/ContaminantAmountText"
+                                android:layout_below="@id/pm10Tile"
+                                android:text="0"/>
+                        </RelativeLayout>
 
-                </FrameLayout>
-                <FrameLayout
-                    style="@style/ContaminantSection"
-                    >
-                    <RelativeLayout
-                        style="@style/ContaminantContainerLayout">
-                        <FrameLayout
-                            style="@style/ContaminantTile"
-                            android:id="@+id/o3Tile"
-                            >
+                    </FrameLayout>
+                    <FrameLayout
+                        style="@style/ContaminantSection"
+                        >
+                        <RelativeLayout
+                            style="@style/ContaminantContainerLayout">
+                            <FrameLayout
+                                style="@style/ContaminantTile"
+                                android:id="@+id/pm2.5Tile"
+                                >
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="PM2.5"/>
+                            </FrameLayout>
                             <TextView
-                                style="@style/ContaminantTileText"
-                                android:text="O3"/>
-                        </FrameLayout>
-                        <TextView
-                            android:id="@+id/o3ValueText"
-                            style="@style/ContaminantAmountText"
-                            android:layout_below="@id/o3Tile"
-                            android:text="0"/>
-                    </RelativeLayout>
+                                android:id="@+id/pm2.5ValueText"
+                                style="@style/ContaminantAmountText"
+                                android:layout_below="@id/pm2.5Tile"
+                                android:text="0"/>
+                        </RelativeLayout>
 
-                </FrameLayout>
-            </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                        style="@style/ContaminantSection"
+                        >
+                        <RelativeLayout
+                            style="@style/ContaminantContainerLayout">
+                            <FrameLayout
+                                style="@style/ContaminantTile"
+                                android:id="@+id/o3Tile"
+                                >
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="O3"/>
+                            </FrameLayout>
+                            <TextView
+                                android:id="@+id/o3ValueText"
+                                style="@style/ContaminantAmountText"
+                                android:layout_below="@id/o3Tile"
+                                android:text="0"/>
+                        </RelativeLayout>
+
+                    </FrameLayout>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/forecastsInfoButton"
+                    style="@style/InfoButton.InSection.Forecasts"
+                    android:layout_marginTop="5dp"/>
+            </RelativeLayout>
+
             <RelativeLayout
                 style="@style/AireSection.Frosted.Big">
                 <TableLayout
                     style="@style/ContaminantForecastTable">
                     <TableRow style="@style/ContaminantForecastTableRow"
                         android:layout_weight="20">
-                        <ImageView
-                            android:id="@+id/forecastsInfoButton"
-                            style="@style/InfoButton.InSection.Forecasts" />
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="@string/today"/>
-                        <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="@string/tomorrow"/>
-                        <TextView style="@style/ContaminantForecastTableColumn.Day"
-                            android:text="@string/day_after_tomorrow"/>
-                    </TableRow>
-                    <TableRow style="@style/ContaminantForecastTableRow">
+                            android:textSize="15sp"
+                            android:text="@string/forecast"/>
                         <FrameLayout style="@style/ContaminantForecastTableColumn">
                             <FrameLayout style="@style/ContaminantTile">
                                 <TextView
@@ -277,14 +281,7 @@
                                     android:text="PM10"/>
                             </FrameLayout>
                         </FrameLayout>
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
-                    </TableRow>
-                    <TableRow style="@style/ContaminantForecastTableRow">
+
                         <FrameLayout style="@style/ContaminantForecastTableColumn">
                             <FrameLayout style="@style/ContaminantTile">
                                 <TextView
@@ -292,6 +289,19 @@
                                     android:text="PM2.5"/>
                             </FrameLayout>
                         </FrameLayout>
+
+                        <FrameLayout style="@style/ContaminantForecastTableColumn">
+                            <FrameLayout style="@style/ContaminantTile">
+                                <TextView
+                                    style="@style/ContaminantTileText"
+                                    android:text="O3"/>
+                            </FrameLayout>
+                        </FrameLayout>
+
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="+1 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
@@ -300,13 +310,28 @@
                             android:text="0" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
-                        <FrameLayout style="@style/ContaminantForecastTableColumn">
-                            <FrameLayout style="@style/ContaminantTile">
-                                <TextView
-                                    style="@style/ContaminantTileText"
-                                    android:text="O3"/>
-                            </FrameLayout>
-                        </FrameLayout>
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="+2 HOUR"/>
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="+3 HOUR"/>
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                        <TextView style="@style/ContaminantAmountText.Forecasts"
+                            android:text="0" />
+                    </TableRow>
+                    <TableRow style="@style/ContaminantForecastTableRow">
+                        <TextView style="@style/ContaminantForecastTableColumn.Day"
+                            android:text="+4 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"

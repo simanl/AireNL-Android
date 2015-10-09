@@ -28,4 +28,5 @@
     <string name="pm10_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 10 µm, es decir, comprende las fracciones fina y gruesa.</string>
     <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
     <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
+    <string name="forecast">PRONOSTICO</string>
 </resources>
