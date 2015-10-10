@@ -37,12 +37,12 @@ public class Popup extends Activity {
 
         roundDots();
 
-        findViewById(R.id.cross_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        findViewById(R.id.cross_cancel).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 //        Display display = getWindowManager().getDefaultDisplay();
 //        Point size = new Point();
 //        display.getSize(size);
@@ -162,6 +162,10 @@ public class Popup extends Activity {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public void closePopup(View view) {
+        finish();
     }
 
     @Override

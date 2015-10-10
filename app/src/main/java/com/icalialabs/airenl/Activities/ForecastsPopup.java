@@ -23,12 +23,12 @@ public class ForecastsPopup extends Activity {
         setContentView(R.layout.forecasts_popup);
 
 
-        findViewById(R.id.cross_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        findViewById(R.id.cross_cancel).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 //        Display display = getWindowManager().getDefaultDisplay();
 //        Point size = new Point();
 //        display.getSize(size);
@@ -79,6 +79,9 @@ public class ForecastsPopup extends Activity {
         return result;
     }
 
+    public void closePopup(View view) {
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

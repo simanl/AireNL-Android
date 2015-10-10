@@ -113,34 +113,34 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
         ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
         mainViewBackground.setImageBitmap(image);
-        findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(DiagnosticsActivity.this, StationsMapActivity.class), STATIONS_RESULT_CODE);
-                //startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
-            }
-        });
+//        findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mapButtonClicked();
+//                //startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
+//            }
+//        });
 
-        findViewById(R.id.locationIcon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userSelectedLocation();
-            }
-        });
+//        findViewById(R.id.locationIcon).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                userSelectedLocation();
+//            }
+//        });
 
-        findViewById(R.id.airStatusInfoButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                statusInfoButtonClicked();
-            }
-        });
+//        findViewById(R.id.airStatusInfoButton).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                statusInfoButtonClicked();
+//            }
+//        });
 
-        findViewById(R.id.forecastsInfoButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forecastsInfoButtonClicked();
-            }
-        });
+//        findViewById(R.id.forecastsInfoButton).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                forecastsInfoButtonClicked();
+//            }
+//        });
 
         ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
         blurredBackground.setAlpha(0f);
@@ -206,7 +206,10 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     protected void onResume() {
         super.onResume();
         if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
-            mGoogleApiClient.reconnect();
+            if (mGoogleApiClient != null) {
+                mGoogleApiClient.reconnect();
+            }
+
         } else {
             RestClient apiClient = new RestClient();
             apiClient.getStationService().getStation(Station.getPersistedCurrentStation().getId()).enqueue(new Callback<Station>() {
@@ -268,21 +271,32 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         blurredBackground.setAlpha(1f);
     }
 
-    private void forecastsInfoButtonClicked() {
-        isShowingPopup = true;
-        blurScreenshotShow();
-        startActivityForResult(new Intent(DiagnosticsActivity.this, ForecastsPopup.class), FORECASTS_POPUP_RESULT_CODE);
+    public void mapButtonClicked(View view) {
+        startActivityForResult(new Intent(DiagnosticsActivity.this, StationsMapActivity.class), STATIONS_RESULT_CODE);
     }
 
-    private void statusInfoButtonClicked() {
+    public void forecastsInfoButtonClicked(View view) {
+        if (!isShowingPopup) {
+            isShowingPopup = true;
+            blurScreenshotShow();
+            startActivityForResult(new Intent(DiagnosticsActivity.this, ForecastsPopup.class), FORECASTS_POPUP_RESULT_CODE);
+        }
+
+    }
+
+    public void statusInfoButtonClicked(View view) {
 //        View view = findViewById(R.id.rootDiagnosticsLayout);
 //        Bitmap bitmap = Screenshot.takeScreenshot(view);
 //        Screenshot.saveBitmap(bitmap,"main_screen");
-        isShowingPopup = true;
-        blurScreenshotShow();
+        if (!isShowingPopup) {
+            isShowingPopup = true;
+            blurScreenshotShow();
+            startActivityForResult(new Intent(DiagnosticsActivity.this, Popup.class), POPUP_RESULT_CODE);
+        }
+
 //        }
 
-        startActivityForResult(new Intent(DiagnosticsActivity.this, Popup.class), POPUP_RESULT_CODE);
+
     }
 
     /**
@@ -349,32 +363,35 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         airStatusView.setBackground(drawableAirStatusView);
     }
 
-    public void userSelectedLocation() {
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            RestClient client = new RestClient();
-            client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
-                @Override
-                public void onResponse(Response<Station> response) {
-                    if (response != null) {
-                        if (response.body() != null) {
-                            findViewById(R.id.locationIcon).setAlpha(1f);
-                            reloadDataWithStation(response.body());
-                            persistStation(response.body(), true);
-                        } else {
-                            System.out.println(response.errorBody());
+    public void userSelectedLocation(View view) {
+        if (mGoogleApiClient != null) {
+            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                RestClient client = new RestClient();
+                client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
+                    @Override
+                    public void onResponse(Response<Station> response) {
+                        if (response != null) {
+                            if (response.body() != null) {
+                                findViewById(R.id.locationIcon).setAlpha(1f);
+                                reloadDataWithStation(response.body());
+                                persistStation(response.body(), true);
+                            } else {
+                                System.out.println(response.errorBody());
+                            }
                         }
+
                     }
 
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    System.out.println(t.getLocalizedMessage());
-                }
-            });
+                    @Override
+                    public void onFailure(Throwable t) {
+                        System.out.println(t.getLocalizedMessage());
+                    }
+                });
+            }
         }
+
 
     }
 
@@ -390,7 +407,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     public void onConnected(Bundle bundle) {
 //        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
-            userSelectedLocation();
+            userSelectedLocation(null);
             //findViewById(R.id.locationIcon).setAlpha(1f);
         }
     }

@@ -44,9 +44,18 @@
                     android:id="@+id/airQualityView"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true">
-                    <ImageView
-                        android:id="@+id/airStatusInfoButton"
-                        style="@style/InfoButton.InAireStatus"/>
+                    <FrameLayout
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:onClick="statusInfoButtonClicked"
+                        android:background="?@android:attr/selectableItemBackgroundBorderless">
+                        <ImageView
+                            android:id="@+id/airStatusInfoButton"
+                            style="@style/InfoButton.InAireStatus"/>
+                    </FrameLayout>
+
                     <TextView
                         android:id="@+id/airQualityStatusText"
                         android:layout_width="wrap_content"
@@ -259,10 +268,19 @@
 
                     </FrameLayout>
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/forecastsInfoButton"
-                    style="@style/InfoButton.InSection.Forecasts"
-                    android:layout_marginTop="5dp"/>
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginTop="-10dp"
+                    android:onClick="forecastsInfoButtonClicked"
+                    android:background="?@android:attr/selectableItemBackgroundBorderless">
+                    <ImageView
+                        android:id="@+id/forecastsInfoButton"
+                        android:layout_gravity="center"
+                        style="@style/InfoButton.InSection.Forecasts"/>
+                </FrameLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -349,17 +367,27 @@
         style="@style/TopItems"
         android:id="@+id/topItemsGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
 
-        <ImageView
-            android:id="@+id/locationIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/location_icon"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_centerVertical="true"/>
+        <FrameLayout
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerVertical="true"
+            android:onClick="userSelectedLocation"
+            android:background="?@android:attr/selectableItemBackgroundBorderless"
+            >
+            <ImageView
+                android:id="@+id/locationIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/location_icon"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"/>
+        </FrameLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -388,14 +416,24 @@
             android:layout_marginTop="4dp"
             android:id="@+id/stationTextView" />
 
-        <ImageView
-            android:id="@+id/mapIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/map_icon"
+        <FrameLayout
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="12dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"/>
+            android:onClick="mapButtonClicked"
+            android:background="?@android:attr/selectableItemBackgroundBorderless"
+            >
+            <ImageView
+                android:id="@+id/mapIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/map_icon"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+
 
 
     </RelativeLayout>
