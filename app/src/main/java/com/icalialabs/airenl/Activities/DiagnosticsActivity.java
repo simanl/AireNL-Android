@@ -44,6 +44,7 @@ import org.lucasr.twowayview.widget.TwoWayView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
@@ -217,6 +218,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 public void onResponse(Response<Station> response) {
                     if (response != null) {
                         if (response.body() != null) {
+                            TextView lastUpdatedDate = (TextView)findViewById(R.id.lastUpdatedDate);
+                            Date date = new Date();
+                            lastUpdatedDate.setText(date.toString());
                             reloadDataWithStation(response.body());
                         } else {
                             System.out.println(response.errorBody());
@@ -343,8 +347,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
 
-        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableSuspendedParticles()) : "0";
-        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getFineParticles()) : "0";
+        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "0";
+        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "0";
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "0";
 
         stationNameTextView.setText(station.getName());

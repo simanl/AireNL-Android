@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Compean on 23/09/15.
@@ -59,6 +60,12 @@ public class Measurement implements Serializable {
 
     @SerializedName("respirable_suspended_particles")
     private Double respirableSuspendedParticles;
+
+    @SerializedName("toracic_particles")
+    private Double toracicParticles;
+
+    @SerializedName("respirable_particles")
+    private Double respirableParticles;
 
     @SerializedName("fine_particles")
     private Double fineParticles;
@@ -130,4 +137,14 @@ public class Measurement implements Serializable {
     public Double getFineParticles() {
         return fineParticles;
     }
+
+    public Double getToracicParticles() {
+        return toracicParticles;
+    }
+
+    public Double getRespirableParticles() {
+        return respirableParticles;
+    }
+
+
 }

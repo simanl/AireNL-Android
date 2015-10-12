@@ -22,7 +22,7 @@
     </style>
 
     <style name="GreenButton">
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_width">200dp</item>
         <item name="android:background">@drawable/green_button_background</item>
     </style>
@@ -99,6 +99,7 @@
     </style>
 
     <style name="ContaminantContainerLayout">
+        <item name="android:paddingTop">10dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>

@@ -39,11 +39,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="345dp"
                 >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/lastUpdatedDate"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="11dp"
+                    android:text="Date"
+                    android:textColor="@android:color/white"/>
                 <RelativeLayout
                     style="@style/GreenButton.Dynamic"
                     android:id="@+id/airQualityView"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true">
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@id/lastUpdatedDate">
                     <FrameLayout
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -359,6 +371,16 @@
                     </TableRow>
                 </TableLayout>
             </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#afff"
+                android:text="Cerro de la Silla, Monterrey, NL."
+                android:layout_gravity="right"
+                android:textSize="13dp"
+                android:fontFamily="sans_serif_light"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"/>
 
         </LinearLayout>
     </ScrollView>

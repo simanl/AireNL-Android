@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Compean on 23/09/15.
@@ -37,6 +38,9 @@ public class Station implements Serializable {
     @SerializedName("coordinate")
     private Coordinate coordinate;
 
+    @SerializedName("current_forecasts")
+    private List<Forecast> forecasts;
+
     public String getCode() {
         return code;
     }
@@ -59,6 +63,10 @@ public class Station implements Serializable {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    public List<Forecast> getForecasts() {
+        return forecasts;
     }
 
     public void persistAsCurrentStation() {

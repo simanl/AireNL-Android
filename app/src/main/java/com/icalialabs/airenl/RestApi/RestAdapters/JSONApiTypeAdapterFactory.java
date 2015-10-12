@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.JsonArray;
 
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -125,18 +126,60 @@ public class JSONApiTypeAdapterFactory implements TypeAdapterFactory {
             Iterator relationshipIterator = relationships.entrySet().iterator();
             while (relationshipIterator.hasNext()) {
                 Map.Entry<String, JsonElement> realtionship = (Map.Entry<String, JsonElement>)relationshipIterator.next();
-                JsonObject lastMeasurementData = realtionship.getValue().getAsJsonObject().get("data").getAsJsonObject();
-                HashMap<String, JsonElement> includedType =  included.get(lastMeasurementData.get("type").getAsString());
-                if (includedType != null) {
-                    JsonElement includedElement = includedType.get(lastMeasurementData.get("id").getAsString());
-                    if (includedElement != null) {
-                        properties.add(realtionship.getKey(),includedElement);
-                    }
-                } else {
-                    properties.add(realtionship.getKey(),lastMeasurementData);
-                }
+                addRelationshipInfo(properties, realtionship.getValue().getAsJsonObject().get("data"), included, realtionship.getKey());
+//                if (realtionship.getValue().isJsonObject()) {
+//                    JsonObject relationShipKeysData = realtionship.getValue().getAsJsonObject().get("data").getAsJsonObject();
+//                    HashMap<String, JsonElement> includedType =  included.get(relationShipKeysData.get("type").getAsString());
+//                    if (includedType != null) {
+//                        JsonElement includedElement = includedType.get(relationShipKeysData.get("id").getAsString());
+//                        if (includedElement != null) {
+//                            properties.add(realtionship.getKey(),includedElement);
+//                        }
+//                    } else {
+//                        properties.add(realtionship.getKey(),relationShipKeysData);
+//                    }
+//                }
+
+
             }
         }
         return  properties;
+    }
+
+    private void addRelationshipInfo(JsonObject properties, JsonElement relationshipDataAbstract, HashMap<String, HashMap<String, JsonElement>> included, String relationshipKey) {
+        if (relationshipDataAbstract.isJsonObject()) {
+            JsonElement element = getRelationshipMergedWithIncludedInfoIfPossible(relationshipDataAbstract.getAsJsonObject(), included);
+            properties.add(relationshipKey, element);
+        } else if (relationshipDataAbstract.isJsonArray()) {
+            JsonArray array = new JsonArray();
+            Iterator<JsonElement> iterator = relationshipDataAbstract.getAsJsonArray().iterator();
+            while(iterator.hasNext()) {
+                JsonElement element = getRelationshipMergedWithIncludedInfoIfPossible(iterator.next().getAsJsonObject(), included);
+                array.add(element);
+            }
+            properties.add(relationshipKey, array);
+        }
+//        HashMap<String, JsonElement> includedType =  included.get(relationshipDataAbstract.get("type").getAsString());
+//        if (includedType != null) {
+//            JsonElement includedElement = includedType.get(relationshipDataAbstract.get("id").getAsString());
+//            if (includedElement != null) {
+//                properties.add(relationshipKey,includedElement);
+//            }
+//        } else {
+//            properties.add(relationshipKey,relationshipDataAbstract);
+//        }
+    }
+
+    private JsonElement getRelationshipMergedWithIncludedInfoIfPossible(JsonObject relationshipObjectAbstract, HashMap<String, HashMap<String, JsonElement>> included){
+        HashMap<String, JsonElement> includedType =  included.get(relationshipObjectAbstract.get("type").getAsString());
+        if (includedType != null) {
+            JsonElement includedElement = includedType.get(relationshipObjectAbstract.get("id").getAsString());
+            if (includedElement != null) {
+                return includedElement;
+                //properties.add(relationshipKey,includedElement);
+            }
+        }
+        return relationshipObjectAbstract;
+            //properties.add(relationshipKey,relationshipDataAbstract);
     }
 }
