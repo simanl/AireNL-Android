@@ -15,13 +15,13 @@ public class Forecast implements Serializable {
     private Date forecastedDatetime;
 
     @SerializedName("ozone")
-    private Double ozone;
+    private String ozone;
 
     @SerializedName("toracic_particles")
-    private Double toracicParticles;
+    private String toracicParticles;
 
     @SerializedName("respirable_particles")
-    private Double respirableParticles;
+    private String respirableParticles;
 
     @SerializedName("updated_at")
     private Date updatedAt;
@@ -30,15 +30,15 @@ public class Forecast implements Serializable {
         return forecastedDatetime;
     }
 
-    public Double getOzone() {
+    public String getOzone() {
         return ozone;
     }
 
-    public Double getToracicParticles() {
+    public String getToracicParticles() {
         return toracicParticles;
     }
 
-    public Double getRespirableParticles() {
+    public String getRespirableParticles() {
         return respirableParticles;
     }
 

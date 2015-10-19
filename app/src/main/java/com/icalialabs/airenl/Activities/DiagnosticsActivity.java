@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.graphics.*;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 //import com.icalialabs.airenl.blurry.Blurry;
@@ -34,11 +37,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.icalialabs.airenl.Adapters.RecomendedActivityAdapter;
 import com.icalialabs.airenl.Models.AirQualityType;
+import com.icalialabs.airenl.Models.Recomendation;
 import com.icalialabs.airenl.Models.Screenshot;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
 
+import org.lucasr.twowayview.ItemClickSupport;
 import org.lucasr.twowayview.widget.SpacingItemDecoration;
 import org.lucasr.twowayview.widget.TwoWayView;
 
@@ -181,15 +186,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             findViewById(R.id.locationIcon).setAlpha(0.5f);
         }
 
-        List<Integer> imageIds = new ArrayList<Integer>();
-        imageIds.add(R.drawable.outdoors);
-        imageIds.add(R.drawable.window);
-        imageIds.add(R.drawable.run);
-        imageIds.add(R.drawable.allergy);
-        imageIds.add(R.drawable.smoke);
-        imageIds.add(R.drawable.heart_condition);
-        imageIds.add(R.drawable.gas);
-        imageIds.add(R.drawable.car);
+        final List<Recomendation> imageIds = new ArrayList<Recomendation>();
+        imageIds.add(Recomendation.outdoors());
+        imageIds.add(Recomendation.window());
+        imageIds.add(Recomendation.run());
+        imageIds.add(Recomendation.allergy());
+        imageIds.add(Recomendation.smoke());
+        imageIds.add(Recomendation.heartCondition());
+        imageIds.add(Recomendation.gas());
+        imageIds.add(Recomendation.car());
 
         TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
         twoWayView.setHasFixedSize(true);
@@ -201,6 +206,27 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (currentStation != null) {
             reloadDataWithStation(currentStation);
         }
+
+        final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
+
+        final Toast mToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        itemClick.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View child, int position, long id) {
+                if (!isShowingPopup) {
+                    isShowingPopup = true;
+                    blurScreenshotShow();
+                    Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("description", imageIds.get(position).getDescription());
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, POPUP_RESULT_CODE);
+                }
+
+                //mToast.setText("Item clicked: " + position);
+                //mToast.show();
+            }
+        });
     }
 
     @Override
@@ -332,7 +358,13 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     public void reloadDataWithStation(Station station) {
-        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
+        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(0);
+        String imecaValue = "N/A";
+        if (station.getLastMeasurement().getImecaPoints() != null) {
+            type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
+            imecaValue = station.getLastMeasurement().getImecaPoints().toString();
+        }
+
 
         TextView stationNameTextView = (TextView)findViewById(R.id.stationTextView);
         TextView imecaValueTextView = (TextView)findViewById(R.id.imecaQuantity);
@@ -347,12 +379,32 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
 
-        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "0";
-        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "0";
-        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "0";
+        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "N/A";
+        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "N/A";
+        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "N/A";
+        TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
+
+        for (int index = 0; index < station.getForecasts().size(); index++) {
+            TableRow row = (TableRow)table.getChildAt(index + 1);
+            if (row != null) {
+                TextView timeLabel = (TextView)row.getChildAt(0);
+                TextView pm10Label = (TextView)row.getChildAt(1);
+                TextView pm2_5Label = (TextView)row.getChildAt(2);
+                TextView o3Label = (TextView)row.getChildAt(3);
+
+                String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "N/A";
+                String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "N/A";
+                String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "N/A";
+
+                timeLabel.setText(index + 1 + " Time");
+                pm10Label.setText(pm10);
+                pm2_5Label.setText(pm2_5);
+                o3Label.setText(o3);
+            }
+        }
 
         stationNameTextView.setText(station.getName());
-        imecaValueTextView.setText(station.getLastMeasurement().getImecaPoints().toString());
+        imecaValueTextView.setText(imecaValue);
         airQualityStatusTextView.setText(type.toString());
         temperatureTextView.setText(temperatureFormat.format(station.getLastMeasurement().getTemperature()));
         windSpeedTextView.setText(numberFormat.format(station.getLastMeasurement().getWindSpeed()));
@@ -378,6 +430,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     public void onResponse(Response<Station> response) {
                         if (response != null) {
                             if (response.body() != null) {
+                                Date date = new Date();
+                                TextView lastUpdatedDate = (TextView)findViewById(R.id.lastUpdatedDate);
+                                lastUpdatedDate.setText(date.toString());
                                 findViewById(R.id.locationIcon).setAlpha(1f);
                                 reloadDataWithStation(response.body());
                                 persistStation(response.body(), true);

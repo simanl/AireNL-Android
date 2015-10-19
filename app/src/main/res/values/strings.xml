@@ -29,4 +29,13 @@
     <string name="pm2_5_description">Fine particles are 2.5 micrometers in diameter or smaller. They are produced from all types of combustion.</string>
     <string name="o3_description">Natural gas composed of three atoms of oxygen.</string>
     <string name="forecast">FORECAST</string>
+    <string name="outdoors_description">If air quality is bad, avoid spending prolonged periods outdoors.</string>
+    <string name="window_description">If air quality is bad, keep windows and doors closed</string>
+    <string name="run_description">If air quality is bad, do not practice exercise outdoors.</string>
+    <string name="allergy_description">If air quality is bad, people with allergies, especially asthma, should stay indoors.</string>
+    <string name="smoke_description">If air quality is bad, people who smoke any kind of tobacco should abstain from doing so.</string>
+    <string name="heart_condition_description">If air quality is bad, people with a history of heart problems should stay indoors or in low risk zones.</string>
+    <string name="gas_description">If air quality is bad, people who use fuel, like cooks, should abstain from doing so until air quality improves.</string>
+    <string name="car_description">If air quality is bad, vehicle use should be reduced as much as possible.</string>
+    <string name="more_information">MORE INFORMATION</string>
 </resources>

@@ -48,7 +48,7 @@
                     android:id="@+id/lastUpdatedDate"
                     android:fontFamily="sans-serif-light"
                     android:textSize="11dp"
-                    android:text="Date"
+                    android:text="No previous refreshed date"
                     android:textColor="@android:color/white"/>
                 <RelativeLayout
                     style="@style/GreenButton.Dynamic"
@@ -202,6 +202,7 @@
                         </RelativeLayout>
                         <TextView
                             style="@style/AireSubsectionText.Amount"
+                            android:layout_centerHorizontal="true"
                             android:layout_below="@id/temperatureInfoView"
                             android:text="@string/temperature"/>
                     </RelativeLayout>
@@ -298,9 +299,10 @@
             <RelativeLayout
                 style="@style/AireSection.Frosted.Big">
                 <TableLayout
+                    android:id="@+id/forecastsTable"
                     style="@style/ContaminantForecastTable">
                     <TableRow style="@style/ContaminantForecastTableRow"
-                        android:layout_weight="20">
+                        android:layout_weight="2">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:textSize="15sp"
                             android:text="@string/forecast"/>

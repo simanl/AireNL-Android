@@ -95,3 +95,36 @@ public class Station implements Serializable {
         return station;
     }
 }
+
+abstract class Instrument {
+    String name;
+
+    abstract void play();
+}
+
+abstract class StringedInstrument extends Instrument {
+    int numberOfStrings;
+
+    void changeStrings() {
+        System.out.print(numberOfStrings + " new strings aquired");
+    }
+}
+
+class ElectricGuitar extends StringedInstrument {
+    ElectricGuitar() {
+        super();
+        this.name = "Guitar";
+        this.numberOfStrings = 6;
+    }
+
+    ElectricGuitar(int numberOfStrings) {
+        super();
+        this.name = "Guitar";
+        this.numberOfStrings = numberOfStrings;
+    }
+
+    @Override
+    void  play() {
+        System.out.print("An electric " + numberOfStrings + "-string " + name + " is rocking!");
+    }
+}

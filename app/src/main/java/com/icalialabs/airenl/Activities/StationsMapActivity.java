@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.icalialabs.airenl.Models.AirQualityType;
 import com.icalialabs.airenl.AireNL;
+import com.icalialabs.airenl.Models.Forecast;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
@@ -176,7 +177,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         if (stations != null) {
             for (int idx = 0; idx < stations.size(); idx++) {
                 Station station = stations.get(idx);
-                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
+                Integer imecaPoints = (station.getLastMeasurement().getImecaPoints() != null)? station.getLastMeasurement().getImecaPoints() : 0;
+                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
                 mMap.addMarker(new MarkerOptions().position(station.getCoordinate().getLatLong()).title(station.getName()).snippet(String.valueOf(idx)).icon(qualityType.getIcon()));
             }
         }
@@ -216,7 +218,10 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
 //        return contentView;
         FrameLayout view = (FrameLayout)getLayoutInflater().inflate(R.layout.info_window, null);
         Station station = stations.get(Integer.parseInt(marker.getSnippet()));
-        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
+        Integer imecaPoints = (station.getLastMeasurement().getImecaPoints() != null) ? station.getLastMeasurement().getImecaPoints() : 0;
+        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
+
+
 
         View airStatusView = view.findViewById(R.id.airStatusView);
         GradientDrawable drawableAirStatus = new GradientDrawable();

@@ -29,4 +29,13 @@
     <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
     <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
     <string name="forecast">PRONOSTICO</string>
+    <string name="outdoors_description">Si la calidad del aire es mala, evitar tiempos prolongados de permanencia a la intemperie.</string>
+    <string name="window_description">Si la calidad del aire es mala, mantener cerradas puertas y ventanas.</string>
+    <string name="run_description">Si la calidad del aire es mala, no practicar actividades de ejercitación o recreación al aire libre.</string>
+    <string name="allergy_description">Si la calidad del aire es mala, los pacientes con atecedentes de alergias, principalmente asma bronquial, deberán mantenerse en el interior de sus domicilios y abstenerse de los medicamentos que normalmente les receta su médico y utilizan ante la presencia de crisis asmáticas o de broncoespasmo. Estas recomendaciones también aplican en pacientes con efermedad pulmonar obstructiva crónica o enfisema, o antecedentes de enfermedad cardiaca (infarto o angina).</string>
+    <string name="smoke_description">Si la calidad del aire es mala, las personas con el hábito de tabaquismo, deberán abstenerse del consumo de productos de tabaco (cigarrillos, tabaco para pipa, etc.) y otras formas combustibles del tabaco.</string>
+    <string name="heart_condition_description">Si la calidad del aire es mala, en el caso de personas con antecedentes de infarto, enfermedad pulmonar obstructiva crónica o asma, trasladarlos fuera de las zonas de mayor riesgo, a zonas habitacionales donde el riesgo sea menor.</string>
+    <string name="gas_description">Si la calidad del aire es mala, las personas que por su actividad cotidiana están en contacto directo al uso de combustibles sólidos (cocineras, asadores), se recomienda limitarse hasta en tanto pase la alerta.</string>
+    <string name="car_description">Si la calidad del aire es mala, reducir en la medida de lo posible el uso de vehículos.</string>
+    <string name="more_information">MAS INFORMACION</string>
 </resources>

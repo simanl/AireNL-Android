@@ -61,6 +61,22 @@ public enum AirQualityType {
         }
     }
 
+    public static AirQualityType qualityTypeWithString(String string) {
+        if (string.equals("good")) {
+            return GOOD;
+        } else if (string.equals("regular")) {
+            return REGULAR;
+        } else if (string.equals("bad")) {
+            return BAD;
+        } else if (string.equals("very_bad")) {
+            return VERY_BAD;
+        } else if (string.equals("extremely_bad")) {
+            return EXTREMELY_BAD;
+        } else {
+            return NONE;
+        }
+    }
+
     private static boolean isBetween(Integer x, Integer lower, Integer upper){
         return lower <= x && x < upper;
     }
@@ -83,8 +99,15 @@ public enum AirQualityType {
     @Override
     public String toString() {
         if (id == 0) {
-            return "none";
+            return "N/A";
         }
         return AireNL.getContext().getString(id).toUpperCase();
+    }
+
+    public String lowerCaseString() {
+        if (id == 0) {
+            return "N/A";
+        }
+        return AireNL.getContext().getString(id).toLowerCase();
     }
 }

@@ -11,7 +11,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:fontFamily="sans-serif-light"
         android:textSize="18sp"
-        android:text="MORE INFORMATION"
+        android:text="@string/more_information"
         android:id="@+id/popupTitle"
         android:textColor="#fff"
         android:layout_centerHorizontal="true"

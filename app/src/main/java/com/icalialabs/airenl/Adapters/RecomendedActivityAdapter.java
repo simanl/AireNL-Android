@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.icalialabs.airenl.Models.Recomendation;
 import com.icalialabs.airenl.R;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedActivityAdapter.ActivityHolder> {
 
-    List<Integer> imageIds;
+    List<Recomendation> imageIds;
 
     public static class ActivityHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -30,7 +31,7 @@ public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedAc
         }
     }
 
-    public RecomendedActivityAdapter(List<Integer> imageIds) {
+    public RecomendedActivityAdapter(List<Recomendation> imageIds) {
         this.imageIds = imageIds;
     }
 
@@ -54,7 +55,7 @@ public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedAc
 
     @Override
     public void onBindViewHolder(ActivityHolder holder, int position) {
-        holder.imageView.setImageResource(imageIds.get(position));
+        holder.imageView.setImageResource(imageIds.get(position).getResourceId());
 //        final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams)holder.imageView.getLayoutParams();
 //        layoutParams.leftMargin = (position == 0)? layoutParams.rightMargin : 0;
 //        holder.imageView.setLayoutParams(layoutParams);
