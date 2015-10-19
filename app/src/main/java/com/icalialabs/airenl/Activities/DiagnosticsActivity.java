@@ -379,8 +379,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
 
-        String pm10Text = (station.getLastMeasurement().getRespirableSuspendedParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "N/A";
-        String pm2_5Text = (station.getLastMeasurement().getFineParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "N/A";
+        String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "N/A";
+        String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "N/A";
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "N/A";
         TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
 
