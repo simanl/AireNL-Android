@@ -23,7 +23,7 @@ public class RestClient {
     public RestClient() {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(new JSONApiTypeAdapterFactory())
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'")
+                .setDateFormat("EEE, d MMM yyyy HH:mm:ss Z")
                 .create();
 
         OkHttpClient httpClient = new OkHttpClient();

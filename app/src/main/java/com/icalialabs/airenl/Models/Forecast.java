@@ -3,6 +3,7 @@ package com.icalialabs.airenl.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -23,8 +24,11 @@ public class Forecast implements Serializable {
     @SerializedName("respirable_particles")
     private String respirableParticles;
 
-    @SerializedName("updated_at")
-    private Date updatedAt;
+    @SerializedName("starts_at_rfc822")
+    private Date startsAt;
+
+    @SerializedName("ends_at_rfc822")
+    private Date endsAt;
 
     public Date getForecastedDatetime() {
         return forecastedDatetime;
@@ -42,7 +46,18 @@ public class Forecast implements Serializable {
         return respirableParticles;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Date getStartsAt() {
+        return startsAt;
     }
+
+    public Date getEndsAt() {
+        return endsAt;
+    }
+
+    public static Comparator<Forecast> StartDateAscendingComparator = new Comparator<Forecast>() {
+        @Override
+        public int compare(Forecast lhs, Forecast rhs) {
+            return lhs.getStartsAt().before(rhs.getStartsAt())? -1 : 1;
+        }
+    };
 }

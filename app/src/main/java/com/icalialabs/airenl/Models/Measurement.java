@@ -16,7 +16,7 @@ public class Measurement implements Serializable {
     @SerializedName("id")
     private String id;
 
-    @SerializedName("measured_at")
+    @SerializedName("measured_at_rfc822")
     private Date measuredAt;
 
     @SerializedName("temperature")

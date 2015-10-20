@@ -37,6 +37,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.icalialabs.airenl.Adapters.RecomendedActivityAdapter;
 import com.icalialabs.airenl.Models.AirQualityType;
+import com.icalialabs.airenl.Models.Forecast;
 import com.icalialabs.airenl.Models.Recomendation;
 import com.icalialabs.airenl.Models.Screenshot;
 import com.icalialabs.airenl.Models.Station;
@@ -47,8 +48,11 @@ import org.lucasr.twowayview.ItemClickSupport;
 import org.lucasr.twowayview.widget.SpacingItemDecoration;
 import org.lucasr.twowayview.widget.TwoWayView;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -77,14 +81,17 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         }
 
 //        Fabric.with(this, new Crashlytics());
+
+
+        setContentView(R.layout.activity_diagnostics);
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
 
-
-
-        setContentView(R.layout.activity_diagnostics);
+        ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
+        mainViewBackground.setImageBitmap(image);
 
         final RelativeLayout nonBoxedDiagnostics = (RelativeLayout) findViewById(R.id.nonBoxedDiagnostics);
         nonBoxedDiagnostics.post(new Runnable() {
@@ -117,8 +124,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
         ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
-        ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
-        mainViewBackground.setImageBitmap(image);
+
 //        findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -359,7 +365,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     public void reloadDataWithStation(Station station) {
         AirQualityType type = AirQualityType.qualityTypeWithImecaValue(0);
-        String imecaValue = "N/A";
+        String imecaValue = "--";
         if (station.getLastMeasurement().getImecaPoints() != null) {
             type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
             imecaValue = station.getLastMeasurement().getImecaPoints().toString();
@@ -378,11 +384,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
+        DateFormat timeFormat = new SimpleDateFormat("kk:mm");
 
-        String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "N/A";
-        String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "N/A";
-        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "N/A";
+        String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "--";
+        String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "--";
+        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
         TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
+
+        Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
+        List<Forecast> forecasts = station.getForecasts();
 
         for (int index = 0; index < station.getForecasts().size(); index++) {
             TableRow row = (TableRow)table.getChildAt(index + 1);
@@ -392,11 +402,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 TextView pm2_5Label = (TextView)row.getChildAt(2);
                 TextView o3Label = (TextView)row.getChildAt(3);
 
-                String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "N/A";
-                String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "N/A";
-                String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "N/A";
+                String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "--";
+                String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
+                String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "--";
 
-                timeLabel.setText(index + 1 + " Time");
+                timeLabel.setText(timeFormat.format(station.getForecasts().get(index).getStartsAt())+"-"+timeFormat.format(station.getForecasts().get(index).getEndsAt()));
                 pm10Label.setText(pm10);
                 pm2_5Label.setText(pm2_5);
                 o3Label.setText(o3);

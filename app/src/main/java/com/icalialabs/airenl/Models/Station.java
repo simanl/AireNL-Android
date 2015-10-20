@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -93,38 +94,5 @@ public class Station implements Serializable {
             System.out.println(exception.getLocalizedMessage());
         }
         return station;
-    }
-}
-
-abstract class Instrument {
-    String name;
-
-    abstract void play();
-}
-
-abstract class StringedInstrument extends Instrument {
-    int numberOfStrings;
-
-    void changeStrings() {
-        System.out.print(numberOfStrings + " new strings aquired");
-    }
-}
-
-class ElectricGuitar extends StringedInstrument {
-    ElectricGuitar() {
-        super();
-        this.name = "Guitar";
-        this.numberOfStrings = 6;
-    }
-
-    ElectricGuitar(int numberOfStrings) {
-        super();
-        this.name = "Guitar";
-        this.numberOfStrings = numberOfStrings;
-    }
-
-    @Override
-    void  play() {
-        System.out.print("An electric " + numberOfStrings + "-string " + name + " is rocking!");
     }
 }
