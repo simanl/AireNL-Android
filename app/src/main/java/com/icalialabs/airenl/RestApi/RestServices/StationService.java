@@ -14,7 +14,7 @@ import retrofit.http.Query;
  * Created by Compean on 23/09/15.
  */
 public interface StationService {
-    @GET("stations?include=last_measurement")
+    @GET("stations?include=last_measurement,current_forecasts&fields[forescasts]=starts_at_rfc822,ends_at_rfc822")
     Call<List<Station>> getAllStations();
 
     @GET("stations/nearest_from?include=last_measurement,current_forecasts")

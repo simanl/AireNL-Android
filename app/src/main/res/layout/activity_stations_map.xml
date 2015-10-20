@@ -12,7 +12,6 @@
             android:id="@+id/topBarImage"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:src="@drawable/fondodia"
             android:scaleType="centerCrop"/>
         <TextView
             android:layout_width="match_parent"
