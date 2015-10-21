@@ -60,7 +60,8 @@
                         android:layout_height="45dp"
                         android:layout_marginLeft="5dp"
                         android:layout_centerVertical="true"
-                        android:onClick="statusInfoButtonClicked">
+                        android:onClick="statusInfoButtonClicked"
+                        android:background="?@android:attr/selectableItemBackgroundBorderless">
                         <ImageView
                             android:id="@+id/airStatusInfoButton"
                             style="@style/InfoButton.InAireStatus"/>
@@ -284,7 +285,8 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="-10dp"
                     android:layout_marginTop="-10dp"
-                    android:onClick="forecastsInfoButtonClicked">
+                    android:onClick="forecastsInfoButtonClicked"
+                    android:background="?@android:attr/selectableItemBackgroundBorderless">
                     <ImageView
                         android:id="@+id/forecastsInfoButton"
                         android:layout_gravity="center"
@@ -397,7 +399,9 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="30dp"
             android:layout_centerVertical="true"
-            android:onClick="userSelectedLocation">
+            android:onClick="userSelectedLocation"
+            android:background="?@android:attr/selectableItemBackgroundBorderless"
+            >
             <ImageView
                 android:id="@+id/locationIcon"
                 android:layout_width="30dp"
@@ -441,7 +445,9 @@
             android:layout_marginRight="12dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:onClick="mapButtonClicked">
+            android:onClick="mapButtonClicked"
+            android:background="?@android:attr/selectableItemBackgroundBorderless"
+            >
             <ImageView
                 android:id="@+id/mapIcon"
                 android:layout_width="wrap_content"

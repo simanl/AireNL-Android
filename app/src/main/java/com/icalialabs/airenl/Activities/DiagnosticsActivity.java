@@ -369,27 +369,30 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
         TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
 
-        Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
-        List<Forecast> forecasts = station.getForecasts();
+        if (station.getForecasts() != null) {
+            Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
+            List<Forecast> forecasts = station.getForecasts();
 
-        for (int index = 0; index < station.getForecasts().size(); index++) {
-            TableRow row = (TableRow)table.getChildAt(index + 1);
-            if (row != null) {
-                TextView timeLabel = (TextView)row.getChildAt(0);
-                TextView pm10Label = (TextView)row.getChildAt(1);
-                TextView pm2_5Label = (TextView)row.getChildAt(2);
-                TextView o3Label = (TextView)row.getChildAt(3);
+            for (int index = 0; index < station.getForecasts().size(); index++) {
+                TableRow row = (TableRow)table.getChildAt(index + 1);
+                if (row != null) {
+                    TextView timeLabel = (TextView)row.getChildAt(0);
+                    TextView pm10Label = (TextView)row.getChildAt(1);
+                    TextView pm2_5Label = (TextView)row.getChildAt(2);
+                    TextView o3Label = (TextView)row.getChildAt(3);
 
-                String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "--";
-                String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
-                String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "--";
+                    String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "--";
+                    String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
+                    String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "--";
 
-                timeLabel.setText(timeFormat.format(station.getForecasts().get(index).getStartsAt())+"-"+timeFormat.format(station.getForecasts().get(index).getEndsAt()));
-                pm10Label.setText(pm10);
-                pm2_5Label.setText(pm2_5);
-                o3Label.setText(o3);
+                    timeLabel.setText(timeFormat.format(station.getForecasts().get(index).getStartsAt())+"-"+timeFormat.format(station.getForecasts().get(index).getEndsAt()));
+                    pm10Label.setText(pm10);
+                    pm2_5Label.setText(pm2_5);
+                    o3Label.setText(o3);
+                }
             }
         }
+
 
         stationNameTextView.setText(station.getName());
         imecaValueTextView.setText(imecaValue);
