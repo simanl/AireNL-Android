@@ -76,23 +76,126 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_diagnostics);
+        restoreActivityData(savedInstanceState);
+
+//        Fabric.with(this, new Crashlytics());
+
+        loadBackgroundImage();
+        setupNonBoxedDiagnosticsLayout();
+
+
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+
+        setupBlurredBackground();
+        setupBlurredScreenshot();
+
+        findViewById(R.id.locationIcon).setAlpha(0.5f);
+        if (checkPlayServices()) {
+
+            buildGoogleApiClient();
+            mGoogleApiClient.connect();
+        }
+
+        setupRecommendationsView();
+
+        Station currentStation = Station.getPersistedCurrentStation();
+        if (currentStation != null) {
+            reloadDataWithStation(currentStation);
+        }
+    }
+
+    void restoreActivityData(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.get("is_showing_popup") != null) {
             isShowingPopup = savedInstanceState.getBoolean("is_showing_popup");
         }
 
-//        Fabric.with(this, new Crashlytics());
+        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+            findViewById(R.id.locationIcon).setAlpha(1f);
+        } else {
+            findViewById(R.id.locationIcon).setAlpha(0.5f);
+        }
+    }
+
+    void setupBlurredScreenshot() {
+        ImageView blurScreenshot = (ImageView)findViewById(R.id.blurScreenshot);
+        blurScreenshot.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isShowingPopup) {
+                    blurScreenshotShow();
+                }
+            }
+        });
+    }
 
 
-        setContentView(R.layout.activity_diagnostics);
+    void setupRecommendationsView() {
+        final List<Recomendation> imageIds = new ArrayList<Recomendation>();
+        imageIds.add(Recomendation.outdoors());
+        imageIds.add(Recomendation.window());
+        imageIds.add(Recomendation.run());
+        imageIds.add(Recomendation.allergy());
+        imageIds.add(Recomendation.smoke());
+        imageIds.add(Recomendation.heartCondition());
+        imageIds.add(Recomendation.gas());
+        imageIds.add(Recomendation.car());
 
+        TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
+        twoWayView.setHasFixedSize(true);
+        twoWayView.setAdapter(new RecomendedActivityAdapter(imageIds));
+        twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
+
+        final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
+
+        itemClick.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View child, int position, long id) {
+                if (!isShowingPopup) {
+                    isShowingPopup = true;
+                    blurScreenshotShow();
+                    Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("description", imageIds.get(position).getDescription());
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, POPUP_RESULT_CODE);
+                }
+            }
+        });
+    }
+
+    void setupBlurredBackground() {
+        ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
+        blurredBackground.setAlpha(0f);
+        blurredBackground.post(new Runnable() {
+            @Override
+            public void run() {
+                ImageView background = (ImageView) findViewById(R.id.mainViewBackground);
+                ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
+                Blurry.with(getApplicationContext())
+                        .radius(20)
+                        .sampling(1)
+                        .capture(background)
+                        .into(blurredBackground);
+            }
+        });
+    }
+
+    void loadBackgroundImage() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
 
         ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
-        mainViewBackground.setImageBitmap(image);
+//        mainViewBackground.setImageBitmap(null);
+//        mainViewBackground.setImageDrawable(null);
 
+        mainViewBackground.setImageBitmap(image);
+    }
+
+    void setupNonBoxedDiagnosticsLayout() {
         final RelativeLayout nonBoxedDiagnostics = (RelativeLayout) findViewById(R.id.nonBoxedDiagnostics);
         nonBoxedDiagnostics.post(new Runnable() {
             @Override
@@ -113,124 +216,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height + secondSectionParams.height + firstSectionParams.topMargin + firstSectionParams.bottomMargin + secondSectionParams.bottomMargin / 2);
                 }
 
-//                int newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height + firstSectionParams.topMargin + firstSectionParams.bottomMargin / 2);
-
                 android.view.ViewGroup.LayoutParams params = nonBoxedDiagnostics.getLayoutParams();
                 params.height = newHeight;
                 nonBoxedDiagnostics.setLayoutParams(params);
-            }
-        });
-
-
-        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
-
-//        findViewById(R.id.mapIcon).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mapButtonClicked();
-//                //startActivity(new Intent(DiagnosticsActivity.this, StationsMapActivity.class));
-//            }
-//        });
-
-//        findViewById(R.id.locationIcon).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                userSelectedLocation();
-//            }
-//        });
-
-//        findViewById(R.id.airStatusInfoButton).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                statusInfoButtonClicked();
-//            }
-//        });
-
-//        findViewById(R.id.forecastsInfoButton).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                forecastsInfoButtonClicked();
-//            }
-//        });
-
-        ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
-        blurredBackground.setAlpha(0f);
-        blurredBackground.post(new Runnable() {
-            @Override
-            public void run() {
-                ImageView background = (ImageView) findViewById(R.id.mainViewBackground);
-                ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
-                Blurry.with(getApplicationContext())
-                        .radius(20)
-                        .sampling(1)
-                        .capture(background)
-                        .into(blurredBackground);
-            }
-        });
-
-        ImageView blurScreenshot = (ImageView)findViewById(R.id.blurScreenshot);
-        blurScreenshot.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isShowingPopup) {
-                    blurScreenshotShow();
-                }
-            }
-        });
-
-        findViewById(R.id.locationIcon).setAlpha(0.5f);
-        if (checkPlayServices()) {
-
-            buildGoogleApiClient();
-            mGoogleApiClient.connect();
-        }
-
-        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
-            findViewById(R.id.locationIcon).setAlpha(1f);
-        } else {
-            findViewById(R.id.locationIcon).setAlpha(0.5f);
-        }
-
-        final List<Recomendation> imageIds = new ArrayList<Recomendation>();
-        imageIds.add(Recomendation.outdoors());
-        imageIds.add(Recomendation.window());
-        imageIds.add(Recomendation.run());
-        imageIds.add(Recomendation.allergy());
-        imageIds.add(Recomendation.smoke());
-        imageIds.add(Recomendation.heartCondition());
-        imageIds.add(Recomendation.gas());
-        imageIds.add(Recomendation.car());
-
-        TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
-        twoWayView.setHasFixedSize(true);
-        //twoWayView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        twoWayView.setAdapter(new RecomendedActivityAdapter(imageIds));
-        twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
-
-        Station currentStation = Station.getPersistedCurrentStation();
-        if (currentStation != null) {
-            reloadDataWithStation(currentStation);
-        }
-
-        final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
-
-        final Toast mToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        itemClick.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView parent, View child, int position, long id) {
-                if (!isShowingPopup) {
-                    isShowingPopup = true;
-                    blurScreenshotShow();
-                    Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("description", imageIds.get(position).getDescription());
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, POPUP_RESULT_CODE);
-                }
-
-                //mToast.setText("Item clicked: " + position);
-                //mToast.show();
             }
         });
     }
@@ -295,9 +283,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private void blurScreenshotShow() {
         View screen = (View) findViewById(R.id.rootDiagnosticsLayout);
         ImageView blurredBackground = (ImageView) findViewById(R.id.blurScreenshot);
-//        if (blurredBackground.getDrawable() != null) {
-//            blurredBackground.animate().alpha(1f).setDuration(300);
-//        } else {
         Blurry.with(getApplicationContext())
                 .radius(25)
                 .sampling(5)
@@ -321,18 +306,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     public void statusInfoButtonClicked(View view) {
-//        View view = findViewById(R.id.rootDiagnosticsLayout);
-//        Bitmap bitmap = Screenshot.takeScreenshot(view);
-//        Screenshot.saveBitmap(bitmap,"main_screen");
         if (!isShowingPopup) {
             isShowingPopup = true;
             blurScreenshotShow();
             startActivityForResult(new Intent(DiagnosticsActivity.this, Popup.class), POPUP_RESULT_CODE);
         }
-
-//        }
-
-
     }
 
     /**
@@ -460,8 +438,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 });
             }
         }
-
-
     }
 
     private void persistStation(Station station, boolean usingLocation) {
@@ -474,10 +450,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     @Override
     public void onConnected(Bundle bundle) {
-//        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
             userSelectedLocation(null);
-            //findViewById(R.id.locationIcon).setAlpha(1f);
         }
     }
 
@@ -494,15 +468,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     @Override
     public void onScrollChanged() {
-
-
-//        ImageView background = (ImageView)findViewById(R.id.mainViewBackground);
-//        Blurry.with(DiagnosticsActivity.this)
-//                .radius(20)
-//                .sampling(1)
-//                .async()
-//                .capture(findViewById(R.id.mainViewBackground))
-//                .into((ImageView) findViewById(R.id.blurImageView));
 
         final double maxAlphaDarkBackground = 0.6;
         final double minAlphaDarkBackground = 0.1;
@@ -523,8 +488,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         final double currentDarkAlpha = (currentScroll / (maxScroll / maxAlphaDarkRange)) + minAlphaDarkBackground;
         final double currentBlurAlpha = (scrollAdjustmentForBlur / (maxScroll * adjustmentFactor / maxAlphaBlurRange)) + minAlphaBlur;
 
-//        System.out.println("blur status: "+currentBlurAlpha + " scroll amount: " + currentScroll);
-
         darkBackground.setAlpha((float)currentDarkAlpha);
         blurImageView.setAlpha((float) currentBlurAlpha);
 
@@ -533,7 +496,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         int imecaOriginY = imecaQuantity.getTop() - currentScroll;
         if (imecaOriginY - topItemsGroup.getBottom() <= 20) {
             topItemsGroup.setTranslationY(-(topItemsGroup.getTop() - (imecaOriginY - (20 + topItemsGroup.getHeight()))));
-//            topItemsGroup.setTop(imecaOriginY - (20 + topItemsGroup.getHeight()));
         } else {
             topItemsGroup.setTranslationY(0);
         }
@@ -578,25 +540,14 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_diagnostics, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
+        ImageView blurredBackground = (ImageView) findViewById(R.id.blurImageView);
+        ImageView blurredScreenshot = (ImageView) findViewById(R.id.blurScreenshot);
+        mainViewBackground.setImageBitmap(null);
+        blurredBackground.setImageBitmap(null);
+        blurredScreenshot.setImageBitmap(null);
+    }
 }
