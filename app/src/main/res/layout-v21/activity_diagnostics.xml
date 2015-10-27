@@ -378,17 +378,33 @@
                     </TableRow>
                 </TableLayout>
             </RelativeLayout>
-            <TextView
-                android:id="@+id/backgroundLocationText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#afff"
-                android:text="Cerro de la Silla, Monterrey, NL."
-                android:layout_gravity="right"
-                android:textSize="13dp"
-                android:fontFamily="sans_serif_light"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/camera_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/camera_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"/>
+                <TextView
+                    android:id="@+id/backgroundLocationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/camera_icon"
+                    android:layout_centerVertical="true"
+                    android:textColor="#afff"
+                    android:text="Cerro de la Silla, Monterrey, NL."
+                    android:gravity="center"
+                    android:textSize="13dp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="sans_serif_light"
+
+                    android:layout_marginBottom="10dp"/>
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>
