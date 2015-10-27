@@ -319,13 +319,6 @@
                             </FrameLayout>
                         </FrameLayout>
 
-                        <FrameLayout style="@style/ContaminantForecastTableColumn">
-                            <FrameLayout style="@style/ContaminantTile">
-                                <TextView
-                                    style="@style/ContaminantTileText"
-                                    android:text="PM2.5"/>
-                            </FrameLayout>
-                        </FrameLayout>
 
                         <FrameLayout style="@style/ContaminantForecastTableColumn">
                             <FrameLayout style="@style/ContaminantTile">
@@ -343,14 +336,10 @@
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+2 HOUR"/>
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
@@ -363,14 +352,10 @@
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+4 HOUR"/>
-                        <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
                             android:text="0" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"

@@ -428,16 +428,16 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                 if (row != null) {
                     TextView timeLabel = (TextView)row.getChildAt(0);
                     TextView pm10Label = (TextView)row.getChildAt(1);
-                    TextView pm2_5Label = (TextView)row.getChildAt(2);
-                    TextView o3Label = (TextView)row.getChildAt(3);
+                    //TextView pm2_5Label = (TextView)row.getChildAt(2);
+                    TextView o3Label = (TextView)row.getChildAt(2);
 
                     String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "--";
-                    String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
+                    //String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
                     String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "--";
 
                     timeLabel.setText(timeFormat.format(station.getForecasts().get(index).getStartsAt())+"-"+timeFormat.format(station.getForecasts().get(index).getEndsAt()));
                     pm10Label.setText(pm10);
-                    pm2_5Label.setText(pm2_5);
+                    //pm2_5Label.setText(pm2_5);
                     o3Label.setText(o3);
                 }
             }
