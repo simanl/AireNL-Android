@@ -39,6 +39,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.icalialabs.airenl.Adapters.RecomendedActivityAdapter;
 import com.icalialabs.airenl.Models.AirQualityType;
+import com.icalialabs.airenl.Models.BackgroundProvider;
 import com.icalialabs.airenl.Models.Forecast;
 import com.icalialabs.airenl.Models.Recomendation;
 import com.icalialabs.airenl.Models.Screenshot;
@@ -201,7 +202,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
+        Bitmap image = decodeSampledBitmapFromResource(getResources(), BackgroundProvider.providerWithDate(new Date()).getBackgroundResource(), size.x / 4, size.y / 4);
 
         ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
 //        mainViewBackground.setImageBitmap(null);
@@ -397,6 +398,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         TextView pm10TextView = (TextView)findViewById(R.id.pm10ValueText);
         TextView pm2_5TextView = (TextView)findViewById(R.id.pm2_5ValueText);
         TextView o3TextView = (TextView)findViewById(R.id.o3ValueText);
+        TextView backgroundLocationTextView = (TextView)findViewById(R.id.backgroundLocationText);
 
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
@@ -440,6 +442,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         pm10TextView.setText(pm10Text);
         pm2_5TextView.setText(pm2_5Text);
         o3TextView.setText(o3Text);
+        backgroundLocationTextView.setText(BackgroundProvider.providerWithDate(new Date()).getBackgroundLocation());
 
         GradientDrawable drawableAirStatusView = new GradientDrawable();
         drawableAirStatusView.setCornerRadius(5000);

@@ -33,12 +33,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.icalialabs.airenl.Models.AirQualityType;
 import com.icalialabs.airenl.AireNL;
+import com.icalialabs.airenl.Models.BackgroundProvider;
 import com.icalialabs.airenl.Models.Forecast;
 import com.icalialabs.airenl.Models.Station;
 import com.icalialabs.airenl.R;
 import com.icalialabs.airenl.RestApi.RestClient;
 import com.squareup.leakcanary.RefWatcher;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -58,7 +60,7 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
+        Bitmap image = decodeSampledBitmapFromResource(getResources(), BackgroundProvider.providerWithDate(new Date()).getBackgroundResource(), size.x / 4, size.y / 4);
 
 
 //
