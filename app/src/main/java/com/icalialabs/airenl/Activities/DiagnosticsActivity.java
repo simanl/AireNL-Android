@@ -74,6 +74,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private final static int POPUP_RESULT_CODE = 2;
     private final static int FORECASTS_POPUP_RESULT_CODE = 2;
 
+    private BackgroundProvider provider;
+
     private boolean isShowingPopup = false;
 
     @Override
@@ -85,15 +87,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 //        Fabric.with(this, new Crashlytics());
 
         setupPullToReload();
-        loadBackgroundImage();
+        //loadBackgroundImage();
         setupNonBoxedDiagnosticsLayout();
 
 
         ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
 
-        setupBlurredBackground();
-        setupBlurredScreenshot();
+        //setupBlurredBackground();
+        //setupBlurredScreenshot();
 
         findViewById(R.id.locationIcon).setAlpha(0.5f);
         if (checkPlayServices()) {
@@ -108,6 +110,18 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (currentStation != null) {
             reloadDataWithStation(currentStation);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (provider == null || provider.getDayFraction() != BackgroundProvider.providerWithDate(new Date()).getDayFraction()) {
+            provider = BackgroundProvider.providerWithDate(new Date());
+            loadBackgroundImage();
+            setupBlurredBackground();
+            setupBlurredScreenshot();
+        }
+        reloadStationInfo();
     }
 
     void setupPullToReload() {
@@ -202,7 +216,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Bitmap image = decodeSampledBitmapFromResource(getResources(), BackgroundProvider.providerWithDate(new Date()).getBackgroundResource(), size.x / 4, size.y / 4);
+        Bitmap image = decodeSampledBitmapFromResource(getResources(), provider.getBackgroundResource(), size.x / 4, size.y / 4);
 
         ImageView mainViewBackground = (ImageView) findViewById(R.id.mainViewBackground);
 //        mainViewBackground.setImageBitmap(null);
@@ -239,11 +253,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        reloadStationInfo();
-    }
+
 
     public void reloadStationInfo() {
         final FrameLayout errorLoadingView = (FrameLayout)findViewById(R.id.errorLoadingView);

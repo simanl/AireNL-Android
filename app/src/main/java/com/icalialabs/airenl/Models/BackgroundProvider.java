@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class BackgroundProvider {
 
-    private enum DayFraction {
+    public enum DayFraction {
         Day, Sunset, Sunrise, Night
     }
 
@@ -30,6 +30,10 @@ public class BackgroundProvider {
         } else {
             fraction = DayFraction.Night;
         }
+    }
+
+    public DayFraction getDayFraction() {
+        return fraction;
     }
 
     public static BackgroundProvider providerWithDate(Date date) {
