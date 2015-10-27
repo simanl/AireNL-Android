@@ -1,5 +1,9 @@
 package com.icalialabs.airenl.Activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -16,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -38,10 +44,11 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.Response;
 
-public class StationsMapActivity extends AppCompatActivity implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
+public class StationsMapActivity extends AppCompatActivity implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private List<Station> stations;
+    Marker selectedMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +60,17 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         display.getSize(size);
         Bitmap image = decodeSampledBitmapFromResource(getResources(), R.drawable.fondodia, size.x / 4, size.y / 4);
 
+
 //
         ImageView mainViewBackground = (ImageView) findViewById(R.id.topBarImage);
         //mainViewBackground.destroyDrawingCache();
         mainViewBackground.setImageBitmap(image);
+        loadStations();
 
+    }
+
+    public void loadStations() {
+        final RelativeLayout errorLoadingView = (RelativeLayout)findViewById(R.id.errorLoadingView);
         RestClient client = new RestClient();
         client.getStationService().getAllStations().enqueue(new Callback<List<Station>>() {
             @Override
@@ -71,16 +84,58 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
                     }
 
                 }
-
+                errorLoadingView.animate().alpha(0f).setDuration(500);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 System.out.println(t.getLocalizedMessage());
+                final TextView serverStatusTextView = (TextView) findViewById(R.id.serverStatusBannerText);
+                final FrameLayout reloadActionView = (FrameLayout) findViewById(R.id.reloadActionView);
+                if (serverStatusTextView.getText().equals(getString(R.string.loading_station))) {
+                    serverStatusTextView.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            if (serverStatusTextView.getText().equals(getString(R.string.loading_station))) {
+                                serverStatusTextView.setText(getString(R.string.error_loading_stations));
+                                serverStatusTextView.animate().alpha(1f).setDuration(500);
+                            }
+                        }
+                    });
+                    ValueAnimator anim = ValueAnimator.ofInt(ContextCompat.getColor(getApplicationContext(), R.color.loading_banner_color), ContextCompat.getColor(getApplicationContext(), R.color.error_banner_color));
+                    anim.setDuration(1000);
+                    anim.setEvaluator(new ArgbEvaluator());
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            errorLoadingView.setBackgroundColor((Integer) animation.getAnimatedValue());
+                        }
+                    });
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            reloadActionView.setAlpha(1f);
+                        }
+                    });
+                    anim.start();
+                }
+
             }
         });
 
         setUpMapIfNeeded();
+    }
+
+    public void reloadStationsClicked(View view) {
+        final RelativeLayout errorLoadingView = (RelativeLayout)findViewById(R.id.errorLoadingView);
+        final TextView serverStatusTextView = (TextView)findViewById(R.id.serverStatusBannerText);
+        final FrameLayout reloadActionView = (FrameLayout)findViewById(R.id.reloadActionView);
+        errorLoadingView.setBackgroundResource(R.color.loading_banner_color);
+        serverStatusTextView.setText(getString(R.string.loading_station));
+        reloadActionView.setAlpha(0f);
+        loadStations();
     }
 
     @Override
@@ -206,6 +261,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setInfoWindowAdapter(this);
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
     }
 
     @Override
@@ -232,10 +289,10 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         airQualityLabel.setText(type.toString());
         drawableAirStatus.setCornerRadius(5000);
         drawableAirStatus.setColor(type.color());
-        drawableAirStatus.setAlpha(60*255/100);
+        drawableAirStatus.setAlpha(60 * 255 / 100);
         drawableInfoWindow.setCornerRadius(20);
         drawableInfoWindow.setColor(Color.WHITE);
-        drawableInfoWindow.setAlpha(90*255/100);
+        drawableInfoWindow.setAlpha(90 * 255 / 100);
         airStatusView.setBackground(drawableAirStatus);
         view.getChildAt(0).setBackground(drawableInfoWindow);
         return view;
@@ -244,6 +301,10 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        returnStationAndFinish(marker);
+    }
+
+    public void returnStationAndFinish(Marker marker) {
         Station station = stations.get(Integer.parseInt(marker.getSnippet()));
         Intent resultIntent = new Intent();
         resultIntent.putExtra("station",station);
@@ -252,8 +313,33 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
     }
 
     @Override
+    public boolean onMarkerClick(Marker marker) {
+        selectedMarker = marker;
+        FrameLayout imageView = (FrameLayout)findViewById(R.id.switchIconView);
+        imageView.setAlpha(1f);
+        return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        selectedMarker = null;
+        FrameLayout imageView = (FrameLayout)findViewById(R.id.switchIconView);
+        imageView.setAlpha(0f);
+    }
+
+    @Override
     public View getInfoContents(Marker marker) {
         return null;
+    }
+
+    public void mapCrossCancelClicked(View view) {
+        finish();
+    }
+
+    public void mapSwitchClicked(View view) {
+        if (selectedMarker != null) {
+            returnStationAndFinish(selectedMarker);
+        }
     }
 
     @Override
@@ -261,8 +347,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         super.onDestroy();
         ImageView mainViewBackground = (ImageView) findViewById(R.id.topBarImage);
         mainViewBackground.setImageBitmap(null);
-        RefWatcher refWatcher = AireNL.getRefWatcher(this);
-        refWatcher.watch(this);
+        //RefWatcher refWatcher = AireNL.getRefWatcher(this);
+        //refWatcher.watch(this);
 //        RefWatcher refWatcher;
 //        refWatcher.watch(this);
     }

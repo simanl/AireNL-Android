@@ -22,6 +22,11 @@
         android:background="#000000"
         android:alpha="0.1"/>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -383,6 +388,7 @@
 
         </LinearLayout>
     </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         style="@style/TopItems"
@@ -454,6 +460,22 @@
 
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/errorLoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/topItemsGroup"
+        android:background="@color/error_banner_color"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/error_loading_station"
+            android:textColor="@android:color/white"
+            />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/blurScreenshot"

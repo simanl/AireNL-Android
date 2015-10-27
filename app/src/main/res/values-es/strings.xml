@@ -38,4 +38,7 @@
     <string name="gas_description">Si la calidad del aire es mala, las personas que por su actividad cotidiana están en contacto directo al uso de combustibles sólidos (cocineras, asadores), se recomienda limitarse hasta en tanto pase la alerta.</string>
     <string name="car_description">Si la calidad del aire es mala, reducir en la medida de lo posible el uso de vehículos.</string>
     <string name="more_information">MAS INFORMACION</string>
+    <string name="error_loading_stations">Error, reintenta haciendo click aquí</string>
+    <string name="error_loading_station">Error Cargando Estacion, intenta más tarde</string>
+    <string name="loading_station">Cargando Estaciones...</string>
 </resources>

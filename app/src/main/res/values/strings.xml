@@ -38,4 +38,7 @@
     <string name="gas_description">If air quality is bad, people who use fuel, like cooks, should abstain from doing so until air quality improves.</string>
     <string name="car_description">If air quality is bad, vehicle use should be reduced as much as possible.</string>
     <string name="more_information">MORE INFORMATION</string>
+    <string name="error_loading_stations">Could not load stations, click here to retry</string>
+    <string name="error_loading_station">Error Loading Station, try again later</string>
+    <string name="loading_station">Loading Stations...</string>
 </resources>

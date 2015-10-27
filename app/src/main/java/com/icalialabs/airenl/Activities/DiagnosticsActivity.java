@@ -1,6 +1,7 @@
 package com.icalialabs.airenl.Activities;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,6 +83,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
 //        Fabric.with(this, new Crashlytics());
 
+        setupPullToReload();
         loadBackgroundImage();
         setupNonBoxedDiagnosticsLayout();
 
@@ -104,6 +107,18 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (currentStation != null) {
             reloadDataWithStation(currentStation);
         }
+    }
+
+    void setupPullToReload() {
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.orange_redish, R.color.orange, R.color.yellow, R.color.sky_blue, R.color.dull_blue, R.color.dark_blue, R.color.dull_blue, R.color.sky_blue, R.color.yellow, R.color.orange);
+        swipeRefreshLayout.setProgressViewEndTarget(true, 260);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reloadStationInfo();
+            }
+        });
     }
 
     void restoreActivityData(Bundle savedInstanceState) {
@@ -226,12 +241,19 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     @Override
     protected void onResume() {
         super.onResume();
+        reloadStationInfo();
+    }
+
+    public void reloadStationInfo() {
+        final FrameLayout errorLoadingView = (FrameLayout)findViewById(R.id.errorLoadingView);
+        errorLoadingView.setAlpha(0);
         if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
             if (mGoogleApiClient != null) {
                 mGoogleApiClient.reconnect();
             }
 
         } else {
+            final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
             RestClient apiClient = new RestClient();
             apiClient.getStationService().getStation(Station.getPersistedCurrentStation().getId()).enqueue(new Callback<Station>() {
                 @Override
@@ -246,11 +268,27 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                             System.out.println(response.errorBody());
                         }
                     }
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
                     System.out.println(t.getLocalizedMessage());
+                    swipeRefreshLayout.setRefreshing(false);
+                    errorLoadingView.animate().alpha(1f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            if (errorLoadingView.getAlpha() == 1) {
+                                errorLoadingView.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        errorLoadingView.animate().alpha(0f).setDuration(500);
+                                    }
+                                }, 2000);
+                            }
+                        }
+                    });
                 }
             });
         }
@@ -411,6 +449,13 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     public void userSelectedLocation(View view) {
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        final FrameLayout errorLoadingView = (FrameLayout)findViewById(R.id.errorLoadingView);
+        //final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        if (!getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
+
         if (mGoogleApiClient != null) {
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
@@ -431,12 +476,27 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                                 System.out.println(response.errorBody());
                             }
                         }
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
                         System.out.println(t.getLocalizedMessage());
+                        swipeRefreshLayout.setRefreshing(false);
+                        errorLoadingView.animate().alpha(1f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                if (errorLoadingView.getAlpha() == 1) {
+                                    errorLoadingView.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            errorLoadingView.animate().alpha(0f).setDuration(500);
+                                        }
+                                    }, 2000);
+                                }
+                            }
+                        });
                     }
                 });
             }

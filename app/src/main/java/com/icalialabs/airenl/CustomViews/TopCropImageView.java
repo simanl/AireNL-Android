@@ -46,14 +46,19 @@ public class TopCropImageView extends ImageView {
         float scale;
         final int viewWidth = getWidth() - getPaddingLeft() - getPaddingRight();
         final int viewHeight = getHeight() - getPaddingTop() - getPaddingBottom();
-        final int drawableWidth = getDrawable().getIntrinsicWidth();
-        final int drawableHeight = getDrawable().getIntrinsicHeight();
+        if (getDrawable() != null) {
+            final int drawableWidth = getDrawable().getIntrinsicWidth();
+            final int drawableHeight = getDrawable().getIntrinsicHeight();
 
-        if (drawableWidth * viewHeight > drawableHeight * viewWidth) {
-            scale = (float) viewHeight / (float) drawableHeight;
+            if (drawableWidth * viewHeight > drawableHeight * viewWidth) {
+                scale = (float) viewHeight / (float) drawableHeight;
+            } else {
+                scale = (float) viewWidth / (float) drawableWidth;
+            }
         } else {
-            scale = (float) viewWidth / (float) drawableWidth;
+            scale = viewWidth;
         }
+
 
         matrix.setScale(scale, scale);
         setImageMatrix(matrix);

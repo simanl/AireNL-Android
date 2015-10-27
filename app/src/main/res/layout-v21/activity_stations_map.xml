@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.icalialabs.airenl.StationsMapActivity"
-    android:orientation="vertical"
     >
     <RelativeLayout
         android:id="@+id/topBar"
@@ -21,7 +21,8 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="10dp"
             android:layout_alignParentBottom="true"
-            android:onClick="mapCrossCancelClicked">
+            android:onClick="mapCrossCancelClicked"
+            android:background="?@android:attr/selectableItemBackgroundBorderless">
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -30,10 +31,11 @@
                 />
         </FrameLayout>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@string/measurement_stations"
+            android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:layout_marginBottom="12dp"
             android:textColor="#fff"
@@ -48,7 +50,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:onClick="mapSwitchClicked"
-            android:alpha="0">
+            android:alpha="0"
+            android:background="?@android:attr/selectableItemBackgroundBorderless">
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"

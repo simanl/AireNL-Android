@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="orange_redish">#D14A18</color>
+    <color name="orange">#E39732</color>
+    <color name="yellow">#EAD04B</color>
+    <color name="sky_blue">#5CB5D4</color>
+    <color name="dull_blue">#0080B6</color>
+    <color name="dark_blue">#003A7A</color>
+    <color name="error_banner_color">#AAD14A18</color>
+    <color name="loading_banner_color">#AA0080B6</color>
+</resources>

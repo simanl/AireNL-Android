@@ -30,8 +30,8 @@ public class AireNL extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
-        refWatcher = LeakCanary.install(this);
+        //Fabric.with(this, new Crashlytics());
+        //refWatcher = LeakCanary.install(this);
         mContext = new WeakReference<Context>(this);
     }
 }
