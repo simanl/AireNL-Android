@@ -6,10 +6,50 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.DiagnosticsActivity"/>
+      <point      
+        x = "500"      
+        y = "100"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.Activities.ForecastsPopup"/>
+      <point      
+        x = "2504"      
+        y = "1172"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.icalialabs.airenl.StationsMapActivity"/>
       <point      
         x = "2196"      
         y = "124"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.Activities.Popup"/>
+      <point      
+        x = "1080"      
+        y = "2440"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.Activities.StationsMapActivity"/>
+      <point      
+        x = "3824"      
+        y = "188"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.icalialabs.airenl.Activities.RecomendationPopup"/>
+      <point      
+        x = "-580"      
+        y = "1184"/>
     </statePointEntry>
     <statePointEntry>
       <state      
@@ -22,10 +62,10 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.icalialabs.airenl.DiagnosticsActivity"/>
+        className = "com.icalialabs.airenl.Activities.DiagnosticsActivity"/>
       <point      
-        x = "500"      
-        y = "100"/>
+        x = "892"      
+        y = "-4"/>
     </statePointEntry>
   </locations>
 </navigationModel>
