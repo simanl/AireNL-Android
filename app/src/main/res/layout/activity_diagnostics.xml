@@ -299,6 +299,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/forecastsSection"
                 style="@style/AireSection.Frosted.Big">
                 <TableLayout
                     android:id="@+id/forecastsTable"

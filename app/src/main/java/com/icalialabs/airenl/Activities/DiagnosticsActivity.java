@@ -423,7 +423,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
         TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
 
+        RelativeLayout forecastsSection = (RelativeLayout)findViewById(R.id.forecastsSection);
         if (station.getForecasts() != null) {
+            forecastsSection.setVisibility(View.VISIBLE);
             Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
             List<Forecast> forecasts = station.getForecasts();
 
@@ -445,6 +447,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     o3Label.setText(o3);
                 }
             }
+        } else {
+            forecastsSection.setVisibility(View.GONE);
         }
 
 
