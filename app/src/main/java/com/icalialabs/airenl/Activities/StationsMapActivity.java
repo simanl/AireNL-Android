@@ -234,8 +234,9 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         if (stations != null) {
             for (int idx = 0; idx < stations.size(); idx++) {
                 Station station = stations.get(idx);
-                Integer imecaPoints = (station.getLastMeasurement().getImecaPoints() != null)? station.getLastMeasurement().getImecaPoints() : 0;
-                AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
+                //Integer imecaPoints = (station.getLastMeasurement().getImecaPoints() != null)? station.getLastMeasurement().getImecaPoints() : 0;
+                //AirQualityType qualityType = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
+                AirQualityType qualityType = AirQualityType.qualityTypeWithString(station.getLastMeasurement().getImecaCategory());
                 mMap.addMarker(new MarkerOptions().position(station.getCoordinate().getLatLong()).title(station.getName()).snippet(String.valueOf(idx)).icon(qualityType.getIcon()));
             }
         }
@@ -278,7 +279,8 @@ public class StationsMapActivity extends AppCompatActivity implements GoogleMap.
         FrameLayout view = (FrameLayout)getLayoutInflater().inflate(R.layout.info_window, null);
         Station station = stations.get(Integer.parseInt(marker.getSnippet()));
         Integer imecaPoints = (station.getLastMeasurement().getImecaPoints() != null) ? station.getLastMeasurement().getImecaPoints() : 0;
-        AirQualityType type = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
+        //AirQualityType type = AirQualityType.qualityTypeWithImecaValue(imecaPoints);
+        AirQualityType type = AirQualityType.qualityTypeWithString(station.getLastMeasurement().getImecaCategory());
 
 
 

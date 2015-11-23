@@ -70,6 +70,9 @@ public class Measurement implements Serializable {
     @SerializedName("fine_particles")
     private Double fineParticles;
 
+    @SerializedName("imeca_category")
+    private String imecaCategory;
+
     public String getId() {
         return id;
     }
@@ -146,5 +149,5 @@ public class Measurement implements Serializable {
         return respirableParticles;
     }
 
-
+    public String getImecaCategory() { return  imecaCategory;}
 }

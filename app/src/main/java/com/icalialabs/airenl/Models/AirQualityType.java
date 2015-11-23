@@ -33,7 +33,7 @@ public enum AirQualityType {
             case R.string.very_bad: return Color.rgb(230,65,60);
             case R.string.extremely_bad: return Color.rgb(115,52,135);
         }
-        return Color.TRANSPARENT;
+        return Color.argb(153,170,170,170);
     }
 
     public BitmapDescriptor getIcon() {
@@ -44,7 +44,7 @@ public enum AirQualityType {
             case R.string.very_bad: return BitmapDescriptorFactory.fromResource(R.drawable.red_marker);
             case R.string.extremely_bad: return BitmapDescriptorFactory.fromResource(R.drawable.purple_marker);
         }
-        return null;
+        return BitmapDescriptorFactory.fromResource(R.drawable.gray_marker);
     }
 
     public static AirQualityType qualityTypeWithImecaValue(Integer imeca) {
@@ -62,7 +62,9 @@ public enum AirQualityType {
     }
 
     public static AirQualityType qualityTypeWithString(String string) {
-        if (string.equals("good")) {
+        if (string == null) {
+            return NONE;
+        } else if (string.equals("good")) {
             return GOOD;
         } else if (string.equals("regular")) {
             return REGULAR;
