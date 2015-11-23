@@ -33,7 +33,7 @@ public enum AirQualityType {
             case R.string.very_bad: return Color.rgb(230,65,60);
             case R.string.extremely_bad: return Color.rgb(115,52,135);
         }
-        return Color.argb(153,170,170,170);
+        return Color.rgb(170,170,170);
     }
 
     public BitmapDescriptor getIcon() {
