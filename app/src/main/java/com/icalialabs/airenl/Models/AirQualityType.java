@@ -48,13 +48,15 @@ public enum AirQualityType {
     }
 
     public static AirQualityType qualityTypeWithImecaValue(Integer imeca) {
-        if (imeca < 130d) {
+        if (imeca == null) {
+            return NONE;
+        } else if (imeca < 50d) {
             return GOOD;
-        } else if (isBetween(imeca, 130, 140)){
+        } else if (isBetween(imeca, 50, 100)){
             return REGULAR;
-        } else if (isBetween(imeca, 140, 165)){
+        } else if (isBetween(imeca, 100, 150)){
             return BAD;
-        } else if (isBetween(imeca, 165, 185)){
+        } else if (isBetween(imeca, 150, 200)){
             return VERY_BAD;
         } else {
             return EXTREMELY_BAD;
