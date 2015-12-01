@@ -16,35 +16,31 @@ public class Recomendation {
     }
 
     public static Recomendation outdoors() {
-        return new Recomendation(R.drawable.outdoors, AireNL.getContext().getString(R.string.outdoors_description));
+        return new Recomendation(R.drawable.outdoor_recomendation, AireNL.getContext().getString(R.string.outdoors_description));
     }
 
     public static Recomendation window() {
-        return new Recomendation(R.drawable.window, AireNL.getContext().getString(R.string.window_description));
+        return new Recomendation(R.drawable.closed_windows_recomendation, AireNL.getContext().getString(R.string.window_description));
     }
 
     public static Recomendation run() {
-        return new Recomendation(R.drawable.run, AireNL.getContext().getString(R.string.run_description));
+        return new Recomendation(R.drawable.run_recomendation, AireNL.getContext().getString(R.string.run_description));
     }
 
     public static Recomendation allergy() {
-        return new Recomendation(R.drawable.allergy, AireNL.getContext().getString(R.string.allergy_description));
-    }
-
-    public static Recomendation smoke() {
-        return new Recomendation(R.drawable.smoke, AireNL.getContext().getString(R.string.smoke_description));
+        return new Recomendation(R.drawable.asthma_recomendation, AireNL.getContext().getString(R.string.allergy_description));
     }
 
     public static Recomendation heartCondition() {
-        return new Recomendation(R.drawable.heart_condition, AireNL.getContext().getString(R.string.heart_condition_description));
+        return new Recomendation(R.drawable.heart_condition_recomendation, AireNL.getContext().getString(R.string.heart_condition_description));
     }
 
     public static Recomendation gas() {
-        return new Recomendation(R.drawable.gas, AireNL.getContext().getString(R.string.gas_description));
+        return new Recomendation(R.drawable.gas_recomendation, AireNL.getContext().getString(R.string.gas_description));
     }
 
     public static Recomendation car() {
-        return new Recomendation(R.drawable.car, AireNL.getContext().getString(R.string.car_description));
+        return new Recomendation(R.drawable.car_recomendation, AireNL.getContext().getString(R.string.car_description));
     }
 
     public int getResourceId() {

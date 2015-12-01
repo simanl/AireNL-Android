@@ -75,8 +75,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private final static int FORECASTS_POPUP_RESULT_CODE = 2;
 
     private BackgroundProvider provider;
+    private RecomendedActivityAdapter recomendedActivityAdapter;
 
     private boolean isShowingPopup = false;
+
+    private Station currentStation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             buildGoogleApiClient();
             mGoogleApiClient.connect();
         }
+
 
         setupRecommendationsView();
 
@@ -160,39 +164,50 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         });
     }
 
-
     void setupRecommendationsView() {
-        final List<Recomendation> imageIds = new ArrayList<Recomendation>();
-        imageIds.add(Recomendation.outdoors());
-        imageIds.add(Recomendation.window());
-        imageIds.add(Recomendation.run());
-        imageIds.add(Recomendation.allergy());
-        imageIds.add(Recomendation.smoke());
-        imageIds.add(Recomendation.heartCondition());
-        imageIds.add(Recomendation.gas());
-        imageIds.add(Recomendation.car());
-
+        //AirQualityType type = AirQualityType.qualityTypeWithString(currentStation.getLastMeasurement().getImecaCategory());
         TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
         twoWayView.setHasFixedSize(true);
-        twoWayView.setAdapter(new RecomendedActivityAdapter(imageIds));
+        recomendedActivityAdapter = new RecomendedActivityAdapter(null);
+        twoWayView.setAdapter(recomendedActivityAdapter);
         twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
+        //twoWayView.addItemDecoration(new SpacingItemDecoration(0, 20));
 
         final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
+
+
 
         itemClick.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View child, int position, long id) {
                 if (!isShowingPopup) {
+                    AirQualityType type = AirQualityType.qualityTypeWithString(currentStation.getLastMeasurement().getImecaCategory());
                     isShowingPopup = true;
                     blurScreenshotShow();
                     Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("description", imageIds.get(position).getDescription());
+                    bundle.putString("description", type.recommendationsImageIds().get(position).getDescription());
                     intent.putExtras(bundle);
                     startActivityForResult(intent, POPUP_RESULT_CODE);
                 }
             }
         });
+    }
+
+    void reloadRecommendationsView(final AirQualityType airQualityType) {
+        recomendedActivityAdapter.setImageIds(airQualityType.recommendationsImageIds());
+        recomendedActivityAdapter.notifyDataSetChanged();
+
+
+        //TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
+        //twoWayView.setHasFixedSize(true);
+        //RecomendedActivityAdapter adapter = new RecomendedActivityAdapter(airQualityType.recommendationsImageIds());
+        //twoWayView.setAdapter(adapter);
+        //adapter.
+        //twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
+
+
+
     }
 
     void setupBlurredBackground() {
@@ -392,6 +407,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     public void reloadDataWithStation(Station station) {
         //AirQualityType type = AirQualityType.qualityTypeWithImecaValue(0);
+        currentStation = station;
         AirQualityType type = AirQualityType.qualityTypeWithString(station.getLastMeasurement().getImecaCategory());
         String imecaValue = "--";
         if (station.getLastMeasurement().getImecaPoints() != null) {
@@ -400,6 +416,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             imecaValue = station.getLastMeasurement().getImecaPoints().toString();
         }
 
+
+        reloadRecommendationsView(type);
 
         TextView stationNameTextView = (TextView)findViewById(R.id.stationTextView);
         TextView imecaValueTextView = (TextView)findViewById(R.id.imecaQuantity);
@@ -424,7 +442,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
 
         RelativeLayout forecastsSection = (RelativeLayout)findViewById(R.id.forecastsSection);
-        if (station.getForecasts() != null) {
+        if (station.getForecasts() != null && station.getForecasts().size() > 0) {
             forecastsSection.setVisibility(View.VISIBLE);
             Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
             List<Forecast> forecasts = station.getForecasts();

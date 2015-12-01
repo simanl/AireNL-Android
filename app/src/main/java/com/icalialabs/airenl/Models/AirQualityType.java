@@ -7,6 +7,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.icalialabs.airenl.AireNL;
 import com.icalialabs.airenl.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Compean on 10/09/15.
  */
@@ -113,5 +116,17 @@ public enum AirQualityType {
             return "N/A";
         }
         return AireNL.getContext().getString(id).toLowerCase();
+    }
+
+    public List<Recomendation> recommendationsImageIds() {
+        final List<Recomendation> imageIds = new ArrayList<Recomendation>();
+        imageIds.add(Recomendation.outdoors());
+        imageIds.add(Recomendation.window());
+        imageIds.add(Recomendation.allergy());
+        imageIds.add(Recomendation.run());
+        imageIds.add(Recomendation.car());
+        imageIds.add(Recomendation.heartCondition());
+        imageIds.add(Recomendation.gas());
+        return imageIds;
     }
 }

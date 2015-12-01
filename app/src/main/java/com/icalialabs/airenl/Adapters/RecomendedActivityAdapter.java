@@ -35,6 +35,10 @@ public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedAc
         this.imageIds = imageIds;
     }
 
+    public void setImageIds(List<Recomendation> imageIds) {
+        this.imageIds = imageIds;
+    }
+
     @Override
     public ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recomended_activity_item, parent, false);
@@ -64,6 +68,9 @@ public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedAc
 
     @Override
     public int getItemCount() {
+        if (imageIds == null) {
+            return 0;
+        }
         return imageIds.size();
     }
 
