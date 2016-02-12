@@ -20,14 +20,17 @@
     <string name="tomorrow">MAÑANA</string>
     <string name="day_after_tomorrow">PASADO</string>
     <string name="loading">Cargando...</string>
-    <string name="good_air_quality_description">Se puede realizar cualquier actividad al aire libre.</string>
-    <string name="regular_air_quality_description">Personas extremadamente sensibles a la contaminación: consideren limitar los esfuerzos prolongados al aire libre.</string>
-    <string name="bad_air_quality_description">Niños, adultos mayores, quienes realicen actividad física intensa o con enfermedades respiratorias y cardiovasculares: limitar esfuerzos prolongados al aire libre</string>
-    <string name="very_bad_air_quality_description">Niños, adultos mayores, quienes realicen actividad física intensa o con enfermedades respiratorias y cardiovasculares: evitar esfuerzos prolongados al aire libre</string>
-    <string name="extremely_bad_air_quality_description">Población en general: suspender esfuerzos al aire libre.</string>
+
+    <string name="good_air_quality_description">Ningun riesgo a la salud.</string>
+    <string name="regular_air_quality_description">Posibles molestias en niños, adultos mayores y personas con enfermedades respiratorias o cardiovasculares.</string>
+    <string name="bad_air_quality_description">Posibles efectos adversos a la salud, en particular niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+    <string name="very_bad_air_quality_description">Efectos adversos a la salud de la población en general. Se agravan los síntomas en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+    <string name="extremely_bad_air_quality_description">Efectos graves a la salud de la población en general. Se pueden presentar complicaciones en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+
     <string name="pm10_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 10 µm, es decir, comprende las fracciones fina y gruesa.</string>
     <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
     <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
+
     <string name="forecast">PRONOSTICO</string>
     <string name="more_information">MAS INFORMACION</string>
     <string name="error_loading_stations">Error, reintenta haciendo click aquí</string>

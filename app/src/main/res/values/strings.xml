@@ -20,14 +20,17 @@
     <string name="tomorrow">TOMORROW</string>
     <string name="day_after_tomorrow">THE DAY AFTER</string>
     <string name="loading">Loading...</string>
-    <string name="good_air_quality_description">You can perform any outdoor activities.</string>
-    <string name="regular_air_quality_description">For people who are sensitive to contamination: consider limiting prolonged outdoor efforts.</string>
-    <string name="bad_air_quality_description">Kids, older adults, people who are doing intense physical activities or who have breathing or heart problems: limit prolonged outdoor efforts.</string>
-    <string name="very_bad_air_quality_description">Kids, older adults, people who are doing intense physical activities or who have breathing or heart problems: avoid prolonged outdoor efforts.</string>
-    <string name="extremely_bad_air_quality_description">General population: abstain from any outdoor efforts.</string>
+
+    <string name="good_air_quality_description">Ningun riesgo a la salud.</string>
+    <string name="regular_air_quality_description">Posibles molestias en niños, adultos mayores y personas con enfermedades respiratorias o cardiovasculares.</string>
+    <string name="bad_air_quality_description">Posibles efectos adversos a la salud, en particular niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+    <string name="very_bad_air_quality_description">Efectos adversos a la salud de la población en general. Se agravan los síntomas en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+    <string name="extremely_bad_air_quality_description">Efectos graves a la salud de la población en general. Se pueden presentar complicaciones en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
+
     <string name="pm10_description">Coarse dust particles are 2.5 to 10 micrometers in diameter. Sources include crushing or grinding operations and dust.</string>
     <string name="pm2_5_description">Fine particles are 2.5 micrometers in diameter or smaller. They are produced from all types of combustion.</string>
     <string name="o3_description">Natural gas composed of three atoms of oxygen.</string>
+
     <string name="forecast">FORECAST</string>
     <string name="more_information">MORE INFORMATION</string>
     <string name="error_loading_stations">Could not load stations, click here to retry</string>
