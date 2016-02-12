@@ -29,16 +29,31 @@
     <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
     <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
     <string name="forecast">PRONOSTICO</string>
-    <string name="outdoors_description">Si la calidad del aire es mala, evitar tiempos prolongados de permanencia a la intemperie.</string>
-    <string name="window_description">Si la calidad del aire es mala, mantener cerradas puertas y ventanas.</string>
-    <string name="run_description">Si la calidad del aire es mala, no practicar actividades de ejercitación o recreación al aire libre.</string>
-    <string name="allergy_description">Si la calidad del aire es mala, los pacientes con atecedentes de alergias, principalmente asma bronquial, deberán mantenerse en el interior de sus domicilios y abstenerse de los medicamentos que normalmente les receta su médico y utilizan ante la presencia de crisis asmáticas o de broncoespasmo. Estas recomendaciones también aplican en pacientes con efermedad pulmonar obstructiva crónica o enfisema, o antecedentes de enfermedad cardiaca (infarto o angina).</string>
-    <string name="smoke_description">Si la calidad del aire es mala, las personas con el hábito de tabaquismo, deberán abstenerse del consumo de productos de tabaco (cigarrillos, tabaco para pipa, etc.) y otras formas combustibles del tabaco.</string>
-    <string name="heart_condition_description">Si la calidad del aire es mala, en el caso de personas con antecedentes de infarto, enfermedad pulmonar obstructiva crónica o asma, trasladarlos fuera de las zonas de mayor riesgo, a zonas habitacionales donde el riesgo sea menor.</string>
-    <string name="gas_description">Si la calidad del aire es mala, las personas que por su actividad cotidiana están en contacto directo al uso de combustibles sólidos (cocineras, asadores), se recomienda limitarse hasta en tanto pase la alerta.</string>
-    <string name="car_description">Si la calidad del aire es mala, reducir en la medida de lo posible el uso de vehículos.</string>
     <string name="more_information">MAS INFORMACION</string>
     <string name="error_loading_stations">Error, reintenta haciendo click aquí</string>
     <string name="error_loading_station">Error Cargando Estacion, intenta más tarde</string>
     <string name="loading_station">Cargando Estaciones...</string>
+
+    <string name="outdoors">Puedes realizar actividades al aire libre</string>
+    <string name="outdoors_limit">Limita las actividades al aire libre</string>
+    <string name="outdoors_no">Evita las actividades al aire libre</string>
+
+    <string name="exercise">Puedes ejercitarte al aire libre</string>
+    <string name="exercise_limit">Limita el tiempo para ejercitarte al aire libre</string>
+    <string name="exercise_no">Evita ejercitarte al aire libre</string>
+
+    <string name="sensible">Sin riesgo para grupos sensibles</string>
+    <string name="sensible_limit">Personas extremadamente sensibles limitar actividades al aire libre</string>
+    <string name="sensible_no">Grupos sensibles permanecer en interiores</string>
+
+    <string name="car_limit">Limita el uso de vehículos automotores</string>
+    <string name="car_no">No uses vehículos automotores a menos que sea necesario</string>
+
+    <string name="smoking_limit">Si eres fumador, limita el consumo del tabaco</string>
+    <string name="smoking_no">No fumar</string>
+
+    <string name="window">Mantén cerradas puertas y ventanas</string>
+    <string name="heart_limit">Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares</string>
+    <string name="fuel_no">Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)</string>
+
 </resources>

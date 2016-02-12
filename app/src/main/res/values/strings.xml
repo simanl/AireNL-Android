@@ -29,16 +29,31 @@
     <string name="pm2_5_description">Fine particles are 2.5 micrometers in diameter or smaller. They are produced from all types of combustion.</string>
     <string name="o3_description">Natural gas composed of three atoms of oxygen.</string>
     <string name="forecast">FORECAST</string>
-    <string name="outdoors_description">If air quality is bad, avoid spending prolonged periods outdoors.</string>
-    <string name="window_description">If air quality is bad, keep windows and doors closed</string>
-    <string name="run_description">If air quality is bad, do not practice exercise outdoors.</string>
-    <string name="allergy_description">If air quality is bad, people with allergies, especially asthma, should stay indoors.</string>
-    <string name="smoke_description">If air quality is bad, people who smoke any kind of tobacco should abstain from doing so.</string>
-    <string name="heart_condition_description">If air quality is bad, people with a history of heart problems should stay indoors or in low risk zones.</string>
-    <string name="gas_description">If air quality is bad, people who use fuel, like cooks, should abstain from doing so until air quality improves.</string>
-    <string name="car_description">If air quality is bad, vehicle use should be reduced as much as possible.</string>
     <string name="more_information">MORE INFORMATION</string>
     <string name="error_loading_stations">Could not load stations, click here to retry</string>
     <string name="error_loading_station">Error Loading Station, try again later</string>
     <string name="loading_station">Loading Stations...</string>
+
+    <string name="outdoors">Puedes realizar actividades al aire libre</string>
+    <string name="outdoors_limit">Limita las actividades al aire libre</string>
+    <string name="outdoors_no">Evita las actividades al aire libre</string>
+
+    <string name="exercise">Puedes ejercitarte al aire libre</string>
+    <string name="exercise_limit">Limita el tiempo para ejercitarte al aire libre</string>
+    <string name="exercise_no">Evita ejercitarte al aire libre</string>
+
+    <string name="sensible">Sin riesgo para grupos sensibles</string>
+    <string name="sensible_limit">Personas extremadamente sensibles limitar actividades al aire libre</string>
+    <string name="sensible_no">Grupos sensibles permanecer en interiores</string>
+
+    <string name="car_limit">Limita el uso de vehículos automotores</string>
+    <string name="car_no">No uses vehículos automotores a menos que sea necesario</string>
+
+    <string name="smoking_limit">Si eres fumador, limita el consumo del tabaco</string>
+    <string name="smoking_no">No fumar</string>
+
+    <string name="window">Mantén cerradas puertas y ventanas</string>
+    <string name="heart_limit">Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares</string>
+    <string name="fuel_no">Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)</string>
+
 </resources>

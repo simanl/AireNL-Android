@@ -128,18 +128,21 @@ public enum AirQualityType {
                 imageIds.add(Recomendation.exercise());
                 imageIds.add(Recomendation.outdoors());
                 imageIds.add(Recomendation.sensible());
+                break;
 
             case R.string.regular:
 
                 imageIds.add(Recomendation.exercise());
                 imageIds.add(Recomendation.outdoors());
                 imageIds.add(Recomendation.sensibleLimit());
+                break;
 
             case R.string.bad:
 
                 imageIds.add(Recomendation.exerciseLimit());
                 imageIds.add(Recomendation.outdoorsLimit());
                 imageIds.add(Recomendation.sensibleNo());
+                break;
 
             case R.string.very_bad:
 
@@ -151,6 +154,7 @@ public enum AirQualityType {
                 imageIds.add(Recomendation.carLimit());
                 imageIds.add(Recomendation.fuelNo());
                 imageIds.add(Recomendation.smokingLimit());
+                break;
 
             case R.string.extremely_bad:
 
@@ -162,30 +166,9 @@ public enum AirQualityType {
                 imageIds.add(Recomendation.carNo());
                 imageIds.add(Recomendation.fuelNo());
                 imageIds.add(Recomendation.smokingNo());
+                break;
 
         }
-
-//        imageIds.add(Recomendation.outdoors());
-//        imageIds.add(Recomendation.outdoorsLimit());
-//        imageIds.add(Recomendation.outdoorsNo());
-//
-//        imageIds.add(Recomendation.exercise());
-//        imageIds.add(Recomendation.exerciseLimit());
-//        imageIds.add(Recomendation.exerciseNo());
-//
-//        imageIds.add(Recomendation.sensible());
-//        imageIds.add(Recomendation.sensibleLimit());
-//        imageIds.add(Recomendation.sensibleNo());
-//
-//        imageIds.add(Recomendation.carLimit());
-//        imageIds.add(Recomendation.carNo());
-//
-//        imageIds.add(Recomendation.smokingLimit());
-//        imageIds.add(Recomendation.smokingNo());
-//
-//        imageIds.add(Recomendation.window());
-//        imageIds.add(Recomendation.heartLimit());
-//        imageIds.add(Recomendation.fuelNo());
 
         return imageIds;
 
