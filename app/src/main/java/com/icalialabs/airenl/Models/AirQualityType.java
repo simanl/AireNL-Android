@@ -118,15 +118,76 @@ public enum AirQualityType {
         return AireNL.getContext().getString(id).toLowerCase();
     }
 
-    public List<Recomendation> recommendationsImageIds() {
+    public List<Recomendation> recommendationsImageIds()
+    {
         final List<Recomendation> imageIds = new ArrayList<Recomendation>();
-        imageIds.add(Recomendation.outdoors());
-        imageIds.add(Recomendation.window());
-        imageIds.add(Recomendation.allergy());
-        imageIds.add(Recomendation.run());
-        imageIds.add(Recomendation.car());
-        imageIds.add(Recomendation.heartCondition());
-        imageIds.add(Recomendation.gas());
+
+        switch (id) {
+            case R.string.good:
+
+                imageIds.add(Recomendation.exercise());
+                imageIds.add(Recomendation.outdoors());
+                imageIds.add(Recomendation.sensible());
+
+            case R.string.regular:
+
+                imageIds.add(Recomendation.exercise());
+                imageIds.add(Recomendation.outdoors());
+                imageIds.add(Recomendation.sensibleLimit());
+
+            case R.string.bad:
+
+                imageIds.add(Recomendation.exerciseLimit());
+                imageIds.add(Recomendation.outdoorsLimit());
+                imageIds.add(Recomendation.sensibleNo());
+
+            case R.string.very_bad:
+
+                imageIds.add(Recomendation.exerciseNo());
+                imageIds.add(Recomendation.outdoorsNo());
+                imageIds.add(Recomendation.window());
+                imageIds.add(Recomendation.sensibleNo());
+                imageIds.add(Recomendation.heartLimit());
+                imageIds.add(Recomendation.carLimit());
+                imageIds.add(Recomendation.fuelNo());
+                imageIds.add(Recomendation.smokingLimit());
+
+            case R.string.extremely_bad:
+
+                imageIds.add(Recomendation.exerciseNo());
+                imageIds.add(Recomendation.outdoorsNo());
+                imageIds.add(Recomendation.window());
+                imageIds.add(Recomendation.sensibleNo());
+                imageIds.add(Recomendation.heartLimit());
+                imageIds.add(Recomendation.carNo());
+                imageIds.add(Recomendation.fuelNo());
+                imageIds.add(Recomendation.smokingNo());
+
+        }
+
+//        imageIds.add(Recomendation.outdoors());
+//        imageIds.add(Recomendation.outdoorsLimit());
+//        imageIds.add(Recomendation.outdoorsNo());
+//
+//        imageIds.add(Recomendation.exercise());
+//        imageIds.add(Recomendation.exerciseLimit());
+//        imageIds.add(Recomendation.exerciseNo());
+//
+//        imageIds.add(Recomendation.sensible());
+//        imageIds.add(Recomendation.sensibleLimit());
+//        imageIds.add(Recomendation.sensibleNo());
+//
+//        imageIds.add(Recomendation.carLimit());
+//        imageIds.add(Recomendation.carNo());
+//
+//        imageIds.add(Recomendation.smokingLimit());
+//        imageIds.add(Recomendation.smokingNo());
+//
+//        imageIds.add(Recomendation.window());
+//        imageIds.add(Recomendation.heartLimit());
+//        imageIds.add(Recomendation.fuelNo());
+
         return imageIds;
+
     }
 }
