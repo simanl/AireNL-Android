@@ -11,7 +11,7 @@
     <string name="very_bad">Muy Mala</string>
     <string name="extremely_bad">Extremadamente Mala</string>
     <string name="air_quality">CALIDAD DEL AIRE</string>
-    <string name="measurement_stations">Estaciones de Medición</string>
+    <string name="measurement_stations">Sitios de Monitoreo</string>
     <string name="quality_of_air_is">LA CALIDAD DEL AIRE ES</string>
     <string name="recomended_activities">ACTIVIDADES RECOMENDADAS</string>
     <string name="wind_with_unit_description">VIENTO KM/H</string>
@@ -20,6 +20,11 @@
     <string name="tomorrow">MAÑANA</string>
     <string name="day_after_tomorrow">PASADO</string>
     <string name="loading">Cargando...</string>
+    <string name="forecast">PRONOSTICO</string>
+    <string name="more_information">MAS INFORMACION</string>
+    <string name="error_loading_stations">Error, reintenta haciendo click aquí</string>
+    <string name="error_loading_station">Error Cargando Estacion, intenta más tarde</string>
+    <string name="loading_station">Cargando Estaciones...</string>
 
     <string name="good_air_quality_description">Ningun riesgo a la salud.</string>
     <string name="regular_air_quality_description">Posibles molestias en niños, adultos mayores y personas con enfermedades respiratorias o cardiovasculares.</string>
@@ -27,15 +32,9 @@
     <string name="very_bad_air_quality_description">Efectos adversos a la salud de la población en general. Se agravan los síntomas en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
     <string name="extremely_bad_air_quality_description">Efectos graves a la salud de la población en general. Se pueden presentar complicaciones en niños, adultos mayores y personas con enfermedades cardiovasculares o respiratorias.</string>
 
-    <string name="pm10_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 10 µm, es decir, comprende las fracciones fina y gruesa.</string>
-    <string name="pm2_5_description">Son partículas en suspensión con un diámetro aerodinámico de hasta 2.5 µm, denominadas partículas finas o fracción fina.</string>
-    <string name="o3_description">Gas natural compuesto de tres atomos de oxígeno.</string>
-
-    <string name="forecast">PRONOSTICO</string>
-    <string name="more_information">MAS INFORMACION</string>
-    <string name="error_loading_stations">Error, reintenta haciendo click aquí</string>
-    <string name="error_loading_station">Error Cargando Estacion, intenta más tarde</string>
-    <string name="loading_station">Cargando Estaciones...</string>
+    <string name="pm10_description">Partículas suspendidas líquidas o sólidas con diámetro aerodinámico igual o menor de 10 µm. Son emitidas por una variedad de fuentes fijas y móviles, como camiones a diesel, estufas de leña, centrales eléctricas, etc. \n La exposición constante a niveles elevados de PM10 ha sido relacionada con irritación de los ojos, nariz y garganta, tos frecuente y dificultad para respirar, ataques de asma, al corazón y afectaciones a las funciones pulmonares.</string>
+    <string name="pm2_5_description">Partículas finas suspendidas en el aire con diámetro aerodinámico igual o menor de 2.5 µm.  Son emitidas durante cualquier proceso de combustión, incluyendo vehículos motorizados, centrales eléctricas, quema de biomasa e incendios forestales, además de algunos procesos industriales. \n Exposición por largos periodos a PM2.5 ha sido asociada con problemas afecciones respiratorias y cardiacas, principalmente entre grupos susceptibles como adultos mayores e infantes.</string>
+    <string name="o3_description">Contaminante secundario formado durante reacciones fotoquímicas entre óxidos de nitrógeno y compuestos orgánicos volátiles. Emisiones de instalaciones eléctricas e industriales, vehiculares, vapores de gasolina y solventes son algunas de las mayores fuentes de precursores. \n Exposición a O3 puede desencadenar en afecciones del sistema respiratorio tales como asma, especialmente en niños y adultos mayores.</string>
 
     <string name="outdoors">Puedes realizar actividades al aire libre</string>
     <string name="outdoors_limit">Limita las actividades al aire libre</string>
