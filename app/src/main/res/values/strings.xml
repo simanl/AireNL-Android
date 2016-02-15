@@ -37,26 +37,26 @@
     <string name="error_loading_station">Error Loading Station, try again later</string>
     <string name="loading_station">Loading Stations...</string>
 
-    <string name="outdoors">Puedes realizar actividades al aire libre</string>
-    <string name="outdoors_limit">Limita las actividades al aire libre</string>
-    <string name="outdoors_no">Evita las actividades al aire libre</string>
+    <string name="outdoors">You may perform any outdoor activities</string> // Puedes realizar actividades al aire libre
+    <string name="outdoors_limit">Limit outdoor activities</string> // Limita las actividades al aire libre
+    <string name="outdoors_no">Avoid outdoor activities</string> // Evita las actividades al aire libre
 
-    <string name="exercise">Puedes ejercitarte al aire libre</string>
-    <string name="exercise_limit">Limita el tiempo para ejercitarte al aire libre</string>
-    <string name="exercise_no">Evita ejercitarte al aire libre</string>
+    <string name="exercise">You may exercise outdoors</string> // Puedes ejercitarte al aire libre
+    <string name="exercise_limit">Limit your outdoor exercise time</string> // Limita el tiempo para ejercitarte al aire libre
+    <string name="exercise_no">Avoid outdoor exercise</string> // Evita ejercitarte al aire libre
 
-    <string name="sensible">Sin riesgo para grupos sensibles</string>
-    <string name="sensible_limit">Personas extremadamente sensibles limitar actividades al aire libre</string>
-    <string name="sensible_no">Grupos sensibles permanecer en interiores</string>
+    <string name="sensible">No risk for sensible groups</string> // Sin riesgo para grupos sensibles
+    <string name="sensible_limit">Extremely sensible people should limit outdoor activities</string> // Personas extremadamente sensibles limitar actividades al aire libre
+    <string name="sensible_no">Sensible people should remain indoors</string> // Grupos sensibles permanecer en interiores
 
-    <string name="car_limit">Limita el uso de vehículos automotores</string>
-    <string name="car_no">No uses vehículos automotores a menos que sea necesario</string>
+    <string name="car_limit">Limit vehicle use</string> // Limita el uso de vehículos automotores
+    <string name="car_no">Do not use vehicles, unless it is absolutely necessary</string> // No uses vehículos automotores a menos que sea necesario
 
-    <string name="smoking_limit">Si eres fumador, limita el consumo del tabaco</string>
-    <string name="smoking_no">No fumar</string>
+    <string name="smoking_limit">Limit tobacco smoking</string> // Si eres fumador, limita el consumo del tabaco
+    <string name="smoking_no">Do not smoke tobacco products</string> // No fumar
 
-    <string name="window">Mantén cerradas puertas y ventanas</string>
-    <string name="heart_limit">Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares</string>
-    <string name="fuel_no">Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)</string>
+    <string name="window">Keep doors and windows closed</string> // Mantén cerradas puertas y ventanas
+    <string name="heart_limit">See your doctor if you present respiratory or cardiovascular problems</string> // Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares
+    <string name="fuel_no">Avoid bonfires and fuel use</string> // Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)
 
 </resources>
