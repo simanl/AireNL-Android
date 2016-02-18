@@ -44,7 +44,8 @@ public class RecomendedActivityAdapter extends RecyclerView.Adapter<RecomendedAc
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recomended_activity_item, parent, false);
         final ActivityHolder activityHolder = new ActivityHolder(itemView);
         final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams)activityHolder.imageView.getLayoutParams();
-        layoutParams.height = activityHolder.itemView.getLayoutParams().width - layoutParams.leftMargin - layoutParams.rightMargin;
+//        layoutParams.height = activityHolder.itemView.getLayoutParams().width - layoutParams.leftMargin - layoutParams.rightMargin;
+        layoutParams.height = activityHolder.itemView.getLayoutParams().width + 20;
         activityHolder.imageView.setLayoutParams(layoutParams);
 //        activityHolder.imageView.post(new Runnable() {
 //            @Override
