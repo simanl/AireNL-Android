@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 
 public class RestClient {
-    private static final String BASE_URL = "http://198.199.108.152:3000/";
+    private static final String BASE_URL = "http://200.23.43.141/";
     private Retrofit retrofit;
     private StationService stationService;
 
