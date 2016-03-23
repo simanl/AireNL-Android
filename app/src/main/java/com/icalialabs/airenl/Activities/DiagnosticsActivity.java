@@ -175,8 +175,6 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
         final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
 
-
-
         itemClick.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View child, int position, long id) {
@@ -471,12 +469,28 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     o3Label.setText(o3);
                     o3Label.setBackgroundColor(forecast.getOzoneColor());
 
+                    row.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v)
+                        {
+                            if (!isShowingPopup) {
+                                AirQualityType type = AirQualityType.qualityTypeWithString(currentStation.getLastMeasurement().getImecaCategory());
+                                isShowingPopup = true;
+                                blurScreenshotShow();
+                                Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("description", "");
+                                intent.putExtras(bundle);
+                                startActivityForResult(intent, POPUP_RESULT_CODE);
+                            }
+                        }
+                    });
+
                 }
             }
         } else {
             forecastsSection.setVisibility(View.GONE);
         }
-
 
         stationNameTextView.setText(station.getName());
         imecaValueTextView.setText(imecaValue);
