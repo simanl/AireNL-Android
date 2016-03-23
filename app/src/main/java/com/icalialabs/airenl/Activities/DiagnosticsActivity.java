@@ -450,19 +450,27 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             for (int index = 0; index < station.getForecasts().size(); index++) {
                 TableRow row = (TableRow)table.getChildAt(index + 1);
                 if (row != null) {
+
+                    Forecast forecast = station.getForecasts().get(index);
+
                     TextView timeLabel = (TextView)row.getChildAt(0);
                     TextView pm10Label = (TextView)row.getChildAt(1);
                     //TextView pm2_5Label = (TextView)row.getChildAt(2);
                     TextView o3Label = (TextView)row.getChildAt(2);
 
-                    String pm10 = (station.getForecasts().get(index).getToracicParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getToracicParticles().toString()).lowerCaseString() : "--";
-                    //String pm2_5 = (station.getForecasts().get(index).getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getRespirableParticles().toString()).lowerCaseString() : "--";
-                    String o3 = (station.getForecasts().get(index).getOzone() != null)? AirQualityType.qualityTypeWithString(station.getForecasts().get(index).getOzone().toString()).lowerCaseString() : "--";
+                    String time = timeFormat.format(forecast.getStartsAt())+"-"+timeFormat.format(forecast.getEndsAt());
+                    String pm10 = (forecast.getToracicParticles() != null)? AirQualityType.qualityTypeWithString(forecast.getToracicParticles().toString()).lowerCaseString() : "--";
+                    //String pm2_5 = (forecast.getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(forecast.getRespirableParticles().toString()).lowerCaseString() : "--";
+                    String o3 = (forecast.getOzone() != null)? AirQualityType.qualityTypeWithString(forecast.getOzone().toString()).lowerCaseString() : "--";
 
-                    timeLabel.setText(timeFormat.format(station.getForecasts().get(index).getStartsAt())+"-"+timeFormat.format(station.getForecasts().get(index).getEndsAt()));
+                    timeLabel.setText(time);
                     pm10Label.setText(pm10);
+                    pm10Label.setBackgroundColor(forecast.getToracicParticlesColor());
                     //pm2_5Label.setText(pm2_5);
+                    //pm2_5label.setBackgroundColor(forecast.getRespirableParticlesColor());
                     o3Label.setText(o3);
+                    o3Label.setBackgroundColor(forecast.getOzoneColor());
+
                 }
             }
         } else {
