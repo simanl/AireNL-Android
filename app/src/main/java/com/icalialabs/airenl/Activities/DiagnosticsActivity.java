@@ -196,16 +196,12 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         recomendedActivityAdapter.setImageIds(airQualityType.recommendationsImageIds());
         recomendedActivityAdapter.notifyDataSetChanged();
 
-
         //TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
         //twoWayView.setHasFixedSize(true);
         //RecomendedActivityAdapter adapter = new RecomendedActivityAdapter(airQualityType.recommendationsImageIds());
         //twoWayView.setAdapter(adapter);
         //adapter.
         //twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
-
-
-
     }
 
     void setupBlurredBackground() {
@@ -410,10 +406,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         String imecaValue = "--";
         if (station.getLastMeasurement().getImecaPoints() != null) {
             //type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
-
             imecaValue = station.getLastMeasurement().getImecaPoints().toString();
         }
-
 
         reloadRecommendationsView(type);
 
@@ -437,10 +431,12 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "--";
         String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "--";
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
-        TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
 
         RelativeLayout forecastsSection = (RelativeLayout)findViewById(R.id.forecastsSection);
+        TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
+
         if (station.getForecasts() != null && station.getForecasts().size() > 0) {
+
             forecastsSection.setVisibility(View.VISIBLE);
             Collections.sort(station.getForecasts(), Forecast.StartDateAscendingComparator);
             List<Forecast> forecasts = station.getForecasts();
@@ -453,19 +449,19 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
                     TextView timeLabel = (TextView)row.getChildAt(0);
                     TextView pm10Label = (TextView)row.getChildAt(1);
-                    //TextView pm2_5Label = (TextView)row.getChildAt(2);
-                    TextView o3Label = (TextView)row.getChildAt(2);
+                    TextView pm2_5Label = (TextView)row.getChildAt(2);
+                    TextView o3Label = (TextView)row.getChildAt(3);
 
-                    String time = timeFormat.format(forecast.getStartsAt())+"-"+timeFormat.format(forecast.getEndsAt());
-                    String pm10 = (forecast.getToracicParticles() != null)? AirQualityType.qualityTypeWithString(forecast.getToracicParticles().toString()).lowerCaseString() : "--";
-                    //String pm2_5 = (forecast.getRespirableParticles() != null)? AirQualityType.qualityTypeWithString(forecast.getRespirableParticles().toString()).lowerCaseString() : "--";
-                    String o3 = (forecast.getOzone() != null)? AirQualityType.qualityTypeWithString(forecast.getOzone().toString()).lowerCaseString() : "--";
+                    String time = timeFormat.format(forecast.getStartsAt()) + "-" + timeFormat.format(forecast.getEndsAt());
+                    String pm10 = (forecast.getToracicParticlesIndex() != null) ? forecast.getToracicParticlesIndex() : "--";
+                    String pm2_5 = (forecast.getRespirableParticlesIndex() != null) ? forecast.getRespirableParticlesIndex() : "--";
+                    String o3 = (forecast.getOzoneIndex() != null) ? forecast.getOzoneIndex() : "--";
 
                     timeLabel.setText(time);
                     pm10Label.setText(pm10);
                     pm10Label.setBackgroundColor(forecast.getToracicParticlesColor());
-                    //pm2_5Label.setText(pm2_5);
-                    //pm2_5label.setBackgroundColor(forecast.getRespirableParticlesColor());
+                    pm2_5Label.setText(pm2_5);
+                    pm2_5Label.setBackgroundColor(forecast.getRespirableParticlesColor());
                     o3Label.setText(o3);
                     o3Label.setBackgroundColor(forecast.getOzoneColor());
 
@@ -479,7 +475,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                                 blurScreenshotShow();
                                 Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("description", "");
+                                bundle.putString("description", String.valueOf(R.string.max_value));
                                 intent.putExtras(bundle);
                                 startActivityForResult(intent, POPUP_RESULT_CODE);
                             }

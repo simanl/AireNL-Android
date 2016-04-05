@@ -51,19 +51,17 @@ public class Forecast implements Serializable {
         return startsAt;
     }
 
-    public Date getEndsAt() {
-        return endsAt;
-    }
+    public Date getEndsAt() { return endsAt; }
 
-    public String getOzone() {
+    public String getOzoneIndex() {
         return ozoneIndex;
     }
 
-    public String getToracicParticles() {
+    public String getToracicParticlesIndex() {
         return toracicParticlesIndex;
     }
 
-    public String getRespirableParticles() {
+    public String getRespirableParticlesIndex() {
         return respirableParticlesIndex;
     }
 
@@ -80,12 +78,15 @@ public class Forecast implements Serializable {
     }
 
     private int getColorForCategory(String category){
+        if (category == null) {
+            return Color.rgb(170, 170, 170);
+        }
         switch (category) {
-            case "buena": return Color.rgb(81, 205, 84);
+            case "good": return Color.rgb(81, 205, 84);
             case "regular": return Color.rgb(255,215,0);
-            case "mala": return Color.rgb(243,154,53);
-            case "muy mala": return Color.rgb(230,65,60);
-            case "extremadamente mala": return Color.rgb(115,52,135);
+            case "bad": return Color.rgb(243,154,53);
+            case "very_bad": return Color.rgb(230,65,60);
+            case "extremely_bad": return Color.rgb(115,52,135);
         }
         return Color.rgb(170, 170, 170);
     }

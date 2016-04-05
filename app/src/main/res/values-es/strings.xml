@@ -58,4 +58,6 @@
     <string name="heart_limit">Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares</string>
     <string name="fuel_no">Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)</string>
 
+    <string name="max_value">Valor máximo esperado</string>
+
 </resources>

@@ -58,4 +58,6 @@
     <string name="heart_limit">See your doctor if you present respiratory or cardiovascular problems</string> // Acude al médico si presentas síntomas de enfermedades respiratorias o cardiovasculares
     <string name="fuel_no">Avoid bonfires and fuel use</string> // Evita hacer fogatas y el uso de combustibles sólidos (carbón y leña)
 
+    <string name="max_value">Maximum expected value</string>
+
 </resources>
