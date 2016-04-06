@@ -432,7 +432,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         TextView o3TextView = (TextView) findViewById(R.id.o3ValueText);
         TextView backgroundLocationTextView = (TextView) findViewById(R.id.backgroundLocationText);
 
-        DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
+        DecimalFormat temperatureFormat = new DecimalFormat("0º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
         DateFormat timeFormat = new SimpleDateFormat("kk:mm");
 
