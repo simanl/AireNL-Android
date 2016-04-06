@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,8 @@ import android.widget.Toast;
 //import com.icalialabs.airenl.blurry.Blurry;
 //import Blurry;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -80,6 +83,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     private boolean isShowingPopup = false;
 
     private Station currentStation;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +122,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (currentStation != null) {
             reloadDataWithStation(currentStation);
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -129,7 +140,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     void setupPullToReload() {
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.orange_redish, R.color.orange, R.color.yellow, R.color.sky_blue, R.color.dull_blue, R.color.dark_blue, R.color.dull_blue, R.color.sky_blue, R.color.yellow, R.color.orange);
         swipeRefreshLayout.setProgressViewEndTarget(true, 260);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -145,7 +156,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             isShowingPopup = savedInstanceState.getBoolean("is_showing_popup");
         }
 
-        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+        if (getApplicationContext().getSharedPreferences("current_station", MODE_PRIVATE).getBoolean("using_location", true)) {
             findViewById(R.id.locationIcon).setAlpha(1f);
         } else {
             findViewById(R.id.locationIcon).setAlpha(0.5f);
@@ -153,7 +164,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     void setupBlurredScreenshot() {
-        ImageView blurScreenshot = (ImageView)findViewById(R.id.blurScreenshot);
+        ImageView blurScreenshot = (ImageView) findViewById(R.id.blurScreenshot);
         blurScreenshot.post(new Runnable() {
             @Override
             public void run() {
@@ -166,11 +177,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     void setupRecommendationsView() {
         //AirQualityType type = AirQualityType.qualityTypeWithString(currentStation.getLastMeasurement().getImecaCategory());
-        TwoWayView twoWayView = (TwoWayView)findViewById(R.id.recomendedActivitesListView);
+        TwoWayView twoWayView = (TwoWayView) findViewById(R.id.recomendedActivitesListView);
         twoWayView.setHasFixedSize(true);
         recomendedActivityAdapter = new RecomendedActivityAdapter(null);
         twoWayView.setAdapter(recomendedActivityAdapter);
-        twoWayView.addItemDecoration(new SpacingItemDecoration(0,20));
+        twoWayView.addItemDecoration(new SpacingItemDecoration(0, 20));
         //twoWayView.addItemDecoration(new SpacingItemDecoration(0, 20));
 
         final ItemClickSupport itemClick = ItemClickSupport.addTo(twoWayView);
@@ -255,7 +266,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     newHeight = rootView.getMeasuredHeight() - (firstSectionParams.height + secondSectionParams.height + firstSectionParams.topMargin + firstSectionParams.bottomMargin + secondSectionParams.bottomMargin / 2);
                 }
 
-                android.view.ViewGroup.LayoutParams params = nonBoxedDiagnostics.getLayoutParams();
+                ViewGroup.LayoutParams params = nonBoxedDiagnostics.getLayoutParams();
                 params.height = newHeight;
                 nonBoxedDiagnostics.setLayoutParams(params);
             }
@@ -263,24 +274,23 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
 
-
     public void reloadStationInfo() {
-        final FrameLayout errorLoadingView = (FrameLayout)findViewById(R.id.errorLoadingView);
+        final FrameLayout errorLoadingView = (FrameLayout) findViewById(R.id.errorLoadingView);
         errorLoadingView.setAlpha(0);
-        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+        if (getApplicationContext().getSharedPreferences("current_station", MODE_PRIVATE).getBoolean("using_location", true)) {
             if (mGoogleApiClient != null) {
                 mGoogleApiClient.reconnect();
             }
 
         } else {
-            final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+            final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
             RestClient apiClient = new RestClient();
             apiClient.getStationService().getStation(Station.getPersistedCurrentStation().getId()).enqueue(new Callback<Station>() {
                 @Override
                 public void onResponse(Response<Station> response) {
                     if (response != null) {
                         if (response.body() != null) {
-                            TextView lastUpdatedDate = (TextView)findViewById(R.id.lastUpdatedDate);
+                            TextView lastUpdatedDate = (TextView) findViewById(R.id.lastUpdatedDate);
                             Date date = new Date();
                             lastUpdatedDate.setText(date.toString());
                             reloadDataWithStation(response.body());
@@ -321,12 +331,12 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         if (requestCode == STATIONS_RESULT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 findViewById(R.id.locationIcon).setAlpha(0.5f);
-                Station station = (Station)data.getExtras().getSerializable("station");
+                Station station = (Station) data.getExtras().getSerializable("station");
                 reloadDataWithStation(station);
                 persistStation(station, false);
             }
         } else if (requestCode == POPUP_RESULT_CODE) {
-            ImageView screenShot = (ImageView)findViewById(R.id.blurScreenshot);
+            ImageView screenShot = (ImageView) findViewById(R.id.blurScreenshot);
             screenShot.animate().alpha(0f).setDuration(500);
             isShowingPopup = false;
         }
@@ -373,7 +383,7 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
     /**
      * Method to verify google play services on the device
-     * */
+     */
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -411,16 +421,16 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
 
         reloadRecommendationsView(type);
 
-        TextView stationNameTextView = (TextView)findViewById(R.id.stationTextView);
-        TextView imecaValueTextView = (TextView)findViewById(R.id.imecaQuantity);
-        RelativeLayout airStatusView = (RelativeLayout)findViewById(R.id.airQualityView);
-        TextView airQualityStatusTextView = (TextView)findViewById(R.id.airQualityStatusText);
-        TextView temperatureTextView = (TextView)findViewById(R.id.temperatureValueText);
-        TextView windSpeedTextView = (TextView)findViewById(R.id.windSpeedValueText);
-        TextView pm10TextView = (TextView)findViewById(R.id.pm10ValueText);
-        TextView pm2_5TextView = (TextView)findViewById(R.id.pm2_5ValueText);
-        TextView o3TextView = (TextView)findViewById(R.id.o3ValueText);
-        TextView backgroundLocationTextView = (TextView)findViewById(R.id.backgroundLocationText);
+        TextView stationNameTextView = (TextView) findViewById(R.id.stationTextView);
+        TextView imecaValueTextView = (TextView) findViewById(R.id.imecaQuantity);
+        RelativeLayout airStatusView = (RelativeLayout) findViewById(R.id.airQualityView);
+        TextView airQualityStatusTextView = (TextView) findViewById(R.id.airQualityStatusText);
+        TextView temperatureTextView = (TextView) findViewById(R.id.temperatureValueText);
+        TextView windSpeedTextView = (TextView) findViewById(R.id.windSpeedValueText);
+        TextView pm10TextView = (TextView) findViewById(R.id.pm10ValueText);
+        TextView pm2_5TextView = (TextView) findViewById(R.id.pm2_5ValueText);
+        TextView o3TextView = (TextView) findViewById(R.id.o3ValueText);
+        TextView backgroundLocationTextView = (TextView) findViewById(R.id.backgroundLocationText);
 
         DecimalFormat temperatureFormat = new DecimalFormat("0.##º");
         DecimalFormat numberFormat = new DecimalFormat("0.##");
@@ -432,8 +442,8 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "--";
         String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
 
-        RelativeLayout forecastsSection = (RelativeLayout)findViewById(R.id.forecastsSection);
-        TableLayout table = (TableLayout)findViewById(R.id.forecastsTable);
+        RelativeLayout forecastsSection = (RelativeLayout) findViewById(R.id.forecastsSection);
+        TableLayout table = (TableLayout) findViewById(R.id.forecastsTable);
 
         if (station.getForecasts() != null && station.getForecasts().size() > 0) {
 
@@ -442,15 +452,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
             List<Forecast> forecasts = station.getForecasts();
 
             for (int index = 0; index < station.getForecasts().size(); index++) {
-                TableRow row = (TableRow)table.getChildAt(index + 1);
+                TableRow row = (TableRow) table.getChildAt(index + 1);
                 if (row != null) {
 
                     Forecast forecast = station.getForecasts().get(index);
 
-                    TextView timeLabel = (TextView)row.getChildAt(0);
-                    TextView pm10Label = (TextView)row.getChildAt(1);
-                    TextView pm2_5Label = (TextView)row.getChildAt(2);
-                    TextView o3Label = (TextView)row.getChildAt(3);
+                    TextView timeLabel = (TextView) row.getChildAt(0);
+                    TextView pm10Label = (TextView) row.getChildAt(1);
+                    TextView pm2_5Label = (TextView) row.getChildAt(2);
+                    TextView o3Label = (TextView) row.getChildAt(3);
 
                     String time = timeFormat.format(forecast.getStartsAt()) + "-" + timeFormat.format(forecast.getEndsAt());
                     String pm10 = (forecast.getToracicParticlesIndex() != null) ? forecast.getToracicParticlesIndex() : "--";
@@ -465,17 +475,16 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     o3Label.setText(o3);
                     o3Label.setBackgroundColor(forecast.getOzoneColor());
 
-                    row.setOnClickListener(new View.OnClickListener(){
+                    row.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v)
-                        {
+                        public void onClick(View v) {
                             if (!isShowingPopup) {
                                 AirQualityType type = AirQualityType.qualityTypeWithString(currentStation.getLastMeasurement().getImecaCategory());
                                 isShowingPopup = true;
                                 blurScreenshotShow();
                                 Intent intent = new Intent(DiagnosticsActivity.this, RecomendationPopup.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("description", String.valueOf(R.string.max_value));
+                                bundle.putString("description", getResources().getString(R.string.max_value));
                                 intent.putExtras(bundle);
                                 startActivityForResult(intent, POPUP_RESULT_CODE);
                             }
@@ -501,15 +510,15 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         GradientDrawable drawableAirStatusView = new GradientDrawable();
         drawableAirStatusView.setCornerRadius(5000);
         drawableAirStatusView.setColor(type.color());
-        drawableAirStatusView.setAlpha(60*255/100);
+        drawableAirStatusView.setAlpha(60 * 255 / 100);
         airStatusView.setBackground(drawableAirStatusView);
     }
 
     public void userSelectedLocation(View view) {
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
-        final FrameLayout errorLoadingView = (FrameLayout)findViewById(R.id.errorLoadingView);
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        final FrameLayout errorLoadingView = (FrameLayout) findViewById(R.id.errorLoadingView);
         //final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
-        if (!getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+        if (!getApplicationContext().getSharedPreferences("current_station", MODE_PRIVATE).getBoolean("using_location", true)) {
             swipeRefreshLayout.setRefreshing(true);
         }
 
@@ -518,13 +527,13 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     mGoogleApiClient);
             if (mLastLocation != null) {
                 RestClient client = new RestClient();
-                client.getStationService().getNearestStationFrom(mLastLocation.getLatitude()+","+mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
+                client.getStationService().getNearestStationFrom(mLastLocation.getLatitude() + "," + mLastLocation.getLongitude()).enqueue(new Callback<Station>() {
                     @Override
                     public void onResponse(Response<Station> response) {
                         if (response != null) {
                             if (response.body() != null) {
                                 Date date = new Date();
-                                TextView lastUpdatedDate = (TextView)findViewById(R.id.lastUpdatedDate);
+                                TextView lastUpdatedDate = (TextView) findViewById(R.id.lastUpdatedDate);
                                 lastUpdatedDate.setText(date.toString());
                                 findViewById(R.id.locationIcon).setAlpha(1f);
                                 reloadDataWithStation(response.body());
@@ -561,16 +570,16 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     private void persistStation(Station station, boolean usingLocation) {
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("current_station", MODE_PRIVATE);
         SharedPreferences.Editor settingEditor = settings.edit();
-        settingEditor.putBoolean("using_location",usingLocation);
+        settingEditor.putBoolean("using_location", usingLocation);
         settingEditor.commit();
         station.persistAsCurrentStation();
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        if (getApplicationContext().getSharedPreferences("current_station",MODE_PRIVATE).getBoolean("using_location",true)) {
+        if (getApplicationContext().getSharedPreferences("current_station", MODE_PRIVATE).getBoolean("using_location", true)) {
             userSelectedLocation(null);
         }
     }
@@ -595,24 +604,24 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         final double maxAlpahBlur = 1;
         final double adjustmentFactor = 1 / 3.0; // reach the max alpha for blur in the total scroll position multiplied by this factor
 
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
         final int maxScroll = scrollView.getChildAt(0).getMeasuredHeight() - scrollView.getMeasuredHeight();
-        FrameLayout darkBackground = (FrameLayout)findViewById(R.id.darkBackground);
-        ImageView blurImageView = (ImageView)findViewById(R.id.blurImageView);
+        FrameLayout darkBackground = (FrameLayout) findViewById(R.id.darkBackground);
+        ImageView blurImageView = (ImageView) findViewById(R.id.blurImageView);
 
         final int currentScroll = scrollView.getScrollY();
-        final int scrollAdjustmentForBlur = (currentScroll <= (int)(maxScroll * adjustmentFactor)) ? currentScroll : (int)(maxScroll * adjustmentFactor);
+        final int scrollAdjustmentForBlur = (currentScroll <= (int) (maxScroll * adjustmentFactor)) ? currentScroll : (int) (maxScroll * adjustmentFactor);
 
         final double maxAlphaDarkRange = maxAlphaDarkBackground - minAlphaDarkBackground;
         final double maxAlphaBlurRange = maxAlpahBlur - minAlphaBlur;
         final double currentDarkAlpha = (currentScroll / (maxScroll / maxAlphaDarkRange)) + minAlphaDarkBackground;
         final double currentBlurAlpha = (scrollAdjustmentForBlur / (maxScroll * adjustmentFactor / maxAlphaBlurRange)) + minAlphaBlur;
 
-        darkBackground.setAlpha((float)currentDarkAlpha);
+        darkBackground.setAlpha((float) currentDarkAlpha);
         blurImageView.setAlpha((float) currentBlurAlpha);
 
-        RelativeLayout topItemsGroup = (RelativeLayout)findViewById(R.id.topItemsGroup);
-        TextView imecaQuantity = (TextView)findViewById(R.id.imecaQuantity);
+        RelativeLayout topItemsGroup = (RelativeLayout) findViewById(R.id.topItemsGroup);
+        TextView imecaQuantity = (TextView) findViewById(R.id.imecaQuantity);
         int imecaOriginY = imecaQuantity.getTop() - currentScroll;
         if (imecaOriginY - topItemsGroup.getBottom() <= 20) {
             topItemsGroup.setTranslationY(-(topItemsGroup.getTop() - (imecaOriginY - (20 + topItemsGroup.getHeight()))));
@@ -669,5 +678,45 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         mainViewBackground.setImageBitmap(null);
         blurredBackground.setImageBitmap(null);
         blurredScreenshot.setImageBitmap(null);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Diagnostics Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.icalialabs.airenl.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client2, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Diagnostics Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.icalialabs.airenl.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client2, viewAction);
+        client2.disconnect();
     }
 }
