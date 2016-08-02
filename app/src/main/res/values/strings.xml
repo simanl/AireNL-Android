@@ -60,4 +60,6 @@
 
     <string name="max_value">Maximum expected value</string>
 
+    <string name="na">n/a</string>
+
 </resources>

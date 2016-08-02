@@ -60,4 +60,6 @@
 
     <string name="max_value">Valor máximo esperado</string>
 
+    <string name="na">n/d</string>
+
 </resources>

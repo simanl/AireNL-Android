@@ -411,12 +411,10 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
     }
 
     public void reloadDataWithStation(Station station) {
-        //AirQualityType type = AirQualityType.qualityTypeWithImecaValue(0);
         currentStation = station;
         AirQualityType type = AirQualityType.qualityTypeWithString(station.getLastMeasurement().getImecaCategory());
-        String imecaValue = "--";
+        String imecaValue = getString(R.string.na);
         if (station.getLastMeasurement().getImecaPoints() != null) {
-            //type = AirQualityType.qualityTypeWithImecaValue(station.getLastMeasurement().getImecaPoints());
             imecaValue = station.getLastMeasurement().getImecaPoints().toString();
         }
 
@@ -437,11 +435,11 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
         DecimalFormat numberFormat = new DecimalFormat("0.##");
         DateFormat timeFormat = new SimpleDateFormat("kk:mm");
 
-        String temperature = (station.getLastMeasurement().getTemperature() != null) ? temperatureFormat.format(station.getLastMeasurement().getTemperature()) : "--";
-        String windSpeed = (station.getLastMeasurement().getWindSpeed() != null) ? numberFormat.format(station.getLastMeasurement().getWindSpeed()) : "--";
-        String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : "--";
-        String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : "--";
-        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : "--";
+        String temperature = (station.getLastMeasurement().getTemperature() != null) ? temperatureFormat.format(station.getLastMeasurement().getTemperature()) : getString(R.string.na);;
+        String windSpeed = (station.getLastMeasurement().getWindSpeed() != null) ? numberFormat.format(station.getLastMeasurement().getWindSpeed()) : getString(R.string.na);;
+        String pm10Text = (station.getLastMeasurement().getToracicParticles() != null) ? numberFormat.format(station.getLastMeasurement().getToracicParticles()) : getString(R.string.na);;
+        String pm2_5Text = (station.getLastMeasurement().getRespirableParticles() != null) ? numberFormat.format(station.getLastMeasurement().getRespirableParticles()) : getString(R.string.na);;
+        String o3Text = (station.getLastMeasurement().getOzone() != null) ? numberFormat.format(station.getLastMeasurement().getOzone()) : getString(R.string.na);;
 
         RelativeLayout forecastsSection = (RelativeLayout) findViewById(R.id.forecastsSection);
         TableLayout table = (TableLayout) findViewById(R.id.forecastsTable);
@@ -464,9 +462,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     TextView o3Label = (TextView) row.getChildAt(3);
 
                     String time = timeFormat.format(forecast.getStartsAt()) + "-" + timeFormat.format(forecast.getEndsAt());
-                    String pm10 = (forecast.getToracicParticlesIndex() != null) ? forecast.getToracicParticlesIndex() : "--";
-                    String pm2_5 = (forecast.getRespirableParticlesIndex() != null) ? forecast.getRespirableParticlesIndex() : "--";
-                    String o3 = (forecast.getOzoneIndex() != null) ? forecast.getOzoneIndex() : "--";
+                    String pm10 = (forecast.getToracicParticlesIndex() != null) ? forecast.getToracicParticlesIndex() : getString(R.string.na);;
+                    String pm2_5 = (forecast.getRespirableParticlesIndex() != null) ? forecast.getRespirableParticlesIndex() : getString(R.string.na);;
+                    String o3 = (forecast.getOzoneIndex() != null) ? forecast.getOzoneIndex() : getString(R.string.na);;
 
                     timeLabel.setText(time);
                     pm10Label.setText(pm10);
