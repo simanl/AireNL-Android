@@ -464,9 +464,9 @@ public class DiagnosticsActivity extends AppCompatActivity implements ViewTreeOb
                     TextView o3Label = (TextView) row.getChildAt(3);
 
                     String time = timeFormat.format(forecast.getStartsAt()) + "-" + timeFormat.format(forecast.getEndsAt());
-                    String pm10 = (forecast.getToracicParticlesIndex() != null) ? wholeNumberFormat.format(forecast.getToracicParticlesIndex()) : getString(R.string.na);;
-                    String pm2_5 = (forecast.getRespirableParticlesIndex() != null) ? wholeNumberFormat.format(forecast.getRespirableParticlesIndex()) : getString(R.string.na);;
-                    String o3 = (forecast.getOzoneIndex() != null) ? wholeNumberFormat.format(forecast.getOzoneIndex()) : getString(R.string.na);;
+                    String pm10 = (forecast.getToracicParticlesIndex() != null) ? wholeNumberFormat.format(Double.parseDouble(forecast.getToracicParticlesIndex())) : getString(R.string.na);;
+                    String pm2_5 = (forecast.getRespirableParticlesIndex() != null) ? wholeNumberFormat.format(Double.parseDouble(forecast.getRespirableParticlesIndex())) : getString(R.string.na);;
+                    String o3 = (forecast.getOzoneIndex() != null) ? wholeNumberFormat.format(Double.parseDouble(forecast.getOzoneIndex())) : getString(R.string.na);;
 
                     timeLabel.setText(time);
                     pm10Label.setText(pm10);
