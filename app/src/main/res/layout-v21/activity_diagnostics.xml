@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="N/A"
+                        android:text="@string/na"
                         android:textSize="25sp"
                         android:textColor="#ffffff"/>
                 </RelativeLayout>
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/imecaQuantity"
                     android:layout_centerHorizontal="true"
-                    android:text="--"
+                    android:text="@string/na"
                     android:fontFamily="sans-serif-light"
                     android:textColor="#ffffff"
                     android:layout_above="@id/imecaLabel"
@@ -171,7 +171,7 @@
                             <TextView
                                 android:id="@+id/windSpeedValueText"
                                 style="@style/AireSubsectionText.MeasurementCategory"
-                                android:text="--"
+                                android:text="@string/na"
                                 android:layout_toRightOf="@id/windIcon"
                                 android:gravity="center"/>
                         </RelativeLayout>
@@ -202,7 +202,7 @@
                             <TextView
                                 android:id="@+id/temperatureValueText"
                                 style="@style/AireSubsectionText.MeasurementCategory"
-                                android:text="--"
+                                android:text="@string/na"
                                 android:layout_toRightOf="@id/temperatureIcon"/>
                         </RelativeLayout>
                         <TextView
@@ -239,7 +239,7 @@
                                 android:id="@+id/pm10ValueText"
                                 style="@style/ContaminantAmountText"
                                 android:layout_below="@id/pm10Tile"
-                                android:text="--"/>
+                                android:text="@string/na"/>
                         </RelativeLayout>
 
                     </FrameLayout>
@@ -260,7 +260,7 @@
                                 android:id="@+id/pm2.5ValueText"
                                 style="@style/ContaminantAmountText"
                                 android:layout_below="@id/pm2.5Tile"
-                                android:text="--"/>
+                                android:text="@string/na"/>
                         </RelativeLayout>
 
                     </FrameLayout>
@@ -281,7 +281,7 @@
                                 android:id="@+id/o3ValueText"
                                 style="@style/ContaminantAmountText"
                                 android:layout_below="@id/o3Tile"
-                                android:text="--"/>
+                                android:text="@string/na"/>
                         </RelativeLayout>
 
                     </FrameLayout>
@@ -342,41 +342,41 @@
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+1 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+2 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+3 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                     </TableRow>
                     <TableRow style="@style/ContaminantForecastTableRow">
                         <TextView style="@style/ContaminantForecastTableColumn.Day"
                             android:text="+4 HOUR"/>
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                         <TextView style="@style/ContaminantAmountText.Forecasts"
-                            android:text="--" />
+                            android:text="@string/na" />
                     </TableRow>
                 </TableLayout>
             </RelativeLayout>
