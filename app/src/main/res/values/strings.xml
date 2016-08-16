@@ -32,9 +32,9 @@
     <string name="very_bad_air_quality_description">Adults and children with lung problems, adults with heart problems, and older people, should avoid strenuous physical  activity. People with asthma may find they need to use their reliever inhaler more often.</string>
     <string name="extremely_bad_air_quality_description">Adults and children with lung problems, adults with heart problems, and older people, should avoid strenuous physical  activity. People with asthma may find they need to use their reliever inhaler more often.</string>
 
-    <string name="pm10">PM 10 (μg x m³)</string>
-    <string name="pm2_5">PM 2.5 (μg x m³)</string>
-    <string name="o3">O3 (Parts Per Billion)</string>
+    <string name="pm10">PM 10 (expressed in μg/m³)</string>
+    <string name="pm2_5">PM 2.5 (expressed in μg/m³)</string>
+    <string name="o3">O3 (expressed in ppb)</string>
 
     <string name="pm10_description">Suspended solid or liquid particles in the air with aerodynamic diameter of 10 µm or less.  They can be emitted from a variety of stationary and mobile sources such as diesel trucks, wood stoves, power plants, etc. \n\nConstant exposure to high levels of PM10 has been related with heart or lung diseases, eyes, nose and throat irritation, coughing and shortness of breath, reduced lung function and, asthma and heart attacks.</string>
     <string name="pm2_5_description">Suspended fine particles in the air with aerodynamic diameter of 2.5 µm or less. PM2.5 primary sources include road transport, industrial, commercial and domestic burn of fuel, and dust emissions from construction sites. \n\nLong-term exposure to high levels of PM2.5 cause respiratory and cardiovascular illness and even death.</string>
